@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="RealEstateHunt.Models.BankAccount">
+    <Position X="4" Y="9" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAACEAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\BankAccount.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Contact" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.City">
+    <Position X="7.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\City.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RealEstateHunt.Models.CommunicationType">
+    <Position X="0.5" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CommunicationType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RealEstateHunt.Models.Contact">
+    <Position X="7.5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAUABAAAAAAAIAEAAAAQAAAAAAAAAEAIAAAAAAAg=</HashCode>
+      <FileName>Models\Contact.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="City" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.ContactCommunication">
+    <Position X="4" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAACAAAAAQAAAAAAAEgAQAgAAAAAAA=</HashCode>
+      <FileName>Models\ContactCommunication.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Contact" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.Contract">
+    <Position X="7" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAxAAAAgAAIAAQAAAAABAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\Contract.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Offer" />
+      <Property Name="Client" />
+      <Property Name="Manager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.District">
+    <Position X="7" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAABAAAAAAAIAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\District.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="City" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.Employee">
+    <Position X="1.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAASAAAAAAAAAAAACAAAAAAAAAACAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Employee.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Job" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.Job">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Job.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RealEstateHunt.Models.Offer">
+    <Position X="4" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAQAgAAAAAAAIAAQAAAAABAAgAQgAAAAAAAA=</HashCode>
+      <FileName>Models\Offer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RealEstate" />
+      <Property Name="Type" />
+      <Property Name="Manager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.OfferType">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\OfferType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RealEstateHunt.Models.RealEstate">
+    <Position X="9.5" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAQABAAAgAAgIAEAAAAQAAAAAAAAgEQIgAAAAAAA=</HashCode>
+      <FileName>Models\RealEstate.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="City" />
+      <Property Name="District" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RealEstateHunt.Models.RealEstateType">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\RealEstateType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RealEstateHunt.Models.Role">
+    <Position X="13.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RealEstateHunt.Models.User">
+    <Position X="11.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAACAAAAAQAAAAAAAEAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Contact" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

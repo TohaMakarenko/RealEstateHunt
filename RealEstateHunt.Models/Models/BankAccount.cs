@@ -2,7 +2,7 @@
 
 namespace RealEstateHunt.Models
 {
-    class BankAccount
+    public class BankAccount
     {
         public int Id { get; set; }
 

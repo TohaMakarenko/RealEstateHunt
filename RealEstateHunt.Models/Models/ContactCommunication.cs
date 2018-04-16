@@ -2,7 +2,7 @@
 
 namespace RealEstateHunt.Models
 {
-    class ContactCommunication
+    public class ContactCommunication
     {
         public int Id { get; set; }
 

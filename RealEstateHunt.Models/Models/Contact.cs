@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Models
 {
-    class Contact
+    public class Contact
     {
         public int Id { get; set; }
 

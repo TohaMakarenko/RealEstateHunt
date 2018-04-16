@@ -2,7 +2,7 @@
 
 namespace RealEstateHunt.Models
 {
-    class OfferType
+    public class OfferType
     {
         public int Id { get; set; }
 

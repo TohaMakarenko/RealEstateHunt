@@ -2,7 +2,7 @@
 
 namespace RealEstateHunt.Models
 {
-    class Contract
+    public class Contract
     {
         public int Id { get; set; }
 
