@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RealEstateHunt.Models
@@ -35,12 +36,58 @@ namespace RealEstateHunt.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(u => u.Name).IsUnique();
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-            modelBuilder.Entity<User>().HasIndex(u => u.Phone).IsUnique();
-            modelBuilder.Entity<BankAccount>().HasIndex(ba => ba.Number).IsUnique();
-            modelBuilder.Entity<Employee>().HasIndex(e => e.ContactId).IsUnique();
-            modelBuilder.Entity<ContactCommunication>().HasIndex(cc => cc.Value);
+            base.OnModelCreating(modelBuilder);
+            #region indexes
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Phone)
+                .IsUnique();
+
+            modelBuilder.Entity<BankAccount>()
+                .HasIndex(ba => ba.Number)
+                .IsUnique();
+
+            modelBuilder.Entity<Employee>()
+                .HasIndex(e => e.ContactId)
+                .IsUnique();
+
+            modelBuilder.Entity<ContactCommunication>()
+                .HasIndex(cc => cc.Value);
+            #endregion
+
+            #region Foreign keys settings
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            modelBuilder.Entity<BankAccount>()
+                .HasOne(ba => ba.Contact)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Contact>()
+                .HasOne(c => c.City)
+                .WithMany()
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Contact>()
+                .HasOne(c => c.District)
+                .WithMany()
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<ContactCommunication>()
+                .HasOne(cc => cc.Contact)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+            #endregion
         }
     }
 }

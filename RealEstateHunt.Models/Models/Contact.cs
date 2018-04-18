@@ -14,12 +14,12 @@ namespace RealEstateHunt.Models
         public string LastName { get; set; }
 
         [ForeignKey("City")]
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
 
         public City City { get; set; }
 
         [ForeignKey("District")]
-        public int DistrictId { get; set; }
+        public int? DistrictId { get; set; }
 
         public District District { get; set; }
 
