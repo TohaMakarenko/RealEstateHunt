@@ -32,10 +32,16 @@ namespace RealEstateHunt.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            #region indexes
+
+            CreateIndexes(modelBuilder);
+            CreateForeignKeys(modelBuilder);
+        }
+
+        protected virtual void CreateIndexes(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<User>()
-                .HasIndex(u => u.Name)
-                .IsUnique();
+               .HasIndex(u => u.Name)
+               .IsUnique();
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
@@ -55,29 +61,71 @@ namespace RealEstateHunt.Models
 
             modelBuilder.Entity<ContactCommunication>()
                 .HasIndex(cc => cc.Value);
-            #endregion
+        }
 
-            #region Foreign keys settings
-
+        protected virtual void CreateForeignKeys(ModelBuilder modelBuilder)
+        {
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.City)
-                .WithMany()
+                .WithMany(c => c.Contacts)
+                .HasForeignKey(c => c.CityId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.District)
-                .WithMany()
+                .WithMany(c => c.Contacts)
+                .HasForeignKey(c => c.DistrictId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<ContactCommunication>()
                 .HasOne(cc => cc.Contact)
-                .WithMany()
+                .WithMany(c => c.ContactCommunications)
+                .HasForeignKey(cc => cc.ContactId)
                 .OnDelete(DeleteBehavior.Cascade);
-            #endregion
+
+            modelBuilder.Entity<Contract>()
+                .HasOne(c => c.Client)
+                .WithMany(c => c.Contracts)
+                .HasForeignKey(c => c.ClientId);
+
+            modelBuilder.Entity<Contract>()
+                .HasOne(c => c.Manager)
+                .WithMany(m => m.Contracts)
+                .HasForeignKey(c => c.ManagerId);
+
+            modelBuilder.Entity<Contract>()
+                .HasOne(d => d.Offer)
+                .WithMany(c => c.Contracts)
+                .HasForeignKey(c => c.OfferId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<RealEstate>()
+                .HasOne(re => re.City)
+                .WithMany(c => c.RealEstates)
+                .HasForeignKey(c => c.CityId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<RealEstate>()
+                .HasOne(re => re.District)
+                .WithMany(c => c.RealEstates)
+                .HasForeignKey(c => c.DistrictId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<District>()
+                .HasOne(d => d.City)
+                .WithMany(c => c.Districts)
+                .HasForeignKey(c => c.CityId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Offer>()
+                .HasOne(d => d.RealEstate)
+                .WithMany(c => c.Offers)
+                .HasForeignKey(c => c.RealEstateId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

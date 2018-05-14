@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Models
 {
@@ -10,5 +11,7 @@ namespace RealEstateHunt.Models
         public int ContactId { get; set; }
 
         public Contact Contact { get; set; }
+
+        public IEnumerable<Contract> Contracts { get; set; }
     }
 }

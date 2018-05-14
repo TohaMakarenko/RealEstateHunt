@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Models
@@ -31,5 +32,11 @@ namespace RealEstateHunt.Models
 
         [Column(TypeName = "date")]
         public DateTime BirthDate { get; set; }
+
+        [Column(TypeName = "varchar(50)")]
+        public string BankAccountNumber { get; set; }
+
+        public IEnumerable<ContactCommunication> ContactCommunications { get; set; }
+        public IEnumerable<Contract> Contracts { get; set; }
     }
 }

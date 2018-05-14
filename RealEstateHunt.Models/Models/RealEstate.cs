@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Models
 {
@@ -36,5 +37,7 @@ namespace RealEstateHunt.Models
 
         [Column(TypeName = "varchar(max)")]
         public string Description { get; set; }
+
+        public IEnumerable<Offer> Offers { get; set; }
     }
 }

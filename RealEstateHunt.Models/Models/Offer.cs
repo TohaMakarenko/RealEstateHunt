@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Models
 {
@@ -23,5 +24,7 @@ namespace RealEstateHunt.Models
         public string Description { get; set; }
 
         public int Price { get; set; }
+
+        public IEnumerable<Contract> Contracts { get; set; }
     }
 }

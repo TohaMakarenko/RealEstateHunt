@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Models
 {
@@ -13,5 +14,8 @@ namespace RealEstateHunt.Models
         public int CityId { get; set; }
 
         public City City { get; set; }
+
+        public IEnumerable<Contact> Contacts { get; set; }
+        public IEnumerable<RealEstate> RealEstates { get; set; }
     }
 }
