@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RealEstateHunt.Models.Repositories.Abstract
+namespace RealEstateHunt.Models.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        User FindByName(string name);
+        IEnumerable<User> FindByName(string name);
     }
 }

@@ -11,6 +11,7 @@ namespace RealEstateHunt.Models
         void Add(T entity);
         void Update(T entity);
         void Remove(int id);
+        void Remove(T entity);
         void Save();
         Task SaveAsync();
     }
