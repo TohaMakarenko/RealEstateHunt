@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RealEstateHunt.Models.Repositories
 {
-    interface IEmployeeRepository : IRepository<Employee>
+    public interface IEmployeeRepository : IRepository<Employee>
     {
     }
 }

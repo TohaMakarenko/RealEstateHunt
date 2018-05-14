@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RealEstateHunt.Models
 {
-    interface IRepository<T> : IDisposable
+    public interface IRepository<T>
     {
         IEnumerable<T> GetEntities();
+        IEnumerable<T> GetPage(int pageNumber, int pageSize);
         T FindById(int id);
         void Add(T entity);
         void Update(T entity);
-        void Delete(int id);
+        void Remove(int id);
         void Save();
+        Task SaveAsync();
     }
 }

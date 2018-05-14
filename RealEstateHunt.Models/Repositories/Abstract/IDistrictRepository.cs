@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace RealEstateHunt.Models.Repositories
 {
-    interface IDistrictRepository : IRepository<District>
+    public interface IDistrictRepository : IRepository<District>
     {
-        District FindByName(string name);
+        IEnumerable<District> FindByName(string name);
     }
 }

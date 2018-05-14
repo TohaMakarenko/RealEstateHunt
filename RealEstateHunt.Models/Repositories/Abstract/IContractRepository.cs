@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RealEstateHunt.Models.Repositories
 {
-    interface IContractRepository : IRepository<Contract>
+    public interface IContractRepository : IRepository<Contract>
     {
     }
 }

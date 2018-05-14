@@ -4,9 +4,10 @@ using System.Text;
 
 namespace RealEstateHunt.Models.Repositories
 {
-    interface IContactRepository : IRepository<Contact>
+    public interface IContactRepository : IRepository<Contact>
     {
-        Contact FindByFullName(string firstName, string lastName);
-        Contact FindByFullNameLike(string fullNameSubstring);
+        IEnumerable<Contact> FindByFullName(string firstName, string lastName);
+        IEnumerable<Contact> FindByFullName(string fullName);
+        IEnumerable<Contact> FindByFullNameLike(string fullNameSubstring);
     }
 }

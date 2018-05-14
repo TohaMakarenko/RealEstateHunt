@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RealEstateHunt.Models.Repositories
 {
-    interface IContactCommunicationRepository : IRepository<ContactCommunication>
+    public interface IContactCommunicationRepository : IRepository<ContactCommunication>
     {
     }
 }
