@@ -17,7 +17,6 @@ namespace RealEstateHunt.Models
         public DbSet<District> Districts { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Offer> Offers { get; set; }
-        public DbSet<OfferType> OfferTypes { get; set; }
         public DbSet<RealEstate> RealEstates { get; set; }
         public DbSet<RealEstateType> RealEstateTypes { get; set; }
         public DbSet<Role> Roles { get; set; }
