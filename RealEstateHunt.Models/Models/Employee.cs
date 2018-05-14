@@ -10,10 +10,5 @@ namespace RealEstateHunt.Models
         public int ContactId { get; set; }
 
         public Contact Contact { get; set; }
-
-        [ForeignKey("Job")]
-        public int JobId { get; set; }
-
-        public Job Job { get; set; }
     }
 }
