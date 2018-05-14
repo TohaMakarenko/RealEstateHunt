@@ -11,13 +11,11 @@ namespace RealEstateHunt.Models
     {
         public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<CommunicationType> CommunicationTypes { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContactCommunication> ContactCommunications { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Job> Jobs { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<OfferType> OfferTypes { get; set; }
         public DbSet<RealEstate> RealEstates { get; set; }

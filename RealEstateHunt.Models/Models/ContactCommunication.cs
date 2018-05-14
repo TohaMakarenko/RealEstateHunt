@@ -16,10 +16,5 @@ namespace RealEstateHunt.Models
         public int ContactId { get; set; }
 
         public Contact Contact { get; set; }
-
-        [ForeignKey("Type")]
-        public int TypeId { get; set; }
-
-        public CommunicationType Type { get; set; }
     }
 }
