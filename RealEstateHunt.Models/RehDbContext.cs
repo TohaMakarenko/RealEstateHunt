@@ -9,7 +9,6 @@ namespace RealEstateHunt.Models
 {
     public class RehDbContext : DbContext
     {
-        public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContactCommunication> ContactCommunications { get; set; }
@@ -46,8 +45,8 @@ namespace RealEstateHunt.Models
                 .HasIndex(u => u.Phone)
                 .IsUnique();
 
-            modelBuilder.Entity<BankAccount>()
-                .HasIndex(ba => ba.Number)
+            modelBuilder.Entity<Contact>()
+                .HasIndex(c => c.BankAccountNumber)
                 .IsUnique();
 
             modelBuilder.Entity<Employee>()
@@ -63,11 +62,6 @@ namespace RealEstateHunt.Models
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            modelBuilder.Entity<BankAccount>()
-                .HasOne(ba => ba.Contact)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.City)
