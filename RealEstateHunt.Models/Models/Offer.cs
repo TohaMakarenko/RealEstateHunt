@@ -14,11 +14,6 @@ namespace RealEstateHunt.Models
 
         public RealEstate RealEstate { get; set; }
 
-        [ForeignKey("Type")]
-        public int TypeId { get; set; }
-
-        public OfferType Type { get; set; }
-
         [ForeignKey("Manager")]
         public int ManagerId { get; set; }
 
