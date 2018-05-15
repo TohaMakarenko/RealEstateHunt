@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace RealEstateHunt.Models
+namespace RealEstateHunt.Models.Repositories
 {
     public interface IRepository<T>
     {
