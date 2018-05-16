@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using RealEstateHunt.Infrastructure.Repositories;
 using RealEstateHunt.Infrastructure.Repositories.EfRepositories;
 
@@ -54,6 +55,11 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
         public UnitOfWork(RehDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task SaveAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

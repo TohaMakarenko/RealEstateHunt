@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using RealEstateHunt.Infrastructure.Repositories;
+using System.Threading.Tasks;
 
 namespace RealEstateHunt.Infrastructure.UnitOfWork
 {
@@ -17,5 +18,7 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork
         IRealEstateRepository RealEstateRepository { get; }
         IRealEstateTypeRepository RealEstateTypeRepository { get; }
         IUserRepository UserRepository { get; }
+
+        Task SaveAsync();
     }
 }
