@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RealEstateHunt.Core
+namespace RealEstateHunt.Core.Data
 {
     public class Contact
     {

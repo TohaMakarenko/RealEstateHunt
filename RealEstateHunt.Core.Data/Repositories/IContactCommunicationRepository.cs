@@ -1,4 +1,4 @@
-﻿namespace RealEstateHunt.Core.Repositories
+﻿namespace RealEstateHunt.Core.Data.Repositories
 {
     public interface IContactCommunicationRepository : IRepository<ContactCommunication>
     {

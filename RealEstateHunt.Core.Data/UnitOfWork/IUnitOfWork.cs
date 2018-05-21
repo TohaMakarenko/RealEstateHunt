@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using RealEstateHunt.Core.Repositories;
+using RealEstateHunt.Core.Data.Repositories;
 
-namespace RealEstateHunt.Core.UnitOfWork
+namespace RealEstateHunt.Core.Data.UnitOfWork
 {
     public interface IUnitOfWork
     {

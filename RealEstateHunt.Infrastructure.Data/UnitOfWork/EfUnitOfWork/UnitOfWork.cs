@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using RealEstateHunt.Infrastructure.Repositories.EfRepositories;
+using RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories;
 using AutoMapper;
-using RealEstateHunt.Core.Repositories;
-using RealEstateHunt.Core.UnitOfWork;
+using RealEstateHunt.Core.Data.Repositories;
+using RealEstateHunt.Core.Data.UnitOfWork;
 
-namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
+namespace RealEstateHunt.Infrastructure.Data.UnitOfWork.EfUnitOfWork
 {
     class UnitOfWork : IUnitOfWork
     {

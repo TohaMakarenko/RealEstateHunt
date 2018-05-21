@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using RealEstateHunt.Core.Repositories;
+using RealEstateHunt.Core.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
-namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
+namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {
     public abstract class EfRepository<T, TEntity> : IRepository<T>
         where T : class

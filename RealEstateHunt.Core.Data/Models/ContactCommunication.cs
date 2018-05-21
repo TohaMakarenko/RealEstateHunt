@@ -1,4 +1,4 @@
-﻿namespace RealEstateHunt.Core
+﻿namespace RealEstateHunt.Core.Data
 {
     public class ContactCommunication
     {

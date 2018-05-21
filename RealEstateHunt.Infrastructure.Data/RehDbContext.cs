@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace RealEstateHunt.Infrastructure
+namespace RealEstateHunt.Infrastructure.Data
 {
     public class RehDbContext : DbContext
     {

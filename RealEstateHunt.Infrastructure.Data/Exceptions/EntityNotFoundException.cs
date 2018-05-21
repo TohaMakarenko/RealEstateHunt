@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace RealEstateHunt.Infrastructure
+namespace RealEstateHunt.Infrastructure.Data
 {
     class EntityNotFoundException : Exception
     {

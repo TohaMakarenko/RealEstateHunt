@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using RealEstateHunt.Core;
+using RealEstateHunt.Core.Data;
 using System.Linq;
 using AutoMapper;
-using RealEstateHunt.Core.Repositories;
+using RealEstateHunt.Core.Data.Repositories;
 
-namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
+namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {
     public class ContractRepository : EfRepository<Contract, ContractEntity>, IContractRepository
     {

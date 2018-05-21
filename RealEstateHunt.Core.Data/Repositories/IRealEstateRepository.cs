@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RealEstateHunt.Core.Repositories
+namespace RealEstateHunt.Core.Data.Repositories
 {
     public interface IRealEstateRepository : IRepository<RealEstate>
     {

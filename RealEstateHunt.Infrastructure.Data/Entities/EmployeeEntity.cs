@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RealEstateHunt.Infrastructure
+namespace RealEstateHunt.Infrastructure.Data
 {
     public class EmployeeEntity
     {

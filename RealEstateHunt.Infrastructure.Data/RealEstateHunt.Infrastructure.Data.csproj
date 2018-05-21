@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RealEstateHunt.Core\RealEstateHunt.Core.csproj" />
+    <ProjectReference Include="..\RealEstateHunt.Core.Data\RealEstateHunt.Core.Data.csproj" />
   </ItemGroup>
 
 </Project>
