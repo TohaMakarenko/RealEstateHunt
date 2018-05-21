@@ -1,7 +1,6 @@
-﻿using RealEstateHunt.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace RealEstateHunt.Infrastructure.Repositories
+namespace RealEstateHunt.Core.Repositories
 {
     public interface IDistrictRepository : IRepository<District>
     {

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using RealEstateHunt.Infrastructure.Repositories;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using RealEstateHunt.Core.Repositories;
 
-namespace RealEstateHunt.Infrastructure.UnitOfWork
+namespace RealEstateHunt.Core.UnitOfWork
 {
     public interface IUnitOfWork
     {

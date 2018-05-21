@@ -1,6 +1,4 @@
-﻿using RealEstateHunt.Core;
-
-namespace RealEstateHunt.Infrastructure.Repositories
+﻿namespace RealEstateHunt.Core.Repositories
 {
     public interface IRealEstateTypeRepository : IRepository<RealEstateType>
     {

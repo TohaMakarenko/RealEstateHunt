@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using RealEstateHunt.Infrastructure;
+using RealEstateHunt.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 

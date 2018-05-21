@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using RealEstateHunt.Infrastructure.Repositories;
 using RealEstateHunt.Infrastructure.Repositories.EfRepositories;
-using RealEstateHunt.Core;
 using AutoMapper;
+using RealEstateHunt.Core.Repositories;
+using RealEstateHunt.Core.UnitOfWork;
 
 namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
 {
