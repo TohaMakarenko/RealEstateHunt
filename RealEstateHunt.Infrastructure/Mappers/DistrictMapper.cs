@@ -6,23 +6,23 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class DistrictMapper : ICollectionMapper<District, DistrictEntity>, ICollectionMapper<DistrictEntity, District>
+    public class DistrictMapper : IMapper<District, DistrictEntity>, IMapper<DistrictEntity, District>
     {
         IMapper<City, CityEntity> _cityToEntityMapper;
         IMapper<CityEntity, City> _entityToCityMapper;
 
-        ICollectionMapper<Contact, ContactEntity> _contactToEntityMapper;
-        ICollectionMapper<ContactEntity, Contact> _entityToContactMapper;
+        IMapper<Contact, ContactEntity> _contactToEntityMapper;
+        IMapper<ContactEntity, Contact> _entityToContactMapper;
 
-        ICollectionMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
-        ICollectionMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
+        IMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
+        IMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
 
         public DistrictMapper(IMapper<City, CityEntity> cityToEntityMapper,
             IMapper<CityEntity, City> entityToCityMapper,
-            ICollectionMapper<Contact, ContactEntity> contactToEntityMapper,
-            ICollectionMapper<ContactEntity, Contact> entityToContactMapper,
-            ICollectionMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
-            ICollectionMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper)
+            IMapper<Contact, ContactEntity> contactToEntityMapper,
+            IMapper<ContactEntity, Contact> entityToContactMapper,
+            IMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
+            IMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper)
         {
             _cityToEntityMapper = cityToEntityMapper;
             _entityToCityMapper = entityToCityMapper;

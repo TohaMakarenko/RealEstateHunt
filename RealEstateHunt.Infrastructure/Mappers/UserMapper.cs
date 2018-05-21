@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class UserMapper : ICollectionMapper<User, UserEntity>, ICollectionMapper<UserEntity, User>
+    public class UserMapper : IMapper<User, UserEntity>, IMapper<UserEntity, User>
     {
         IMapper<Contact, ContactEntity> _contactToEntityMapper;
         IMapper<ContactEntity, Contact> _entityToContactMapper;

@@ -4,8 +4,9 @@ using System.Text;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public interface IMapper <Tin, TOut>
+    public interface IMapper<TIn, TOut>
     {
-        TOut Map(Tin entity);
+        TOut Map(TIn entity);
+        IEnumerable<TOut> MapCollection(IEnumerable<TIn> entities);
     }
 }

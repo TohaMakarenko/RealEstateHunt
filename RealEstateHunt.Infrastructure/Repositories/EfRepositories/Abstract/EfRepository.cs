@@ -10,14 +10,14 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
         where T : class
         where TEntity : class
     {
-        protected ICollectionMapper<T, TEntity> ToEntityMapper;
-        protected ICollectionMapper<TEntity, T> FromEntityMapper;
+        protected IMapper<T, TEntity> ToEntityMapper;
+        protected IMapper<TEntity, T> FromEntityMapper;
 
         public RehDbContext DbContext { get; protected set; }
 
         public EfRepository(RehDbContext dbContext,
-            ICollectionMapper<T, TEntity> toEntityMapper,
-            ICollectionMapper<TEntity, T> fromEntityMapper)
+            IMapper<T, TEntity> toEntityMapper,
+            IMapper<TEntity, T> fromEntityMapper)
         {
             DbContext = dbContext;
             ToEntityMapper = toEntityMapper;

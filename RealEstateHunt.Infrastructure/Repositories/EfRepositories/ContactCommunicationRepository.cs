@@ -8,8 +8,8 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
     public class ContactCommunicationRepository : EfRepository<ContactCommunication, ContactCommunicationEntity>, IContactCommunicationRepository
     {
         public ContactCommunicationRepository(RehDbContext dbContext,
-            ICollectionMapper<ContactCommunication, ContactCommunicationEntity> toEntityMapper,
-            ICollectionMapper<ContactCommunicationEntity, ContactCommunication> fromEntityMapper)
+            IMapper<ContactCommunication, ContactCommunicationEntity> toEntityMapper,
+            IMapper<ContactCommunicationEntity, ContactCommunication> fromEntityMapper)
             : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }

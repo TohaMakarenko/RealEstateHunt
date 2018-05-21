@@ -8,8 +8,8 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
     public class RealEstateTypeRepository : EfRepository<RealEstateType, RealEstateTypeEntity>, IRealEstateTypeRepository
     {
         public RealEstateTypeRepository(RehDbContext dbContext,
-            ICollectionMapper<RealEstateType, RealEstateTypeEntity> toEntityMapper,
-            ICollectionMapper<RealEstateTypeEntity, RealEstateType> fromEntityMapper)
+            IMapper<RealEstateType, RealEstateTypeEntity> toEntityMapper,
+            IMapper<RealEstateTypeEntity, RealEstateType> fromEntityMapper)
             : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }

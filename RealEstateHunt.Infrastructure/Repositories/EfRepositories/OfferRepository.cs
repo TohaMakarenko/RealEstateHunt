@@ -8,8 +8,8 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
     public class OfferRepository : EfRepository<Offer, OfferEntity>, IOfferRepository
     {
         public OfferRepository(RehDbContext dbContext,
-            ICollectionMapper<Offer, OfferEntity> toEntityMapper,
-            ICollectionMapper<OfferEntity, Offer> fromEntityMapper)
+            IMapper<Offer, OfferEntity> toEntityMapper,
+            IMapper<OfferEntity, Offer> fromEntityMapper)
             : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }

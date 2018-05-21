@@ -8,8 +8,8 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
     public class CityRepository : EfRepository<City, CityEntity>, ICityRepository
     {
         public CityRepository(RehDbContext dbContext,
-            ICollectionMapper<City, CityEntity> toEntityMapper,
-            ICollectionMapper<CityEntity, City> fromEntityMapper)
+            IMapper<City, CityEntity> toEntityMapper,
+            IMapper<CityEntity, City> fromEntityMapper)
             : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }

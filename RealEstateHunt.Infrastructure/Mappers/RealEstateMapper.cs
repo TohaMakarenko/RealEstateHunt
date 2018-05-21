@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class RealEstateMapper : ICollectionMapper<RealEstate, RealEstateEntity>, ICollectionMapper<RealEstateEntity, RealEstate>
+    public class RealEstateMapper : IMapper<RealEstate, RealEstateEntity>, IMapper<RealEstateEntity, RealEstate>
     {
         IMapper<RealEstateType, RealEstateTypeEntity> _realEstateTypeToEntityMapper;
         IMapper<RealEstateTypeEntity, RealEstateType> _entityToRealEstateTypeMapper;
@@ -17,8 +17,8 @@ namespace RealEstateHunt.Infrastructure.Mappers
         IMapper<District, DistrictEntity> _districtToEntityMapper;
         IMapper<DistrictEntity, District> _entityToDistrictMapper;
 
-        ICollectionMapper<Offer, OfferEntity> _offerToEntityMapper;
-        ICollectionMapper<OfferEntity, Offer> _entityToOfferMapper;
+        IMapper<Offer, OfferEntity> _offerToEntityMapper;
+        IMapper<OfferEntity, Offer> _entityToOfferMapper;
 
         public RealEstateMapper(IMapper<RealEstateType, RealEstateTypeEntity> realEstateTypeToEntityMapper,
             IMapper<RealEstateTypeEntity, RealEstateType> entityToRealEstateTypeMapper,
@@ -26,8 +26,8 @@ namespace RealEstateHunt.Infrastructure.Mappers
             IMapper<CityEntity, City> entityToCityMapper,
             IMapper<District, DistrictEntity> districtToEntityMapper,
             IMapper<DistrictEntity, District> entityToDistrictMapper,
-            ICollectionMapper<Offer, OfferEntity> offerToEntityMapper,
-            ICollectionMapper<OfferEntity, Offer> entityToOfferMapper)
+            IMapper<Offer, OfferEntity> offerToEntityMapper,
+            IMapper<OfferEntity, Offer> entityToOfferMapper)
         {
             _realEstateTypeToEntityMapper = realEstateTypeToEntityMapper;
             _entityToRealEstateTypeMapper = entityToRealEstateTypeMapper;

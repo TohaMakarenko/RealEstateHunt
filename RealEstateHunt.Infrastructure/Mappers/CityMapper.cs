@@ -6,23 +6,23 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class CityMapper : ICollectionMapper<City, CityEntity>, ICollectionMapper<CityEntity, City>
+    public class CityMapper : IMapper<City, CityEntity>, IMapper<CityEntity, City>
     {
-        ICollectionMapper<District, DistrictEntity> _districtToEntityMapper;
-        ICollectionMapper<DistrictEntity, District> _entityToDistrictMapper;
+        IMapper<District, DistrictEntity> _districtToEntityMapper;
+        IMapper<DistrictEntity, District> _entityToDistrictMapper;
 
-        ICollectionMapper<Contact, ContactEntity> _contactToEntityMapper;
-        ICollectionMapper<ContactEntity, Contact> _entityToContactMapper;
+        IMapper<Contact, ContactEntity> _contactToEntityMapper;
+        IMapper<ContactEntity, Contact> _entityToContactMapper;
 
-        ICollectionMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
-        ICollectionMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
+        IMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
+        IMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
 
-        public CityMapper(ICollectionMapper<District, DistrictEntity> districtToEntityMapper,
-            ICollectionMapper<DistrictEntity, District> entityToDistrictMapper,
-            ICollectionMapper<Contact, ContactEntity> contactToEntityMapper,
-            ICollectionMapper<ContactEntity, Contact> entityToContactMapper,
-            ICollectionMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
-            ICollectionMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper)
+        public CityMapper(IMapper<District, DistrictEntity> districtToEntityMapper,
+            IMapper<DistrictEntity, District> entityToDistrictMapper,
+            IMapper<Contact, ContactEntity> contactToEntityMapper,
+            IMapper<ContactEntity, Contact> entityToContactMapper,
+            IMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
+            IMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper)
         {
             _districtToEntityMapper = districtToEntityMapper;
             _entityToDistrictMapper = entityToDistrictMapper;

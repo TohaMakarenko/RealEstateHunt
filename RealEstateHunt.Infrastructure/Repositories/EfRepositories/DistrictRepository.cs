@@ -8,8 +8,8 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
     public class DistrictRepository : EfRepository<District, DistrictEntity>, IDistrictRepository
     {
         public DistrictRepository(RehDbContext dbContext,
-            ICollectionMapper<District, DistrictEntity> toEntityMapper,
-            ICollectionMapper<DistrictEntity, District> fromEntityMapper)
+            IMapper<District, DistrictEntity> toEntityMapper,
+            IMapper<DistrictEntity, District> fromEntityMapper)
             : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class ContractMapper : ICollectionMapper<Contract, ContractEntity>, ICollectionMapper<ContractEntity, Contract>
+    public class ContractMapper : IMapper<Contract, ContractEntity>, IMapper<ContractEntity, Contract>
     {
         IMapper<Offer, OfferEntity> _offerToEntityMapper;
         IMapper<OfferEntity, Offer> _entityToOfferMapper;

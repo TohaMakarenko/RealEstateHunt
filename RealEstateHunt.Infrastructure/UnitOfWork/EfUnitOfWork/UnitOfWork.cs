@@ -13,26 +13,26 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
     {
         private readonly RehDbContext _dbContext;
 
-        private ICollectionMapper<City, CityEntity> _cityToEntityMapper;
-        private ICollectionMapper<CityEntity, City> _entityToCityMapper;
-        private ICollectionMapper<District, DistrictEntity> _districtToEntityMapper;
-        private ICollectionMapper<DistrictEntity, District> _entityToDistrictMapper;
-        private ICollectionMapper<ContactCommunication, ContactCommunicationEntity> _contactCommunicationToEntityMapper;
-        private ICollectionMapper<ContactCommunicationEntity, ContactCommunication> _entityToContactCommunicationMapper;
-        private ICollectionMapper<Contract, ContractEntity> _contractToEntityMapper;
-        private ICollectionMapper<ContractEntity, Contract> _entityToContractMapper;
-        private ICollectionMapper<Contact, ContactEntity> _contactToEntityMapper;
-        private ICollectionMapper<ContactEntity, Contact> _entityToContactMapper;
-        private ICollectionMapper<Employee, EmployeeEntity> _employeeToEntityMapper;
-        private ICollectionMapper<EmployeeEntity, Employee> _entityToEmployeeMapper;
-        private ICollectionMapper<Offer, OfferEntity> _offerToEntityMapper;
-        private ICollectionMapper<OfferEntity, Offer> _entityToOfferMapper;
-        private ICollectionMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
-        private ICollectionMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
-        private ICollectionMapper<RealEstateType, RealEstateTypeEntity> _realEstateTypeToEntityMapper;
-        private ICollectionMapper<RealEstateTypeEntity, RealEstateType> _entityToRealEstateTypeMapper;
-        private ICollectionMapper<User, UserEntity> _userToEntityMapper;
-        private ICollectionMapper<UserEntity, User> _entityToUserMapper;
+        private IMapper<City, CityEntity> _cityToEntityMapper;
+        private IMapper<CityEntity, City> _entityToCityMapper;
+        private IMapper<District, DistrictEntity> _districtToEntityMapper;
+        private IMapper<DistrictEntity, District> _entityToDistrictMapper;
+        private IMapper<ContactCommunication, ContactCommunicationEntity> _contactCommunicationToEntityMapper;
+        private IMapper<ContactCommunicationEntity, ContactCommunication> _entityToContactCommunicationMapper;
+        private IMapper<Contract, ContractEntity> _contractToEntityMapper;
+        private IMapper<ContractEntity, Contract> _entityToContractMapper;
+        private IMapper<Contact, ContactEntity> _contactToEntityMapper;
+        private IMapper<ContactEntity, Contact> _entityToContactMapper;
+        private IMapper<Employee, EmployeeEntity> _employeeToEntityMapper;
+        private IMapper<EmployeeEntity, Employee> _entityToEmployeeMapper;
+        private IMapper<Offer, OfferEntity> _offerToEntityMapper;
+        private IMapper<OfferEntity, Offer> _entityToOfferMapper;
+        private IMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
+        private IMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
+        private IMapper<RealEstateType, RealEstateTypeEntity> _realEstateTypeToEntityMapper;
+        private IMapper<RealEstateTypeEntity, RealEstateType> _entityToRealEstateTypeMapper;
+        private IMapper<User, UserEntity> _userToEntityMapper;
+        private IMapper<UserEntity, User> _entityToUserMapper;
 
         private ICityRepository _cityRepository;
         private IContactCommunicationRepository _contactCommunicationRepository;
@@ -46,26 +46,26 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
         private IUserRepository _userRepository;
 
         public UnitOfWork(RehDbContext dbContext,
-            ICollectionMapper<City, CityEntity> cityToEntityMapper,
-            ICollectionMapper<CityEntity, City> entityToCityMapper,
-            ICollectionMapper<District, DistrictEntity> districtToEntityMapper,
-            ICollectionMapper<DistrictEntity, District> entityToDistrictMapper,
-            ICollectionMapper<ContactCommunication, ContactCommunicationEntity> contactCommunicationToEntityMapper,
-            ICollectionMapper<ContactCommunicationEntity, ContactCommunication> entityToContactCommunicationMapper,
-            ICollectionMapper<Contract, ContractEntity> contractToEntityMapper,
-            ICollectionMapper<ContractEntity, Contract> entityToContractMapper,
-            ICollectionMapper<Contact, ContactEntity> contactToEntityMapper,
-            ICollectionMapper<ContactEntity, Contact> entityToContactMapper,
-            ICollectionMapper<Employee, EmployeeEntity> employeeToEntityMapper,
-            ICollectionMapper<EmployeeEntity, Employee> entityToEmployeeMapper,
-            ICollectionMapper<Offer, OfferEntity> offerToEntityMapper,
-            ICollectionMapper<OfferEntity, Offer> entityToOfferMapper,
-            ICollectionMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
-            ICollectionMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper,
-            ICollectionMapper<RealEstateType, RealEstateTypeEntity> realEstateTypeToEntityMapper,
-            ICollectionMapper<RealEstateTypeEntity, RealEstateType> entityToRealEstateTypeMapper,
-            ICollectionMapper<User, UserEntity> userToEntityMapper,
-            ICollectionMapper<UserEntity, User> entityToUserMapper)
+            IMapper<City, CityEntity> cityToEntityMapper,
+            IMapper<CityEntity, City> entityToCityMapper,
+            IMapper<District, DistrictEntity> districtToEntityMapper,
+            IMapper<DistrictEntity, District> entityToDistrictMapper,
+            IMapper<ContactCommunication, ContactCommunicationEntity> contactCommunicationToEntityMapper,
+            IMapper<ContactCommunicationEntity, ContactCommunication> entityToContactCommunicationMapper,
+            IMapper<Contract, ContractEntity> contractToEntityMapper,
+            IMapper<ContractEntity, Contract> entityToContractMapper,
+            IMapper<Contact, ContactEntity> contactToEntityMapper,
+            IMapper<ContactEntity, Contact> entityToContactMapper,
+            IMapper<Employee, EmployeeEntity> employeeToEntityMapper,
+            IMapper<EmployeeEntity, Employee> entityToEmployeeMapper,
+            IMapper<Offer, OfferEntity> offerToEntityMapper,
+            IMapper<OfferEntity, Offer> entityToOfferMapper,
+            IMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
+            IMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper,
+            IMapper<RealEstateType, RealEstateTypeEntity> realEstateTypeToEntityMapper,
+            IMapper<RealEstateTypeEntity, RealEstateType> entityToRealEstateTypeMapper,
+            IMapper<User, UserEntity> userToEntityMapper,
+            IMapper<UserEntity, User> entityToUserMapper)
         {
             _dbContext = dbContext;
             _cityToEntityMapper = cityToEntityMapper;
@@ -128,8 +128,7 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
         public IUserRepository UserRepository =>
             _userRepository ?? (_userRepository
             = new UserRepository(_dbContext, _userToEntityMapper, _entityToUserMapper));
-
-
+        
 
         public async Task SaveAsync()
         {

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    class RealEstateTypeMapper : ICollectionMapper<RealEstateType, RealEstateTypeEntity>, ICollectionMapper<RealEstateTypeEntity, RealEstateType>
+    class RealEstateTypeMapper : IMapper<RealEstateType, RealEstateTypeEntity>, IMapper<RealEstateTypeEntity, RealEstateType>
     {
         public RealEstateTypeEntity Map(RealEstateType entity)
         {

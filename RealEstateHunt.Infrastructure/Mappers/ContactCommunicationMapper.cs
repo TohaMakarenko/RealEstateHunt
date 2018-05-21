@@ -6,8 +6,8 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class ContactCommunicationMapper : ICollectionMapper<ContactCommunication, ContactCommunicationEntity>,
-        ICollectionMapper<ContactCommunicationEntity, ContactCommunication>
+    public class ContactCommunicationMapper : IMapper<ContactCommunication, ContactCommunicationEntity>,
+        IMapper<ContactCommunicationEntity, ContactCommunication>
     {
         IMapper<Contact, ContactEntity> _contactToEntityMapper;
         IMapper<ContactEntity, Contact> _entityToContactMapper;

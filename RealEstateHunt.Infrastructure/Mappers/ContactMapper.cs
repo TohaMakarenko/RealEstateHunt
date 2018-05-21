@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class ContactMapper : ICollectionMapper<Contact, ContactEntity>, ICollectionMapper<ContactEntity, Contact>
+    public class ContactMapper : IMapper<Contact, ContactEntity>, IMapper<ContactEntity, Contact>
     {
         IMapper<City, CityEntity> _cityToEntityMapper;
         IMapper<CityEntity, City> _entityToCityMapper;
@@ -14,20 +14,20 @@ namespace RealEstateHunt.Infrastructure.Mappers
         IMapper<District, DistrictEntity> _districtToEntityMapper;
         IMapper<DistrictEntity, District> _entityToDistrictMapper;
 
-        ICollectionMapper<ContactCommunication, ContactCommunicationEntity> _contactCommunicationToEntityMapper;
-        ICollectionMapper<ContactCommunicationEntity, ContactCommunication> _entityToContactCommunicationMapper;
+        IMapper<ContactCommunication, ContactCommunicationEntity> _contactCommunicationToEntityMapper;
+        IMapper<ContactCommunicationEntity, ContactCommunication> _entityToContactCommunicationMapper;
 
-        ICollectionMapper<Contract, ContractEntity> _contractToEntityMapper;
-        ICollectionMapper<ContractEntity, Contract> _entityToContractMapper;
+        IMapper<Contract, ContractEntity> _contractToEntityMapper;
+        IMapper<ContractEntity, Contract> _entityToContractMapper;
 
         public ContactMapper(IMapper<City, CityEntity> cityToEntityMapper,
             IMapper<CityEntity, City> entityToCityMapper,
             IMapper<District, DistrictEntity> districtToEntityMapper,
             IMapper<DistrictEntity, District> entityToDistrictMapper,
-            ICollectionMapper<ContactCommunication, ContactCommunicationEntity> contactCommunicationToEntityMapper,
-            ICollectionMapper<ContactCommunicationEntity, ContactCommunication> entityToContactCommunicationMapper,
-            ICollectionMapper<Contract, ContractEntity> contractToEntityMapper,
-            ICollectionMapper<ContractEntity, Contract> entityToContractMapper)
+            IMapper<ContactCommunication, ContactCommunicationEntity> contactCommunicationToEntityMapper,
+            IMapper<ContactCommunicationEntity, ContactCommunication> entityToContactCommunicationMapper,
+            IMapper<Contract, ContractEntity> contractToEntityMapper,
+            IMapper<ContractEntity, Contract> entityToContractMapper)
         {
             _cityToEntityMapper = cityToEntityMapper;
             _entityToCityMapper = entityToCityMapper;

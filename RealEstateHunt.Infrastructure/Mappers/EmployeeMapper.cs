@@ -6,18 +6,18 @@ using System.Text;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class EmployeeMapper : ICollectionMapper<Employee, EmployeeEntity>, ICollectionMapper<EmployeeEntity, Employee>
+    public class EmployeeMapper : IMapper<Employee, EmployeeEntity>, IMapper<EmployeeEntity, Employee>
     {
         IMapper<Contact, ContactEntity> _contactToEntityMapper;
         IMapper<ContactEntity, Contact> _entityToContactMapper;
 
-        ICollectionMapper<Contract, ContractEntity> _contractToEntityMapper;
-        ICollectionMapper<ContractEntity, Contract> _entityToContractMapper;
+        IMapper<Contract, ContractEntity> _contractToEntityMapper;
+        IMapper<ContractEntity, Contract> _entityToContractMapper;
 
         public EmployeeMapper(IMapper<Contact, ContactEntity> contactToEntityMapper,
             IMapper<ContactEntity, Contact> entityToContactMapper,
-            ICollectionMapper<Contract, ContractEntity> contractToEntityMapper,
-            ICollectionMapper<ContractEntity, Contract> entityToContractMapper)
+            IMapper<Contract, ContractEntity> contractToEntityMapper,
+            IMapper<ContractEntity, Contract> entityToContractMapper)
         {
             _contactToEntityMapper = contactToEntityMapper;
             _entityToContactMapper = entityToContactMapper;

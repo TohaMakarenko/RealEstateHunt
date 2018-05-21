@@ -8,8 +8,8 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
     public class EmployeeRepository : EfRepository<Employee, EmployeeEntity>, IEmployeeRepository
     {
         public EmployeeRepository(RehDbContext dbContext,
-            ICollectionMapper<Employee, EmployeeEntity> toEntityMapper,
-            ICollectionMapper<EmployeeEntity, Employee> fromEntityMapper)
+            IMapper<Employee, EmployeeEntity> toEntityMapper,
+            IMapper<EmployeeEntity, Employee> fromEntityMapper)
             : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RealEstateHunt.Infrastructure.Mappers
 {
-    public class OfferMapper : ICollectionMapper<Offer, OfferEntity>, ICollectionMapper<OfferEntity, Offer>
+    public class OfferMapper : IMapper<Offer, OfferEntity>, IMapper<OfferEntity, Offer>
     {
         IMapper<Employee, EmployeeEntity> _employeeToEntityMapper;
         IMapper<EmployeeEntity, Employee> _entityToEmployeeMapper;
@@ -14,15 +14,15 @@ namespace RealEstateHunt.Infrastructure.Mappers
         IMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
         IMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
 
-        ICollectionMapper<Contract, ContractEntity> _contractToEntityMapper;
-        ICollectionMapper<ContractEntity, Contract> _entityToContractMapper;
+        IMapper<Contract, ContractEntity> _contractToEntityMapper;
+        IMapper<ContractEntity, Contract> _entityToContractMapper;
 
         public OfferMapper(IMapper<Employee, EmployeeEntity> employeeToEntityMapper,
             IMapper<EmployeeEntity, Employee> entityToEmployeeMapper,
             IMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
             IMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper,
-            ICollectionMapper<Contract, ContractEntity> contractToEntityMapper,
-            ICollectionMapper<ContractEntity, Contract> entityToContractMapper)
+            IMapper<Contract, ContractEntity> contractToEntityMapper,
+            IMapper<ContractEntity, Contract> entityToContractMapper)
         {
             _employeeToEntityMapper = employeeToEntityMapper;
             _entityToEmployeeMapper = entityToEmployeeMapper;
