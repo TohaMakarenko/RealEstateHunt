@@ -4,8 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RealEstateHunt.Infrastructure.Repositories;
 using RealEstateHunt.Infrastructure.Repositories.EfRepositories;
-using RealEstateHunt.Infrastructure.Mappers;
 using RealEstateHunt.Core;
+using AutoMapper;
 
 namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
 {
@@ -13,26 +13,7 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
     {
         private readonly RehDbContext _dbContext;
 
-        private IMapper<City, CityEntity> _cityToEntityMapper;
-        private IMapper<CityEntity, City> _entityToCityMapper;
-        private IMapper<District, DistrictEntity> _districtToEntityMapper;
-        private IMapper<DistrictEntity, District> _entityToDistrictMapper;
-        private IMapper<ContactCommunication, ContactCommunicationEntity> _contactCommunicationToEntityMapper;
-        private IMapper<ContactCommunicationEntity, ContactCommunication> _entityToContactCommunicationMapper;
-        private IMapper<Contract, ContractEntity> _contractToEntityMapper;
-        private IMapper<ContractEntity, Contract> _entityToContractMapper;
-        private IMapper<Contact, ContactEntity> _contactToEntityMapper;
-        private IMapper<ContactEntity, Contact> _entityToContactMapper;
-        private IMapper<Employee, EmployeeEntity> _employeeToEntityMapper;
-        private IMapper<EmployeeEntity, Employee> _entityToEmployeeMapper;
-        private IMapper<Offer, OfferEntity> _offerToEntityMapper;
-        private IMapper<OfferEntity, Offer> _entityToOfferMapper;
-        private IMapper<RealEstate, RealEstateEntity> _realEstateToEntityMapper;
-        private IMapper<RealEstateEntity, RealEstate> _entityToRealEstateMapper;
-        private IMapper<RealEstateType, RealEstateTypeEntity> _realEstateTypeToEntityMapper;
-        private IMapper<RealEstateTypeEntity, RealEstateType> _entityToRealEstateTypeMapper;
-        private IMapper<User, UserEntity> _userToEntityMapper;
-        private IMapper<UserEntity, User> _entityToUserMapper;
+        private IMapper _mapper;
 
         private ICityRepository _cityRepository;
         private IContactCommunicationRepository _contactCommunicationRepository;
@@ -45,90 +26,55 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork.EfUnitOfWork
         private IRealEstateTypeRepository _realEstateTypeRepository;
         private IUserRepository _userRepository;
 
-        public UnitOfWork(RehDbContext dbContext,
-            IMapper<City, CityEntity> cityToEntityMapper,
-            IMapper<CityEntity, City> entityToCityMapper,
-            IMapper<District, DistrictEntity> districtToEntityMapper,
-            IMapper<DistrictEntity, District> entityToDistrictMapper,
-            IMapper<ContactCommunication, ContactCommunicationEntity> contactCommunicationToEntityMapper,
-            IMapper<ContactCommunicationEntity, ContactCommunication> entityToContactCommunicationMapper,
-            IMapper<Contract, ContractEntity> contractToEntityMapper,
-            IMapper<ContractEntity, Contract> entityToContractMapper,
-            IMapper<Contact, ContactEntity> contactToEntityMapper,
-            IMapper<ContactEntity, Contact> entityToContactMapper,
-            IMapper<Employee, EmployeeEntity> employeeToEntityMapper,
-            IMapper<EmployeeEntity, Employee> entityToEmployeeMapper,
-            IMapper<Offer, OfferEntity> offerToEntityMapper,
-            IMapper<OfferEntity, Offer> entityToOfferMapper,
-            IMapper<RealEstate, RealEstateEntity> realEstateToEntityMapper,
-            IMapper<RealEstateEntity, RealEstate> entityToRealEstateMapper,
-            IMapper<RealEstateType, RealEstateTypeEntity> realEstateTypeToEntityMapper,
-            IMapper<RealEstateTypeEntity, RealEstateType> entityToRealEstateTypeMapper,
-            IMapper<User, UserEntity> userToEntityMapper,
-            IMapper<UserEntity, User> entityToUserMapper)
+        public UnitOfWork(RehDbContext dbContext, IMapper mapper)
         {
-            _dbContext = dbContext;
-            _cityToEntityMapper = cityToEntityMapper;
-            _entityToCityMapper = entityToCityMapper;
-            _districtToEntityMapper = districtToEntityMapper;
-            _entityToDistrictMapper = entityToDistrictMapper;
-            _contactCommunicationToEntityMapper = contactCommunicationToEntityMapper;
-            _entityToContactCommunicationMapper = entityToContactCommunicationMapper;
-            _contractToEntityMapper = contractToEntityMapper;
-            _entityToContractMapper = entityToContractMapper;
-            _contactToEntityMapper = contactToEntityMapper;
-            _entityToContactMapper = entityToContactMapper;
-            _employeeToEntityMapper = employeeToEntityMapper;
-            _entityToEmployeeMapper = entityToEmployeeMapper;
-            _offerToEntityMapper = offerToEntityMapper;
-            _entityToOfferMapper = entityToOfferMapper;
-            _realEstateToEntityMapper = realEstateToEntityMapper;
-            _entityToRealEstateMapper = entityToRealEstateMapper;
-            _realEstateTypeToEntityMapper = realEstateTypeToEntityMapper;
-            _entityToRealEstateTypeMapper = entityToRealEstateTypeMapper;
-            _userToEntityMapper = userToEntityMapper;
-            _entityToUserMapper = entityToUserMapper;
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public ICityRepository CityRepository =>
-            _cityRepository ?? (_cityRepository = new CityRepository(_dbContext, _cityToEntityMapper, _entityToCityMapper));
+            _cityRepository ?? (_cityRepository = new CityRepository(_dbContext, _mapper));
 
         public IContactCommunicationRepository ContactCommunicationRepository =>
             _contactCommunicationRepository ?? (_contactCommunicationRepository
-            = new ContactCommunicationRepository(_dbContext, _contactCommunicationToEntityMapper, _entityToContactCommunicationMapper));
+            = new ContactCommunicationRepository(_dbContext, _mapper));
 
         public IContactRepository ContactRepository =>
             _contactRepository ?? (_contactRepository
-            = new ContactRepository(_dbContext, _contactToEntityMapper, _entityToContactMapper));
+            = new ContactRepository(_dbContext, _mapper));
 
         public IContractRepository ContractRepository =>
             _contractRepository ?? (_contractRepository
-            = new ContractRepository(_dbContext, _contractToEntityMapper, _entityToContractMapper));
+            = new ContractRepository(_dbContext, _mapper));
 
         public IDistrictRepository DistrictRepository =>
             _districtRepository ?? (_districtRepository
-            = new DistrictRepository(_dbContext, _districtToEntityMapper, _entityToDistrictMapper));
+            = new DistrictRepository(_dbContext, _mapper));
 
         public IEmployeeRepository EmployeeRepository =>
             _employeeRepository ?? (_employeeRepository
-            = new EmployeeRepository(_dbContext, _employeeToEntityMapper, _entityToEmployeeMapper));
+            = new EmployeeRepository(_dbContext, _mapper));
 
         public IOfferRepository OfferRepository =>
             _offerRepository ?? (_offerRepository
-            = new OfferRepository(_dbContext, _offerToEntityMapper, _entityToOfferMapper));
+            = new OfferRepository(_dbContext, _mapper));
 
         public IRealEstateRepository RealEstateRepository =>
             _realEstateRepository ?? (_realEstateRepository
-            = new RealEstateRepository(_dbContext, _realEstateToEntityMapper, _entityToRealEstateMapper));
+            = new RealEstateRepository(_dbContext, _mapper));
 
         public IRealEstateTypeRepository RealEstateTypeRepository =>
             _realEstateTypeRepository ?? (_realEstateTypeRepository
-            = new RealEstateTypeRepository(_dbContext, _realEstateTypeToEntityMapper, _entityToRealEstateTypeMapper));
+            = new RealEstateTypeRepository(_dbContext, _mapper));
 
         public IUserRepository UserRepository =>
             _userRepository ?? (_userRepository
-            = new UserRepository(_dbContext, _userToEntityMapper, _entityToUserMapper));
-        
+            = new UserRepository(_dbContext, _mapper));
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
 
         public async Task SaveAsync()
         {

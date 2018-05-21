@@ -1,27 +1,24 @@
 ﻿using RealEstateHunt.Core;
 using System.Collections.Generic;
 using System.Linq;
-using RealEstateHunt.Infrastructure.Mappers;
+using AutoMapper;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
     public class DistrictRepository : EfRepository<District, DistrictEntity>, IDistrictRepository
     {
-        public DistrictRepository(RehDbContext dbContext,
-            IMapper<District, DistrictEntity> toEntityMapper,
-            IMapper<DistrictEntity, District> fromEntityMapper)
-            : base(dbContext, toEntityMapper, fromEntityMapper)
+        public DistrictRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
         {
         }
 
         public override IEnumerable<District> GetEntities()
         {
-            return FromEntityMapper.MapCollection(DbContext.Districts);
+            return mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(DbContext.Districts);
         }
 
         public override IEnumerable<District> GetPage(int pageNumber, int pageSize)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
                 DbContext.Districts
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize));
@@ -29,7 +26,7 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 
         public IEnumerable<District> FindByName(string name)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
                 DbContext.Districts
                 .Where(d => d.Name == name));
         }

@@ -1,27 +1,24 @@
 ﻿using RealEstateHunt.Core;
 using System.Collections.Generic;
 using System.Linq;
-using RealEstateHunt.Infrastructure.Mappers;
+using AutoMapper;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
     public class ContactRepository : EfRepository<Contact, ContactEntity>, IContactRepository
     {
-        public ContactRepository(RehDbContext dbContext,
-            IMapper<Contact, ContactEntity> toEntityMapper,
-            IMapper<ContactEntity, Contact> fromEntityMapper)
-            : base(dbContext, toEntityMapper, fromEntityMapper)
+        public ContactRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
         {
         }
 
         public override IEnumerable<Contact> GetEntities()
         {
-            return FromEntityMapper.MapCollection(DbContext.Contacts);
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(DbContext.Contacts);
         }
 
         public override IEnumerable<Contact> GetPage(int pageNumber, int pageSize)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 DbContext.Contacts
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize));
@@ -29,7 +26,7 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 
         public IEnumerable<Contact> FindByFullName(string firstName, string lastName)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 DbContext.Contacts
                 .Where(c =>
                    c.FirstName == firstName &&
@@ -38,7 +35,7 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 
         public IEnumerable<Contact> FindByFullName(string fullName)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 DbContext.Contacts
                 .Where(c =>
                 (c.FirstName + c.LastName) == fullName.Replace(" ", string.Empty)));
@@ -46,7 +43,7 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 
         public IEnumerable<Contact> FindByFullNameLike(string fullNameSubstring)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 DbContext.Contacts
                 .Where(c =>
                 (c.FirstName + c.LastName).Contains(fullNameSubstring.Replace(" ", string.Empty))));

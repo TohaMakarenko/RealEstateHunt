@@ -19,6 +19,7 @@ namespace RealEstateHunt.Infrastructure.UnitOfWork
         IRealEstateTypeRepository RealEstateTypeRepository { get; }
         IUserRepository UserRepository { get; }
 
+        void Save();
         Task SaveAsync();
     }
 }

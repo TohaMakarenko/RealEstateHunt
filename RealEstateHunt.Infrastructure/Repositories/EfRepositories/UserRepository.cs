@@ -1,27 +1,24 @@
 ﻿using RealEstateHunt.Core;
 using System.Collections.Generic;
 using System.Linq;
-using RealEstateHunt.Infrastructure.Mappers;
+using AutoMapper;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
     public class UserRepository : EfRepository<User, UserEntity>, IUserRepository
     {
-        public UserRepository(RehDbContext dbContext,
-            IMapper<User, UserEntity> toEntityMapper,
-            IMapper<UserEntity, User> fromEntityMapper)
-            : base(dbContext, toEntityMapper, fromEntityMapper)
+        public UserRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
         {
         }
 
         public override IEnumerable<User> GetEntities()
         {
-            return FromEntityMapper.MapCollection(DbContext.Users);
+            return mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(DbContext.Users);
         }
 
         public override IEnumerable<User> GetPage(int pageNumber, int pageSize)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
                 DbContext.Users
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize));
@@ -29,7 +26,7 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 
         public IEnumerable<User> FindByName(string name)
         {
-            return FromEntityMapper.MapCollection(
+            return mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
                 DbContext.Users
                 .Where(u => u.Name == name));
         }
