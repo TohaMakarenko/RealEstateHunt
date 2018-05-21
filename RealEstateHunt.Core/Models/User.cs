@@ -7,7 +7,6 @@ namespace RealEstateHunt.Core
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public int ContactId { get; set; }
         public Contact Contact { get; set; }
     }
 }
