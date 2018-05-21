@@ -1,46 +1,55 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class ContactRepository : EfRepository<ContactEntity>, IContactRepository
+    public class ContactRepository : EfRepository<Contact, ContactEntity>, IContactRepository
     {
-        public ContactRepository(RehDbContext dbContext) : base(dbContext)
+        public ContactRepository(RehDbContext dbContext,
+            ICollectionMapper<Contact, ContactEntity> toEntityMapper,
+            ICollectionMapper<ContactEntity, Contact> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<ContactEntity> GetEntities()
+        public override IEnumerable<Contact> GetEntities()
         {
-            return DbContext.Contacts;
+            return FromEntityMapper.MapCollection(DbContext.Contacts);
         }
 
-        public override IEnumerable<ContactEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<Contact> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.Contacts
+            return FromEntityMapper.MapCollection(
+                DbContext.Contacts
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
 
-        public IEnumerable<ContactEntity> FindByFullName(string firstName, string lastName)
+        public IEnumerable<Contact> FindByFullName(string firstName, string lastName)
         {
-            return DbContext.Contacts
+            return FromEntityMapper.MapCollection(
+                DbContext.Contacts
                 .Where(c =>
                    c.FirstName == firstName &&
-                   c.LastName == lastName);
+                   c.LastName == lastName));
         }
 
-        public IEnumerable<ContactEntity> FindByFullName(string fullName)
+        public IEnumerable<Contact> FindByFullName(string fullName)
         {
-            return DbContext.Contacts
+            return FromEntityMapper.MapCollection(
+                DbContext.Contacts
                 .Where(c =>
-                (c.FirstName + c.LastName) == fullName.Replace(" ", string.Empty));
+                (c.FirstName + c.LastName) == fullName.Replace(" ", string.Empty)));
         }
 
-        public IEnumerable<ContactEntity> FindByFullNameLike(string fullNameSubstring)
+        public IEnumerable<Contact> FindByFullNameLike(string fullNameSubstring)
         {
-            return DbContext.Contacts
+            return FromEntityMapper.MapCollection(
+                DbContext.Contacts
                 .Where(c =>
-                (c.FirstName + c.LastName).Contains(fullNameSubstring.Replace(" ", string.Empty)));
+                (c.FirstName + c.LastName).Contains(fullNameSubstring.Replace(" ", string.Empty))));
         }
     }
 }

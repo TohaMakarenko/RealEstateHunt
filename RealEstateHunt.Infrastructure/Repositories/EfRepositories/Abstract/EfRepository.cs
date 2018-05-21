@@ -2,16 +2,26 @@
 using System.Threading.Tasks;
 using RealEstateHunt.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public abstract class EfRepository<T> : IRepository<T> where T : class
+    public abstract class EfRepository<T, TEntity> : IRepository<T>
+        where T : class
+        where TEntity : class
     {
+        protected ICollectionMapper<T, TEntity> ToEntityMapper;
+        protected ICollectionMapper<TEntity, T> FromEntityMapper;
+
         public RehDbContext DbContext { get; protected set; }
 
-        public EfRepository(RehDbContext dbContext)
+        public EfRepository(RehDbContext dbContext,
+            ICollectionMapper<T, TEntity> toEntityMapper,
+            ICollectionMapper<TEntity, T> fromEntityMapper)
         {
             DbContext = dbContext;
+            ToEntityMapper = toEntityMapper;
+            FromEntityMapper = fromEntityMapper;
         }
 
         public void Save()
@@ -30,17 +40,17 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 
         public virtual T FindById(int id)
         {
-            return DbContext.Find<T>(id);
+            return FromEntityMapper.Map(DbContext.Find<TEntity>(id));
         }
 
         public virtual void Add(T entity)
         {
-            DbContext.Add<T>(entity);
+            DbContext.Add<TEntity>(ToEntityMapper.Map(entity));
         }
 
         public virtual void Update(T entity)
         {
-            var entry = DbContext.Entry<T>(entity);
+            var entry = DbContext.Entry<TEntity>(ToEntityMapper.Map(entity));
             if (entry == null)
                 throw new EntityNotFoundException(entity, "Can not update record because it was not found");
             entry.State = EntityState.Modified;
@@ -48,15 +58,15 @@ namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 
         public virtual void Remove(int id)
         {
-            var entity = DbContext.Find<T>(id);
+            var entity = DbContext.Find<TEntity>(id);
             if (entity == null)
                 throw new EntityNotFoundException("Can not remove record because it was not found");
-            DbContext.Remove<T>(entity);
+            DbContext.Remove<TEntity>(entity);
         }
 
         public void Remove(T entity)
         {
-            DbContext.Remove<T>(entity);
+            DbContext.Remove<TEntity>(ToEntityMapper.Map(entity));
         }
     }
 }

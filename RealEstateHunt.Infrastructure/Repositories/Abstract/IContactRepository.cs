@@ -1,13 +1,12 @@
-﻿using System;
+﻿using RealEstateHunt.Core;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RealEstateHunt.Infrastructure.Repositories
 {
-    public interface IContactRepository : IRepository<ContactEntity>
+    public interface IContactRepository : IRepository<Contact>
     {
-        IEnumerable<ContactEntity> FindByFullName(string firstName, string lastName);
-        IEnumerable<ContactEntity> FindByFullName(string fullName);
-        IEnumerable<ContactEntity> FindByFullNameLike(string fullNameSubstring);
+        IEnumerable<Contact> FindByFullName(string firstName, string lastName);
+        IEnumerable<Contact> FindByFullName(string fullName);
+        IEnumerable<Contact> FindByFullNameLike(string fullNameSubstring);
     }
 }

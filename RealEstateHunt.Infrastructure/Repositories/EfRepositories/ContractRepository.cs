@@ -1,24 +1,30 @@
 ﻿using System.Collections.Generic;
+using RealEstateHunt.Core;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class ContractRepository : EfRepository<ContractEntity>, IContractRepository
+    public class ContractRepository : EfRepository<Contract, ContractEntity>, IContractRepository
     {
-        public ContractRepository(RehDbContext dbContext) : base(dbContext)
+        public ContractRepository(RehDbContext dbContext,
+            ICollectionMapper<Contract, ContractEntity> toEntityMapper,
+            ICollectionMapper<ContractEntity, Contract> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<ContractEntity> GetEntities()
+        public override IEnumerable<Contract> GetEntities()
         {
-            return DbContext.Contracts;
+            return FromEntityMapper.MapCollection(DbContext.Contracts);
         }
 
-        public override IEnumerable<ContractEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<Contract> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.Contracts
+            return FromEntityMapper.MapCollection(
+                DbContext.Contracts
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
     }
 }

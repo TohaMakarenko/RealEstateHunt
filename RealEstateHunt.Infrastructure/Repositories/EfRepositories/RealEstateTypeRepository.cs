@@ -1,24 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class RealEstateTypeRepository : EfRepository<RealEstateTypeEntity>, IRealEstateTypeRepository
+    public class RealEstateTypeRepository : EfRepository<RealEstateType, RealEstateTypeEntity>, IRealEstateTypeRepository
     {
-        public RealEstateTypeRepository(RehDbContext dbContext) : base(dbContext)
+        public RealEstateTypeRepository(RehDbContext dbContext,
+            ICollectionMapper<RealEstateType, RealEstateTypeEntity> toEntityMapper,
+            ICollectionMapper<RealEstateTypeEntity, RealEstateType> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<RealEstateTypeEntity> GetEntities()
+        public override IEnumerable<RealEstateType> GetEntities()
         {
-            return DbContext.RealEstateTypes;
+            return FromEntityMapper.MapCollection(DbContext.RealEstateTypes);
         }
 
-        public override IEnumerable<RealEstateTypeEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<RealEstateType> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.RealEstateTypes
+            return FromEntityMapper.MapCollection(
+                DbContext.RealEstateTypes
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
     }
 }

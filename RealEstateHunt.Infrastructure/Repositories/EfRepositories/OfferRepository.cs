@@ -1,24 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class OfferRepository : EfRepository<OfferEntity>, IOfferRepository
+    public class OfferRepository : EfRepository<Offer, OfferEntity>, IOfferRepository
     {
-        public OfferRepository(RehDbContext dbContext) : base(dbContext)
+        public OfferRepository(RehDbContext dbContext,
+            ICollectionMapper<Offer, OfferEntity> toEntityMapper,
+            ICollectionMapper<OfferEntity, Offer> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<OfferEntity> GetEntities()
+        public override IEnumerable<Offer> GetEntities()
         {
-            return DbContext.Offers;
+            return FromEntityMapper.MapCollection(DbContext.Offers);
         }
 
-        public override IEnumerable<OfferEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<Offer> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.Offers
+            return FromEntityMapper.MapCollection(
+                DbContext.Offers
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
     }
 }

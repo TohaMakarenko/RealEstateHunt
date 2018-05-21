@@ -1,24 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class ContactCommunicationRepository : EfRepository<ContactCommunicationEntity>, IContactCommunicationRepository
+    public class ContactCommunicationRepository : EfRepository<ContactCommunication, ContactCommunicationEntity>, IContactCommunicationRepository
     {
-        public ContactCommunicationRepository(RehDbContext dbContext) : base(dbContext)
+        public ContactCommunicationRepository(RehDbContext dbContext,
+            ICollectionMapper<ContactCommunication, ContactCommunicationEntity> toEntityMapper,
+            ICollectionMapper<ContactCommunicationEntity, ContactCommunication> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<ContactCommunicationEntity> GetEntities()
+        public override IEnumerable<ContactCommunication> GetEntities()
         {
-            return DbContext.ContactCommunications;
+            return FromEntityMapper.MapCollection(DbContext.ContactCommunications);
         }
 
-        public override IEnumerable<ContactCommunicationEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<ContactCommunication> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.ContactCommunications
+            return FromEntityMapper.MapCollection(DbContext.ContactCommunications
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
     }
 }

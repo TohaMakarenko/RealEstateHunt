@@ -1,24 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class CityRepository : EfRepository<CityEntity>, ICityRepository
+    public class CityRepository : EfRepository<City, CityEntity>, ICityRepository
     {
-        public CityRepository(RehDbContext dbContext) : base(dbContext)
+        public CityRepository(RehDbContext dbContext,
+            ICollectionMapper<City, CityEntity> toEntityMapper,
+            ICollectionMapper<CityEntity, City> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<CityEntity> GetEntities()
+        public override IEnumerable<City> GetEntities()
         {
-            return DbContext.Cities;
+            return FromEntityMapper.MapCollection(DbContext.Cities);
         }
 
-        public override IEnumerable<CityEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<City> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.Cities
+            return FromEntityMapper.MapCollection(
+                DbContext.Cities
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
     }
 }

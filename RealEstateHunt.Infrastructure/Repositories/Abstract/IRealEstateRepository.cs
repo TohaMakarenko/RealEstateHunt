@@ -1,12 +1,11 @@
-﻿using System;
+﻿using RealEstateHunt.Core;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RealEstateHunt.Infrastructure.Repositories
 {
-    public interface IRealEstateRepository : IRepository<RealEstateEntity>
+    public interface IRealEstateRepository : IRepository<RealEstate>
     {
-        IEnumerable<RealEstateEntity> FindByCityName(string cityName);
-        IEnumerable<RealEstateEntity> FindByCityAndDistrictName(string cityName, string districtName);
+        IEnumerable<RealEstate> FindByCityName(string cityName);
+        IEnumerable<RealEstate> FindByCityAndDistrictName(string cityName, string districtName);
     }
 }

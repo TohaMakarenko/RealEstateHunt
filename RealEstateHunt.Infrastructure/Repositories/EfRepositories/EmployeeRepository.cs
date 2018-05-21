@@ -1,24 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class EmployeeRepository : EfRepository<EmployeeEntity>, IEmployeeRepository
+    public class EmployeeRepository : EfRepository<Employee, EmployeeEntity>, IEmployeeRepository
     {
-        public EmployeeRepository(RehDbContext dbContext) : base(dbContext)
+        public EmployeeRepository(RehDbContext dbContext,
+            ICollectionMapper<Employee, EmployeeEntity> toEntityMapper,
+            ICollectionMapper<EmployeeEntity, Employee> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<EmployeeEntity> GetEntities()
+        public override IEnumerable<Employee> GetEntities()
         {
-            return DbContext.Employees;
+            return FromEntityMapper.MapCollection(DbContext.Employees);
         }
 
-        public override IEnumerable<EmployeeEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<Employee> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.Employees
+            return FromEntityMapper.MapCollection(
+                DbContext.Employees
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
     }
 }

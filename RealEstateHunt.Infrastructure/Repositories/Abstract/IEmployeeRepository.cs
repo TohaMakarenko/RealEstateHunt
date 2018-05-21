@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RealEstateHunt.Core;
 
 namespace RealEstateHunt.Infrastructure.Repositories
 {
-    public interface IEmployeeRepository : IRepository<EmployeeEntity>
+    public interface IEmployeeRepository : IRepository<Employee>
     {
     }
 }

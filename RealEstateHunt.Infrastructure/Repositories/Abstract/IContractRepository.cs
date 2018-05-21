@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RealEstateHunt.Core;
 
 namespace RealEstateHunt.Infrastructure.Repositories
 {
-    public interface IContractRepository : IRepository<ContractEntity>
+    public interface IContractRepository : IRepository<Contract>
     {
     }
 }

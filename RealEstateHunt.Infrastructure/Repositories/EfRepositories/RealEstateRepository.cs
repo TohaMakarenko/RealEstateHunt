@@ -1,37 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class RealEstateRepository : EfRepository<RealEstateEntity>, IRealEstateRepository
+    public class RealEstateRepository : EfRepository<RealEstate, RealEstateEntity>, IRealEstateRepository
     {
-        public RealEstateRepository(RehDbContext dbContext) : base(dbContext)
+        public RealEstateRepository(RehDbContext dbContext,
+            ICollectionMapper<RealEstate, RealEstateEntity> toEntityMapper,
+            ICollectionMapper<RealEstateEntity, RealEstate> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<RealEstateEntity> GetEntities()
+        public override IEnumerable<RealEstate> GetEntities()
         {
-            return DbContext.RealEstates;
+            return FromEntityMapper.MapCollection(DbContext.RealEstates);
         }
 
-        public override IEnumerable<RealEstateEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<RealEstate> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.RealEstates
+            return FromEntityMapper.MapCollection(
+                DbContext.RealEstates
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
 
-        public IEnumerable<RealEstateEntity> FindByCityName(string cityName)
+        public IEnumerable<RealEstate> FindByCityName(string cityName)
         {
-            return DbContext.RealEstates
-                .Where(re => re.City.Name == cityName);
+            return FromEntityMapper.MapCollection(
+                DbContext.RealEstates
+                .Where(re => re.City.Name == cityName));
         }
 
-        public IEnumerable<RealEstateEntity> FindByCityAndDistrictName(string cityName, string districtName)
+        public IEnumerable<RealEstate> FindByCityAndDistrictName(string cityName, string districtName)
         {
-            return DbContext.RealEstates
+            return FromEntityMapper.MapCollection(
+                DbContext.RealEstates
                 .Where(re => re.City.Name == cityName &&
-                re.District.Name == districtName);
+                re.District.Name == districtName));
         }
     }
 }

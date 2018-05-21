@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 
 namespace RealEstateHunt.Infrastructure.Repositories
 {
-    public interface IDistrictRepository : IRepository<DistrictEntity>
+    public interface IDistrictRepository : IRepository<District>
     {
-        IEnumerable<DistrictEntity> FindByName(string name);
+        IEnumerable<District> FindByName(string name);
     }
 }

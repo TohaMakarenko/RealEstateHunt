@@ -1,29 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    public class DistrictRepository : EfRepository<DistrictEntity>, IDistrictRepository
+    public class DistrictRepository : EfRepository<District, DistrictEntity>, IDistrictRepository
     {
-        public DistrictRepository(RehDbContext dbContext) : base(dbContext)
+        public DistrictRepository(RehDbContext dbContext,
+            ICollectionMapper<District, DistrictEntity> toEntityMapper,
+            ICollectionMapper<DistrictEntity, District> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<DistrictEntity> GetEntities()
+        public override IEnumerable<District> GetEntities()
         {
-            return DbContext.Districts;
+            return FromEntityMapper.MapCollection(DbContext.Districts);
         }
 
-        public override IEnumerable<DistrictEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<District> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.Districts
+            return FromEntityMapper.MapCollection(
+                DbContext.Districts
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
 
-        public IEnumerable<DistrictEntity> FindByName(string name)
+        public IEnumerable<District> FindByName(string name)
         {
-            return DbContext.Districts.Where(d => d.Name == name);
+            return FromEntityMapper.MapCollection(
+                DbContext.Districts
+                .Where(d => d.Name == name));
         }
     }
 }

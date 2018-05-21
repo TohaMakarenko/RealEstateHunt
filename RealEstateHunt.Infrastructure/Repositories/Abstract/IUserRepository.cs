@@ -1,11 +1,10 @@
-﻿using System;
+﻿using RealEstateHunt.Core;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RealEstateHunt.Infrastructure.Repositories
 {
-    public interface IUserRepository : IRepository<UserEntity>
+    public interface IUserRepository : IRepository<User>
     {
-        IEnumerable<UserEntity> FindByName(string name);
+        IEnumerable<User> FindByName(string name);
     }
 }

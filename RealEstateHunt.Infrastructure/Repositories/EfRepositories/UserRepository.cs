@@ -1,30 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using RealEstateHunt.Core;
+using System.Collections.Generic;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Mappers;
 
 namespace RealEstateHunt.Infrastructure.Repositories.EfRepositories
 {
-    class UserRepository : EfRepository<UserEntity>, IUserRepository
+    public class UserRepository : EfRepository<User, UserEntity>, IUserRepository
     {
-        public UserRepository(RehDbContext dbContext) : base(dbContext)
+        public UserRepository(RehDbContext dbContext,
+            ICollectionMapper<User, UserEntity> toEntityMapper,
+            ICollectionMapper<UserEntity, User> fromEntityMapper)
+            : base(dbContext, toEntityMapper, fromEntityMapper)
         {
         }
 
-        public override IEnumerable<UserEntity> GetEntities()
+        public override IEnumerable<User> GetEntities()
         {
-            return DbContext.Users;
+            return FromEntityMapper.MapCollection(DbContext.Users);
         }
 
-        public override IEnumerable<UserEntity> GetPage(int pageNumber, int pageSize)
+        public override IEnumerable<User> GetPage(int pageNumber, int pageSize)
         {
-            return DbContext.Users
+            return FromEntityMapper.MapCollection(
+                DbContext.Users
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+                .Take(pageSize));
         }
 
-        public IEnumerable<UserEntity> FindByName(string name)
+        public IEnumerable<User> FindByName(string name)
         {
-            return DbContext.Users
-                .Where(u => u.Name == name);
+            return FromEntityMapper.MapCollection(
+                DbContext.Users
+                .Where(u => u.Name == name));
         }
     }
 }
