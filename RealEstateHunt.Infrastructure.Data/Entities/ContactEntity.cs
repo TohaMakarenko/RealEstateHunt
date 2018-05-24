@@ -38,5 +38,6 @@ namespace RealEstateHunt.Infrastructure.Data
 
         public IEnumerable<ContactCommunicationEntity> ContactCommunications { get; set; }
         public IEnumerable<ContractEntity> Contracts { get; set; }
+        public IEnumerable<OfferEntity> Offers { get; set; }
     }
 }

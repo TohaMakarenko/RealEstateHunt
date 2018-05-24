@@ -17,5 +17,6 @@ namespace RealEstateHunt.Core.Data
 
         public IEnumerable<ContactCommunication> ContactCommunications { get; set; }
         public IEnumerable<Contract> Contracts { get; set; }
+        public IEnumerable<Offer> Offers { get; set; }
     }
 }

@@ -20,6 +20,11 @@ namespace RealEstateHunt.Infrastructure.Data
 
         public EmployeeEntity Manager { get; set; }
 
+        [ForeignKey("Contact")]
+        public int ContactId { get; set; }
+        
+        public ContactEntity Contact { get; set; }
+
         [Column(TypeName = "varchar(max)")]
         public string Description { get; set; }
 

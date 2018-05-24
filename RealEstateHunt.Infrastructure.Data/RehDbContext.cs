@@ -122,6 +122,12 @@ namespace RealEstateHunt.Infrastructure.Data
                 .WithMany(c => c.Offers)
                 .HasForeignKey(c => c.RealEstateId)
                 .OnDelete(DeleteBehavior.SetNull);
+            
+            modelBuilder.Entity<OfferEntity>()
+                .HasOne(d => d.Contact)
+                .WithMany(c => c.Offers)
+                .HasForeignKey(c => c.ContactId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
