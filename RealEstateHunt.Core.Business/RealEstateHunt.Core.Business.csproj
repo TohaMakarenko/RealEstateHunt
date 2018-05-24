@@ -3,10 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UnitOfWork\" />
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\RealEstateHunt.Core.Data\RealEstateHunt.Core.Data.csproj" />
   </ItemGroup>
 </Project>

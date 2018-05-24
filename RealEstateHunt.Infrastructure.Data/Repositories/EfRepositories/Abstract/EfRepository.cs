@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using RealEstateHunt.Core.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using RealEstateHunt.Core.Data;
+using RealEstateHunt.Core.Data.Enums;
 
 namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {
@@ -17,6 +22,28 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public EfRepository(RehDbContext dbContext, IMapper mapper)
         {
             DbContext = dbContext;
+        }
+
+        protected IEnumerable<T> GetOrdered<TKey>(DbSet<TEntity> dbSet, Expression<Func<TEntity, TKey>> keySelector,
+            OrderDirection orderDirection)
+        {
+            return mapper.Map<IQueryable<TEntity>, IEnumerable<T>>(
+                orderDirection == OrderDirection.Asc
+                    ? dbSet.OrderBy(keySelector)
+                    : dbSet.OrderByDescending(keySelector));
+        }
+
+        protected IEnumerable<T> GetOrderedPage<TKey>(DbSet<TEntity> dbSet, Expression<Func<TEntity, TKey>> keySelector,
+            int pageNumber, int pageSize, OrderDirection orderDirection)
+        {
+            var pagableResult = dbSet
+                .Skip(pageNumber * pageSize)
+                .Take(pageSize);
+
+            return mapper.Map<IQueryable<TEntity>, IEnumerable<T>>(
+                orderDirection == OrderDirection.Asc
+                    ? pagableResult.OrderBy(keySelector)
+                    : pagableResult.OrderByDescending(keySelector));
         }
 
         public void Save()
