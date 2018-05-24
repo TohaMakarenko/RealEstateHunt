@@ -37,6 +37,8 @@ namespace RealEstateHunt.Infrastructure.Data
 
         [Column(TypeName = "varchar(max)")]
         public string Description { get; set; }
+        
+        public int Price { get; set; }
 
         public IEnumerable<OfferEntity> Offers { get; set; }
     }

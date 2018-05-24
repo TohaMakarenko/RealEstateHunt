@@ -14,7 +14,7 @@ namespace RealEstateHunt.Core.Data
         public int Floor { get; set; }
         public int Square { get; set; }
         public string Description { get; set; }
-
+        public int Price { get; set; }
         public IEnumerable<Offer> Offers { get; set; }
     }
 }
