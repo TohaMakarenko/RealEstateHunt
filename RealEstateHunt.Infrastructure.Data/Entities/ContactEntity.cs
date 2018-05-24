@@ -35,6 +35,13 @@ namespace RealEstateHunt.Infrastructure.Data
 
         [Column(TypeName = "varchar(50)")]
         public string BankAccountNumber { get; set; }
+        
+        [ForeignKey("PreferredType")]
+        public int PreferredTypeId { get; set; }
+        
+        public RealEstateTypeEntity PreferredType { get; set; }
+        
+        public int PreferredPrice { get; set; }
 
         public IEnumerable<ContactCommunicationEntity> ContactCommunications { get; set; }
         public IEnumerable<ContractEntity> Contracts { get; set; }
