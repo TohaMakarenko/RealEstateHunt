@@ -2,7 +2,7 @@
 
 namespace RealEstateHunt.Infrastructure.Data
 {
-    class EntityNotFoundException : Exception
+    public class EntityNotFoundException : Exception
     {
         public object Entity { get; set; }
         public EntityNotFoundException() : base()

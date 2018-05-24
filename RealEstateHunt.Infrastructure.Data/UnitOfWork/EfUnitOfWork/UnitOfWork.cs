@@ -7,7 +7,7 @@ using RealEstateHunt.Core.Data.UnitOfWork;
 
 namespace RealEstateHunt.Infrastructure.Data.UnitOfWork.EfUnitOfWork
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly RehDbContext _dbContext;
 
