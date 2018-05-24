@@ -11,6 +11,7 @@ namespace RealEstateHunt.Core.Data
         public Contact Contact { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
+        public bool IsDeclined { get; set; }
 
         public IEnumerable<Contract> Contracts { get; set; }
     }

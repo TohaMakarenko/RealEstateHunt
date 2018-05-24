@@ -29,6 +29,8 @@ namespace RealEstateHunt.Infrastructure.Data
         public string Description { get; set; }
 
         public int Price { get; set; }
+        
+        public bool IsDeclined { get; set; }
 
         public IEnumerable<ContractEntity> Contracts { get; set; }
     }
