@@ -14,6 +14,8 @@ namespace RealEstateHunt.Core.Data
         public string Number { get; set; }
         public DateTime BirthDate { get; set; }
         public string BankAccountNumber { get; set; }
+        public RealEstateType PreferredType { get; set; }
+        public int PreferredPrice { get; set; }
 
         public IEnumerable<ContactCommunication> ContactCommunications { get; set; }
         public IEnumerable<Contract> Contracts { get; set; }
