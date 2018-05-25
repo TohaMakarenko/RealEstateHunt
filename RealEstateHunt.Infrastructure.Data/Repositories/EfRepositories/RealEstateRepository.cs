@@ -11,9 +11,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {
     public class RealEstateRepository : EfRepository<RealEstate, RealEstateEntity>, IRealEstateRepository
     {
-        public RealEstateRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
-        {
-        }
+        public RealEstateRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
         public override IEnumerable<RealEstate> GetEntities()
         {
@@ -68,6 +66,20 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             OrderDirection orderDirection)
         {
             return GetOrderedPage(DbContext.RealEstates, re => re.Price, pageNumber, pageSize, orderDirection);
+        }
+
+        public IEnumerable<RealEstate> SearchRealEstates(string keyWord)
+        {
+            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+                DbContext.RealEstates
+                    .Where(re => re.Name.Contains(keyWord)
+                                 || keyWord.Contains(re.Name)
+                                 || re.City.Name.Contains(keyWord)
+                                 || keyWord.Contains(re.City.Name)
+                                 || re.District.Name.Contains(keyWord)
+                                 || keyWord.Contains(re.District.Name)
+                                 || re.Street.Contains(keyWord)
+                                 || keyWord.Contains(re.Street)));
         }
     }
 }

@@ -7,7 +7,10 @@ namespace RealEstateHunt.Core.Data.Repositories
     public interface IContactRepository : IRepository<Contact>
     {
         IEnumerable<Contact> GetClientsOrderByFirstName(OrderDirection orderDirection);
-        IEnumerable<Contact> GetClientsOrderByFirstNamePage(int pageNumber, int pageSize, OrderDirection orderDirection);
+
+        IEnumerable<Contact>
+            GetClientsOrderByFirstNamePage(int pageNumber, int pageSize, OrderDirection orderDirection);
+
         IEnumerable<Contact> GetClientsOrderByLastName(OrderDirection orderDirection);
         IEnumerable<Contact> GetClientsOrderByLastNamePage(int pageNumber, int pageSize, OrderDirection orderDirection);
         IEnumerable<Contact> GetClientsOrderByBankAccountNumber(OrderDirection orderDirection);
@@ -18,5 +21,8 @@ namespace RealEstateHunt.Core.Data.Repositories
         IEnumerable<Contact> FindByFullName(string firstName, string lastName);
         IEnumerable<Contact> FindByFullName(string fullName);
         IEnumerable<Contact> FindByFullNameLike(string fullNameSubstring);
+
+        IEnumerable<Contact> SearchContacts(string keyWord);
+        IEnumerable<Contact> ExtendedSearchContacts(Contact contact);
     }
 }

@@ -87,5 +87,26 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                     .Where(c =>
                         (c.FirstName + c.LastName).Contains(fullNameSubstring.Replace(" ", string.Empty))));
         }
+
+        public IEnumerable<Contact> SearchContacts(string keyWord)
+        {
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+                DbContext.Contacts
+                .Where(c=>c.FirstName.Contains(keyWord)
+                    ||keyWord.Contains(c.FirstName)
+                          || c.LastName.Contains(keyWord)
+                          || keyWord.Contains(c.LastName)
+                          || c.City.Name.Contains(keyWord)
+                          || keyWord.Contains(c.City.Name)
+                          || c.District.Name.Contains(keyWord)
+                          || keyWord.Contains(c.District.Name)
+                          || c.Street.Contains(keyWord)
+                          || keyWord.Contains(c.Street)));
+        }
+
+        public IEnumerable<Contact> ExtendedSearchContacts(Contact contact)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
