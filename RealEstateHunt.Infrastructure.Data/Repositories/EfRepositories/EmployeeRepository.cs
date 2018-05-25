@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using RealEstateHunt.Core.Data.Models;
 using RealEstateHunt.Core.Data.Repositories;
+using RealEstateHunt.Infrastructure.Data.Entities;
 
 namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RealEstateHunt.Infrastructure.Data
+namespace RealEstateHunt.Infrastructure.Data.Entities
 {
     public class ContactEntity
     {

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using RealEstateHunt.Core.Data;
 using RealEstateHunt.Core.Data.Enums;
+using RealEstateHunt.Infrastructure.Data.Exceptions;
 
 namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {

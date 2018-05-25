@@ -11,7 +11,7 @@ namespace RealEstateHunt.Infrastructure.Data.UnitOfWork.EfUnitOfWork
     {
         private readonly RehDbContext _dbContext;
 
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         private ICityRepository _cityRepository;
         private IContactCommunicationRepository _contactCommunicationRepository;

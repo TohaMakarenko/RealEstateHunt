@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RealEstateHunt.Infrastructure.Data
+namespace RealEstateHunt.Infrastructure.Data.Exceptions
 {
     public class EntityNotFoundException : Exception
     {

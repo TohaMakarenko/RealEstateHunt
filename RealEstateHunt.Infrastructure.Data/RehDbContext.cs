@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using RealEstateHunt.Infrastructure.Data.Entities;
 
 namespace RealEstateHunt.Infrastructure.Data
 {
@@ -15,11 +16,6 @@ namespace RealEstateHunt.Infrastructure.Data
         public DbSet<RealEstateEntity> RealEstates { get; set; }
         public DbSet<RealEstateTypeEntity> RealEstateTypes { get; set; }
         public DbSet<UserEntity> Users { get; set; }
-
-        protected RehDbContext()
-        {
-            Database.EnsureCreated();
-        }
 
         public RehDbContext(DbContextOptions options) : base(options)
         {

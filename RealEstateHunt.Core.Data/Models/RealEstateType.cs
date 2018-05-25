@@ -1,5 +1,5 @@
 ﻿
-namespace RealEstateHunt.Core.Data
+namespace RealEstateHunt.Core.Data.Models
 {
     public class RealEstateType
     {

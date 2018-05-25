@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RealEstateHunt.Core.Data;
 using RealEstateHunt.Core.Data.Enums;
+using RealEstateHunt.Core.Data.Models;
 
 namespace RealEstateHunt.Core.Business.Services
 {

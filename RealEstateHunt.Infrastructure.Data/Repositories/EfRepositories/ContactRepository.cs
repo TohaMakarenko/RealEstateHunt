@@ -5,7 +5,9 @@ using System.Threading;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RealEstateHunt.Core.Data.Enums;
+using RealEstateHunt.Core.Data.Models;
 using RealEstateHunt.Core.Data.Repositories;
+using RealEstateHunt.Infrastructure.Data.Entities;
 
 namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {

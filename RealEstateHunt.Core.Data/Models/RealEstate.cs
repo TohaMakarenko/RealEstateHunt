@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RealEstateHunt.Core.Data
+namespace RealEstateHunt.Core.Data.Models
 {
     public class RealEstate
     {
