@@ -9,7 +9,7 @@ namespace RealEstateHunt.Core.Business.Services
     {
         Task<IEnumerable<Contact>> SearchContactsAsync(string keyWord);
         Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord);
-        Task<IEnumerable<RealEstate>> SearchAllAsync(string keyWord);
+        Task<(IEnumerable<RealEstate> realEstates, IEnumerable<Contact> contacts)> SearchAllAsync(string keyWord);
         Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact);
     }
 }
