@@ -16,14 +16,14 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<User>> GetEntitiesAsync()
         {
-            return mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
+            return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
                 await DbContext.Users
                     .ToListAsync());
         }
 
         public override async Task<IEnumerable<User>> GetPageAsync(int pageNumber, int pageSize)
         {
-            return mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
+            return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
                 await DbContext.Users
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
@@ -32,7 +32,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<User>> FindByNameAsync(string name)
         {
-            return mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
+            return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
                 await DbContext.Users
                     .Where(u => u.Name == name)
                     .ToListAsync());

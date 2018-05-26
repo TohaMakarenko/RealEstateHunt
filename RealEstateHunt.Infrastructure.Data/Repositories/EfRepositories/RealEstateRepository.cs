@@ -17,13 +17,13 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<RealEstate>> GetEntitiesAsync()
         {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates.ToListAsync());
         }
 
         public override async Task<IEnumerable<RealEstate>> GetPageAsync(int pageNumber, int pageSize)
         {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
@@ -32,7 +32,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<RealEstate>> FindByCityNameAsync(string cityName)
         {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.City.Name == cityName)
                     .ToListAsync());
@@ -40,7 +40,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<RealEstate>> FindByCityAndDistrictNameAsync(string cityName, string districtName)
         {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.City.Name == cityName &&
                                  re.District.Name == districtName)
@@ -49,7 +49,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType)
         {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.TypeId == realEstateType.Id)
                     .ToListAsync());
@@ -59,7 +59,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             int pageNumber,
             int pageSize)
         {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.TypeId == realEstateType.Id)
                     .Skip(pageNumber * pageSize)
@@ -80,7 +80,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord)
         {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.Name.Contains(keyWord)
                                  || keyWord.Contains(re.Name)

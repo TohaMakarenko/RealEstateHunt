@@ -16,13 +16,13 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<Contract>> GetEntitiesAsync()
         {
-            return mapper.Map<IEnumerable<ContractEntity>, IEnumerable<Contract>>(
+            return Mapper.Map<IEnumerable<ContractEntity>, IEnumerable<Contract>>(
                 await DbContext.Contracts.ToListAsync());
         }
 
         public override async Task<IEnumerable<Contract>> GetPageAsync(int pageNumber, int pageSize)
         {
-            return mapper.Map<IEnumerable<ContractEntity>, IEnumerable<Contract>>(
+            return Mapper.Map<IEnumerable<ContractEntity>, IEnumerable<Contract>>(
                 await DbContext.Contracts
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)

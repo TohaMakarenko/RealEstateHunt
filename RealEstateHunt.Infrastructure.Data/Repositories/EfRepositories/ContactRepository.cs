@@ -18,13 +18,13 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<Contact>> GetEntitiesAsync()
         {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts.ToListAsync());
         }
 
         public override async Task<IEnumerable<Contact>> GetPageAsync(int pageNumber, int pageSize)
         {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
@@ -67,7 +67,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> FindByFullNameAsync(string firstName, string lastName)
         {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c =>
                         c.FirstName == firstName &&
@@ -77,7 +77,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> FindByFullNameAsync(string fullName)
         {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c =>
                         (c.FirstName + c.LastName) == fullName.Replace(" ", string.Empty))
@@ -86,7 +86,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> FindByFullNameLikeAsync(string fullNameSubstring)
         {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c =>
                         (c.FirstName + c.LastName)
@@ -96,7 +96,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> SearchContactsAsync(string keyWord)
         {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c => c.FirstName.Contains(keyWord)
                                 || keyWord.Contains(c.FirstName)
@@ -113,7 +113,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact)
         {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c => contact.Id != 0 && c.Id == contact.Id
                                 || !string.IsNullOrEmpty(contact.FirstName) && c.FirstName.Contains(contact.FirstName)

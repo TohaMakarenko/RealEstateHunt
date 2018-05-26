@@ -17,14 +17,14 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<ContactCommunication>> GetEntitiesAsync()
         {
-            return mapper.Map<IEnumerable<ContactCommunicationEntity>, IEnumerable<ContactCommunication>>(
+            return Mapper.Map<IEnumerable<ContactCommunicationEntity>, IEnumerable<ContactCommunication>>(
                 await DbContext.ContactCommunications
                     .ToListAsync());
         }
 
         public override async Task<IEnumerable<ContactCommunication>> GetPageAsync(int pageNumber, int pageSize)
         {
-            return mapper.Map<IEnumerable<ContactCommunicationEntity>, IEnumerable<ContactCommunication>>(
+            return Mapper.Map<IEnumerable<ContactCommunicationEntity>, IEnumerable<ContactCommunication>>(
                 await DbContext
                     .ContactCommunications
                     .Skip(pageNumber * pageSize)

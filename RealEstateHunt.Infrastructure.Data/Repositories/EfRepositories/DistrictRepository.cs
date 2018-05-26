@@ -16,13 +16,13 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<District>> GetEntitiesAsync()
         {
-            return mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
+            return Mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
                 await DbContext.Districts.ToListAsync());
         }
 
         public override async Task<IEnumerable<District>> GetPageAsync(int pageNumber, int pageSize)
         {
-            return mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
+            return Mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
                 await DbContext.Districts
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
@@ -31,7 +31,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<District>> FindByNameAsync(string name)
         {
-            return mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
+            return Mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
                 await DbContext.Districts
                     .Where(d => d.Name == name)
                     .ToArrayAsync());

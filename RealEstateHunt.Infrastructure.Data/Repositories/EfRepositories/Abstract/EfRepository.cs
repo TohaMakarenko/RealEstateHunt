@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using RealEstateHunt.Core.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using RealEstateHunt.Core.Data;
 using RealEstateHunt.Core.Data.Enums;
 using RealEstateHunt.Core.Data.Exceptions;
 
@@ -16,20 +15,21 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         where T : class
         where TEntity : class
     {
-        protected IMapper mapper;
+        protected readonly IMapper Mapper;
 
-        public RehDbContext DbContext { get; protected set; }
+        protected RehDbContext DbContext { get; set; }
 
-        public EfRepository(RehDbContext dbContext, IMapper mapper)
+        protected EfRepository(RehDbContext dbContext, IMapper mapper)
         {
             DbContext = dbContext;
+            Mapper = mapper;
         }
 
         protected virtual async Task<IEnumerable<T>> GetOrderedAsync<TKey>(DbSet<TEntity> dbSet,
             Expression<Func<TEntity, TKey>> keySelector,
             OrderDirection orderDirection)
         {
-            return mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(
+            return Mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(
                 orderDirection == OrderDirection.Asc
                     ? await dbSet.OrderBy(keySelector).ToListAsync()
                     : await dbSet.OrderByDescending(keySelector).ToListAsync());
@@ -43,7 +43,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize);
 
-            return mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(
+            return Mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(
                 orderDirection == OrderDirection.Asc
                     ? await pagableResult.OrderBy(keySelector).ToListAsync()
                     : await pagableResult.OrderByDescending(keySelector).ToListAsync());
@@ -65,17 +65,17 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public virtual async Task<T> FindByIdAsync(int id)
         {
-            return mapper.Map<TEntity, T>(await DbContext.FindAsync<TEntity>(id));
+            return Mapper.Map<TEntity, T>(await DbContext.FindAsync<TEntity>(id));
         }
 
         public virtual void Add(T entity)
         {
-            DbContext.Add<TEntity>(mapper.Map<T, TEntity>(entity));
+            DbContext.Add<TEntity>(Mapper.Map<T, TEntity>(entity));
         }
 
         public virtual void Update(T entity)
         {
-            var entry = DbContext.Entry<TEntity>(mapper.Map<T, TEntity>(entity));
+            var entry = DbContext.Entry<TEntity>(Mapper.Map<T, TEntity>(entity));
             if (entry == null)
                 throw new EntityNotFoundException(entity, "Can not update record because it was not found");
             entry.State = EntityState.Modified;
@@ -91,7 +91,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public void Remove(T entity)
         {
-            DbContext.Remove<TEntity>(mapper.Map<T, TEntity>(entity));
+            DbContext.Remove<TEntity>(Mapper.Map<T, TEntity>(entity));
         }
     }
 }
