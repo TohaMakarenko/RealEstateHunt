@@ -56,27 +56,38 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                     .ToListAsync());
         }
 
-        public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType)
+        public Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType)
         {
-            if (realEstateType == null) throw new ArgumentNullException(nameof(realEstateType));
+            return GetRealEstatesByTypeAsync(realEstateType.Id);
+        }
+
+        public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(int realEstateTypeId)
+        {
+            if (realEstateTypeId <= 0) throw new ArgumentOutOfRangeException(nameof(realEstateTypeId));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
-                    .Where(re => re.TypeId == realEstateType.Id)
+                    .Where(re => re.TypeId == realEstateTypeId)
                     .ToListAsync());
         }
 
-        public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(RealEstateType realEstateType,
+        public Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(RealEstateType realEstateType,
             int pageNumber,
+            int pageSize)
+        {
+            if (realEstateType == null) throw new ArgumentNullException(nameof(realEstateType));
+            return GetRealEstatesByTypePageAsync(realEstateType.Id, pageNumber, pageSize);
+        }
+
+        public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(int realEstateTypeId, int pageNumber,
             int pageSize)
         {
             if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
-            if (realEstateType == null) throw new ArgumentNullException(nameof(realEstateType));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
-                    .Where(re => re.TypeId == realEstateType.Id)
+                    .Where(re => re.TypeId == realEstateTypeId)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());

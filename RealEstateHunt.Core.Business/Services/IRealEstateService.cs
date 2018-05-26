@@ -12,7 +12,7 @@ namespace RealEstateHunt.Core.Business.Services
         Task RemoveRealEstateAsync(int id);
         Task RemoveRealEstateAsync(RealEstate realEstate);
         Task EditRealEstateAsync(RealEstate realEstate);
-        Task GetRealEstateAsync(RealEstate realEstate);
+        Task GetRealEstateAsync(int id);
         Task<IEnumerable<RealEstate>> GetRealEstatesAsync();
         Task<IEnumerable<RealEstate>> GetRealEstatesPageAsync(int pageNumber, int pageSize);
         Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType);

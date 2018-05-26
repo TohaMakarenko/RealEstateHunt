@@ -11,7 +11,9 @@ namespace RealEstateHunt.Core.Data.Repositories
         Task<IEnumerable<RealEstate>> FindByCityAndDistrictNameAsync(string cityName, string districtName);
 
         Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType);
+        Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(int realEstateTypeId);
         Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(RealEstateType realEstateType, int pageNumber, int pageSize);
+        Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(int realEstateTypeId, int pageNumber, int pageSize);
         Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPriceAsync(OrderDirection orderDirection);
 
         Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPricePageAsync(int pageNumber, int pageSize,
