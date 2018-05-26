@@ -1,7 +1,9 @@
 ﻿using RealEstateHunt.Core.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RealEstateHunt.Core.Data.Models;
 using RealEstateHunt.Core.Data.Repositories;
 using RealEstateHunt.Infrastructure.Data.Entities;
@@ -14,17 +16,18 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         {
         }
 
-        public override IEnumerable<City> GetEntities()
+        public override async Task<IEnumerable<City>> GetEntitiesAsync()
         {
-            return mapper.Map<IEnumerable<CityEntity>, IEnumerable<City>>(DbContext.Cities);
+            return mapper.Map<IEnumerable<CityEntity>, IEnumerable<City>>(await DbContext.Cities.ToListAsync());
         }
 
-        public override IEnumerable<City> GetPage(int pageNumber, int pageSize)
+        public override async Task<IEnumerable<City>> GetPageAsync(int pageNumber, int pageSize)
         {
             return mapper.Map<IEnumerable<CityEntity>, IEnumerable<City>>(
-                DbContext.Cities
+                await DbContext.Cities
                 .Skip(pageNumber * pageSize)
-                .Take(pageSize));
+                .Take(pageSize)
+                .ToListAsync());
         }
     }
 }

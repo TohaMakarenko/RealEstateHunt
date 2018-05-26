@@ -32,6 +32,6 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         
         public bool IsDeclined { get; set; }
 
-        public IEnumerable<ContractEntity> Contracts { get; set; }
+        public ICollection<ContractEntity> Contracts { get; set; }
     }
 }

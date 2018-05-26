@@ -1,86 +1,96 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using RealEstateHunt.Core.Business.Services;
 using RealEstateHunt.Core.Data.Enums;
 using RealEstateHunt.Core.Data.Models;
 using RealEstateHunt.Core.Data.Repositories;
+using RealEstateHunt.Core.Data.UnitOfWork;
 
 namespace RealEstateHunt.Infrastructure.Business.Services
 {
     public class ClientService : IClientService
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ClientService(IContactRepository contactRepository)
+        public ClientService(IUnitOfWork unitOfWork)
         {
-            _contactRepository = contactRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public void AddClient(Contact contact)
+
+        public Task AddClientAsync(Contact contact)
         {
-            _contactRepository.Add(contact);
+            _unitOfWork.ContactRepository.Add(contact);
+            return _unitOfWork.SaveAsync();
         }
 
-        public void RemoveClient(int id)
+        public Task RemoveClientAsync(int id)
         {
-            _contactRepository.Remove(id);
+            _unitOfWork.ContactRepository.Remove(id);
+            return _unitOfWork.SaveAsync();
         }
 
-        public void RemoveClient(Contact client)
+        public Task RemoveClientAsync(Contact client)
         {
-            _contactRepository.Remove(client);
+            _unitOfWork.ContactRepository.Remove(client);
+            return _unitOfWork.SaveAsync();
         }
 
-        public void EditClient(Contact client)
+        public Task EditClient(Contact client)
         {
-            _contactRepository.Update(client);
+            _unitOfWork.ContactRepository.Update(client);
+            return _unitOfWork.SaveAsync();
         }
 
-        public Contact GetClient(int id)
+        public Task<Contact> GetClientAsync(int id)
         {
-            return _contactRepository.FindById(id);
+            return _unitOfWork.ContactRepository.FindByIdAsync(id);
         }
 
-        public IEnumerable<Contact> GetClients()
+        public Task<IEnumerable<Contact>> GetClientsAsync()
         {
-            return _contactRepository.GetEntities();
+            return _unitOfWork.ContactRepository.GetEntitiesAsync();
         }
 
-        public IEnumerable<Contact> GetClientsPage(int pageNumber, int pageSize)
+        public Task<IEnumerable<Contact>> GetClientsPageAsync(int pageNumber, int pageSize)
         {
-            return _contactRepository.GetPage(pageNumber, pageSize);
+            return _unitOfWork.ContactRepository.GetPageAsync(pageNumber, pageSize);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByFirstName(OrderDirection orderDirection)
+        public Task<IEnumerable<Contact>> GetClientsOrderByFirstNameAsync(OrderDirection orderDirection)
         {
-            return _contactRepository.GetClientsOrderByFirstName(orderDirection);
+            return _unitOfWork.ContactRepository.GetClientsOrderByFirstNameAsync(orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByFirstNamePage(int pageNumber, int pageSize,
+        public Task<IEnumerable<Contact>> GetClientsOrderByFirstNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            return _contactRepository.GetClientsOrderByFirstNamePage(pageNumber, pageSize, orderDirection);
+            return _unitOfWork.ContactRepository.GetClientsOrderByFirstNamePageAsync(pageNumber, pageSize,
+                orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByLastName(OrderDirection orderDirection)
+        public Task<IEnumerable<Contact>> GetClientsOrderByLastNameAsync(OrderDirection orderDirection)
         {
-            return _contactRepository.GetClientsOrderByLastName(orderDirection);
+            return _unitOfWork.ContactRepository.GetClientsOrderByLastNameAsync(orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByLastNamePage(int pageNumber, int pageSize,
+        public Task<IEnumerable<Contact>> GetClientsOrderByLastNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            return _contactRepository.GetClientsOrderByLastNamePage(pageNumber, pageSize, orderDirection);
+            return _unitOfWork.ContactRepository.GetClientsOrderByLastNamePageAsync(pageNumber, pageSize,
+                orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByBankAccountNumber(OrderDirection orderDirection)
+        public Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberAsync(OrderDirection orderDirection)
         {
-            return _contactRepository.GetClientsOrderByBankAccountNumber(orderDirection);
+            return _unitOfWork.ContactRepository.GetClientsOrderByBankAccountNumberAsync(orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByBankAccountNumberPage(int pageNumber, int pageSize,
-            OrderDirection orderDirection)
+        public Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberPageAsync(int pageNumber,
+            int pageSize, OrderDirection orderDirection)
         {
-            return _contactRepository.GetClientsOrderByBankAccountNumberPage(pageNumber, pageSize, orderDirection);
+            return _unitOfWork.ContactRepository.GetClientsOrderByBankAccountNumberPageAsync(pageNumber, pageSize,
+                orderDirection);
         }
     }
 }

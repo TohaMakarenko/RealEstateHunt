@@ -10,8 +10,8 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         [Column(TypeName = "varchar(100)")]
         public string Name { get; set; }
 
-        public IEnumerable<DistrictEntity> Districts { get; set; }
-        public IEnumerable<ContactEntity> Contacts { get; set; }
-        public IEnumerable<RealEstateEntity> RealEstates { get; set; }
+        public ICollection<DistrictEntity> Districts { get; set; }
+        public ICollection<ContactEntity> Contacts { get; set; }
+        public ICollection<RealEstateEntity> RealEstates { get; set; }
     }
 }

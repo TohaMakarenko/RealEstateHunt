@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using RealEstateHunt.Core.Data.Models;
 
 namespace RealEstateHunt.Core.Data.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        IEnumerable<User> FindByName(string name);
+        Task<IEnumerable<User>> FindByNameAsync(string name);
     }
 }

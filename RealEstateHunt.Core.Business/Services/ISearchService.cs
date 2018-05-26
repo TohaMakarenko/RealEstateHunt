@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using RealEstateHunt.Core.Data;
 using RealEstateHunt.Core.Data.Models;
 
@@ -6,9 +7,9 @@ namespace RealEstateHunt.Core.Business.Services
 {
     public interface ISearchService
     {
-        IEnumerable<Contact> SearchContacts(string keyWord);
-        IEnumerable<RealEstate> SearchRealEstates(string keyWord);
-        IEnumerable<RealEstate> SearchAll(string keyWord);
-        IEnumerable<Contact> ExtendedSearchContacts(Contact contact);
+        Task<IEnumerable<Contact>> SearchContactsAsync(string keyWord);
+        Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord);
+        Task<IEnumerable<RealEstate>> SearchAllAsync(string keyWord);
+        Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact);
     }
 }

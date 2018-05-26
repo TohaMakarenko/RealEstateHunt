@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RealEstateHunt.Core.Data.Enums;
@@ -13,100 +14,116 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 {
     public class ContactRepository : EfRepository<Contact, ContactEntity>, IContactRepository
     {
-        public ContactRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
-        {
-        }
+        public ContactRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
-        public override IEnumerable<Contact> GetEntities()
-        {
-            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(DbContext.Contacts);
-        }
-
-        public override IEnumerable<Contact> GetPage(int pageNumber, int pageSize)
+        public override async Task<IEnumerable<Contact>> GetEntitiesAsync()
         {
             return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
-                DbContext.Contacts
+                await DbContext.Contacts.ToListAsync());
+        }
+
+        public override async Task<IEnumerable<Contact>> GetPageAsync(int pageNumber, int pageSize)
+        {
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+                await DbContext.Contacts
                     .Skip(pageNumber * pageSize)
-                    .Take(pageSize));
+                    .Take(pageSize)
+                    .ToListAsync());
         }
 
-        public IEnumerable<Contact> GetClientsOrderByFirstName(OrderDirection orderDirection)
+        public Task<IEnumerable<Contact>> GetClientsOrderByFirstNameAsync(OrderDirection orderDirection)
         {
-            return GetOrdered(DbContext.Contacts, c => c.FirstName, orderDirection);
+            return GetOrderedAsync(DbContext.Contacts, c => c.FirstName, orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByFirstNamePage(int pageNumber, int pageSize,
+        public Task<IEnumerable<Contact>> GetClientsOrderByFirstNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            return GetOrderedPage(DbContext.Contacts, c => c.FirstName, pageNumber, pageSize, orderDirection);
+            return GetOrderedPageAsync(DbContext.Contacts, c => c.FirstName, pageNumber, pageSize, orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByLastName(OrderDirection orderDirection)
+        public Task<IEnumerable<Contact>> GetClientsOrderByLastNameAsync(OrderDirection orderDirection)
         {
-            return GetOrdered(DbContext.Contacts, c => c.LastName, orderDirection);
+            return GetOrderedAsync(DbContext.Contacts, c => c.LastName, orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByLastNamePage(int pageNumber, int pageSize,
+        public Task<IEnumerable<Contact>> GetClientsOrderByLastNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            return GetOrderedPage(DbContext.Contacts, c => c.LastName, pageNumber, pageSize, orderDirection);
+            return GetOrderedPageAsync(DbContext.Contacts, c => c.LastName, pageNumber, pageSize, orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByBankAccountNumber(OrderDirection orderDirection)
+        public Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberAsync(OrderDirection orderDirection)
         {
-            return GetOrdered(DbContext.Contacts, c => c.BankAccountNumber, orderDirection);
+            return GetOrderedAsync(DbContext.Contacts, c => c.BankAccountNumber, orderDirection);
         }
 
-        public IEnumerable<Contact> GetClientsOrderByBankAccountNumberPage(int pageNumber, int pageSize,
+        public Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberPageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            return GetOrderedPage(DbContext.Contacts, c => c.BankAccountNumber, pageNumber, pageSize, orderDirection);
+            return GetOrderedPageAsync(DbContext.Contacts, c => c.BankAccountNumber, pageNumber, pageSize,
+                orderDirection);
         }
 
-        public IEnumerable<Contact> FindByFullName(string firstName, string lastName)
+        public async Task<IEnumerable<Contact>> FindByFullNameAsync(string firstName, string lastName)
         {
             return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
-                DbContext.Contacts
+                await DbContext.Contacts
                     .Where(c =>
                         c.FirstName == firstName &&
-                        c.LastName == lastName));
+                        c.LastName == lastName)
+                    .ToListAsync());
         }
 
-        public IEnumerable<Contact> FindByFullName(string fullName)
+        public async Task<IEnumerable<Contact>> FindByFullNameAsync(string fullName)
         {
             return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
-                DbContext.Contacts
+                await DbContext.Contacts
                     .Where(c =>
-                        (c.FirstName + c.LastName) == fullName.Replace(" ", string.Empty)));
+                        (c.FirstName + c.LastName) == fullName.Replace(" ", string.Empty))
+                    .ToListAsync());
         }
 
-        public IEnumerable<Contact> FindByFullNameLike(string fullNameSubstring)
+        public async Task<IEnumerable<Contact>> FindByFullNameLikeAsync(string fullNameSubstring)
         {
             return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
-                DbContext.Contacts
+                await DbContext.Contacts
                     .Where(c =>
-                        (c.FirstName + c.LastName).Contains(fullNameSubstring.Replace(" ", string.Empty))));
+                        (c.FirstName + c.LastName)
+                        .Contains(fullNameSubstring.Replace(" ", string.Empty)))
+                    .ToListAsync());
         }
 
-        public IEnumerable<Contact> SearchContacts(string keyWord)
+        public async Task<IEnumerable<Contact>> SearchContactsAsync(string keyWord)
         {
             return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
-                DbContext.Contacts
-                .Where(c=>c.FirstName.Contains(keyWord)
-                    ||keyWord.Contains(c.FirstName)
-                          || c.LastName.Contains(keyWord)
-                          || keyWord.Contains(c.LastName)
-                          || c.City.Name.Contains(keyWord)
-                          || keyWord.Contains(c.City.Name)
-                          || c.District.Name.Contains(keyWord)
-                          || keyWord.Contains(c.District.Name)
-                          || c.Street.Contains(keyWord)
-                          || keyWord.Contains(c.Street)));
+                await DbContext.Contacts
+                    .Where(c => c.FirstName.Contains(keyWord)
+                                || keyWord.Contains(c.FirstName)
+                                || c.LastName.Contains(keyWord)
+                                || keyWord.Contains(c.LastName)
+                                || c.City.Name.Contains(keyWord)
+                                || keyWord.Contains(c.City.Name)
+                                || c.District.Name.Contains(keyWord)
+                                || keyWord.Contains(c.District.Name)
+                                || c.Street.Contains(keyWord)
+                                || keyWord.Contains(c.Street))
+                    .ToListAsync());
         }
 
-        public IEnumerable<Contact> ExtendedSearchContacts(Contact contact)
+        public async Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact)
         {
-            throw new System.NotImplementedException();
+            return mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+                await DbContext.Contacts
+                    .Where(c => contact.Id != 0 && c.Id == contact.Id
+                                || !string.IsNullOrEmpty(contact.FirstName) && c.FirstName.Contains(contact.FirstName)
+                                || !string.IsNullOrEmpty(contact.LastName) && c.LastName.Contains(contact.LastName)
+                                || contact.City != null && contact.City.Id < c.CityId
+                                || contact.District != null && contact.District.Id < c.DistrictId
+                                || !string.IsNullOrEmpty(contact.Street) && c.Street.Contains(contact.Street)
+                                || contact.PreferredPrice != 0 && contact.PreferredPrice < c.PreferredPrice
+                                || contact.PreferredType != null && contact.PreferredType.Id == c.PreferredTypeId)
+                    .ToListAsync());
         }
     }
 }

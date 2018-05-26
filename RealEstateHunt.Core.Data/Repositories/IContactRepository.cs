@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using RealEstateHunt.Core.Data.Enums;
 using RealEstateHunt.Core.Data.Models;
 
@@ -6,23 +7,23 @@ namespace RealEstateHunt.Core.Data.Repositories
 {
     public interface IContactRepository : IRepository<Contact>
     {
-        IEnumerable<Contact> GetClientsOrderByFirstName(OrderDirection orderDirection);
+        Task<IEnumerable<Contact>> GetClientsOrderByFirstNameAsync(OrderDirection orderDirection);
 
-        IEnumerable<Contact>
-            GetClientsOrderByFirstNamePage(int pageNumber, int pageSize, OrderDirection orderDirection);
+        Task<IEnumerable<Contact>>
+            GetClientsOrderByFirstNamePageAsync(int pageNumber, int pageSize, OrderDirection orderDirection);
 
-        IEnumerable<Contact> GetClientsOrderByLastName(OrderDirection orderDirection);
-        IEnumerable<Contact> GetClientsOrderByLastNamePage(int pageNumber, int pageSize, OrderDirection orderDirection);
-        IEnumerable<Contact> GetClientsOrderByBankAccountNumber(OrderDirection orderDirection);
+        Task<IEnumerable<Contact>> GetClientsOrderByLastNameAsync(OrderDirection orderDirection);
+        Task<IEnumerable<Contact>> GetClientsOrderByLastNamePageAsync(int pageNumber, int pageSize, OrderDirection orderDirection);
+        Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberAsync(OrderDirection orderDirection);
 
-        IEnumerable<Contact> GetClientsOrderByBankAccountNumberPage(int pageNumber, int pageSize,
+        Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberPageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection);
 
-        IEnumerable<Contact> FindByFullName(string firstName, string lastName);
-        IEnumerable<Contact> FindByFullName(string fullName);
-        IEnumerable<Contact> FindByFullNameLike(string fullNameSubstring);
+        Task<IEnumerable<Contact>> FindByFullNameAsync(string firstName, string lastName);
+        Task<IEnumerable<Contact>> FindByFullNameAsync(string fullName);
+        Task<IEnumerable<Contact>> FindByFullNameLikeAsync(string fullNameSubstring);
 
-        IEnumerable<Contact> SearchContacts(string keyWord);
-        IEnumerable<Contact> ExtendedSearchContacts(Contact contact);
+        Task<IEnumerable<Contact>> SearchContactsAsync(string keyWord);
+        Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact);
     }
 }

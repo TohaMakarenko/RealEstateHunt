@@ -15,7 +15,7 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
 
         public CityEntity City { get; set; }
 
-        public IEnumerable<ContactEntity> Contacts { get; set; }
-        public IEnumerable<RealEstateEntity> RealEstates { get; set; }
+        public ICollection<ContactEntity> Contacts { get; set; }
+        public ICollection<RealEstateEntity> RealEstates { get; set; }
     }
 }

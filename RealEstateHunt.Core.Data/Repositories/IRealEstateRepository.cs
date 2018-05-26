@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using RealEstateHunt.Core.Data.Enums;
 using RealEstateHunt.Core.Data.Models;
 
@@ -6,16 +7,16 @@ namespace RealEstateHunt.Core.Data.Repositories
 {
     public interface IRealEstateRepository : IRepository<RealEstate>
     {
-        IEnumerable<RealEstate> FindByCityName(string cityName);
-        IEnumerable<RealEstate> FindByCityAndDistrictName(string cityName, string districtName);
+        Task<IEnumerable<RealEstate>> FindByCityNameAsync(string cityName);
+        Task<IEnumerable<RealEstate>> FindByCityAndDistrictNameAsync(string cityName, string districtName);
 
-        IEnumerable<RealEstate> GetRealEstatesByType(RealEstateType realEstateType);
-        IEnumerable<RealEstate> GetRealEstatesByTypePage(RealEstateType realEstateType, int pageNumber, int pageSize);
-        IEnumerable<RealEstate> GetRealEstatesOrderByPrice(OrderDirection orderDirection);
+        Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType);
+        Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(RealEstateType realEstateType, int pageNumber, int pageSize);
+        Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPriceAsync(OrderDirection orderDirection);
 
-        IEnumerable<RealEstate> GetRealEstatesOrderByPricePage(int pageNumber, int pageSize,
+        Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPricePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection);
 
-        IEnumerable<RealEstate> SearchRealEstates(string keyWord);
+        Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord);
     }
 }

@@ -43,8 +43,8 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         
         public int PreferredPrice { get; set; }
 
-        public IEnumerable<ContactCommunicationEntity> ContactCommunications { get; set; }
-        public IEnumerable<ContractEntity> Contracts { get; set; }
-        public IEnumerable<OfferEntity> Offers { get; set; }
+        public ICollection<ContactCommunicationEntity> ContactCommunications { get; set; }
+        public ICollection<ContractEntity> Contracts { get; set; }
+        public ICollection<OfferEntity> Offers { get; set; }
     }
 }

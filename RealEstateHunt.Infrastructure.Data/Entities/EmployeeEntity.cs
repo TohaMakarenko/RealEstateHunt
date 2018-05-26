@@ -12,6 +12,6 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
 
         public ContactEntity Contact { get; set; }
 
-        public IEnumerable<ContractEntity> Contracts { get; set; }
+        public ICollection<ContractEntity> Contracts { get; set; }
     }
 }

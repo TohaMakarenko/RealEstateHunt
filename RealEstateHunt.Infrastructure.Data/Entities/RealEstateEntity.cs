@@ -40,6 +40,6 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         
         public int Price { get; set; }
 
-        public IEnumerable<OfferEntity> Offers { get; set; }
+        public ICollection<OfferEntity> Offers { get; set; }
     }
 }

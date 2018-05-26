@@ -1,7 +1,9 @@
 ﻿using RealEstateHunt.Core.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RealEstateHunt.Core.Data.Enums;
 using RealEstateHunt.Core.Data.Models;
 using RealEstateHunt.Core.Data.Repositories;
@@ -13,65 +15,73 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
     {
         public RealEstateRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
-        public override IEnumerable<RealEstate> GetEntities()
-        {
-            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(DbContext.RealEstates);
-        }
-
-        public override IEnumerable<RealEstate> GetPage(int pageNumber, int pageSize)
+        public override async Task<IEnumerable<RealEstate>> GetEntitiesAsync()
         {
             return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                DbContext.RealEstates
+                await DbContext.RealEstates.ToListAsync());
+        }
+
+        public override async Task<IEnumerable<RealEstate>> GetPageAsync(int pageNumber, int pageSize)
+        {
+            return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+                await DbContext.RealEstates
                     .Skip(pageNumber * pageSize)
-                    .Take(pageSize));
+                    .Take(pageSize)
+                    .ToListAsync());
         }
 
-        public IEnumerable<RealEstate> FindByCityName(string cityName)
+        public async Task<IEnumerable<RealEstate>> FindByCityNameAsync(string cityName)
         {
             return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                DbContext.RealEstates
-                    .Where(re => re.City.Name == cityName));
+                await DbContext.RealEstates
+                    .Where(re => re.City.Name == cityName)
+                    .ToListAsync());
         }
 
-        public IEnumerable<RealEstate> FindByCityAndDistrictName(string cityName, string districtName)
+        public async Task<IEnumerable<RealEstate>> FindByCityAndDistrictNameAsync(string cityName, string districtName)
         {
             return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                DbContext.RealEstates
+                await DbContext.RealEstates
                     .Where(re => re.City.Name == cityName &&
-                                 re.District.Name == districtName));
+                                 re.District.Name == districtName)
+                    .ToListAsync());
         }
 
-        public IEnumerable<RealEstate> GetRealEstatesByType(RealEstateType realEstateType)
+        public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType)
         {
             return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                DbContext.RealEstates.Where(re => re.TypeId == realEstateType.Id));
+                await DbContext.RealEstates
+                    .Where(re => re.TypeId == realEstateType.Id)
+                    .ToListAsync());
         }
 
-        public IEnumerable<RealEstate> GetRealEstatesByTypePage(RealEstateType realEstateType, int pageNumber,
+        public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(RealEstateType realEstateType,
+            int pageNumber,
             int pageSize)
         {
             return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                DbContext.RealEstates
+                await DbContext.RealEstates
                     .Where(re => re.TypeId == realEstateType.Id)
                     .Skip(pageNumber * pageSize)
-                    .Take(pageSize));
+                    .Take(pageSize)
+                    .ToListAsync());
         }
 
-        public IEnumerable<RealEstate> GetRealEstatesOrderByPrice(OrderDirection orderDirection)
+        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPriceAsync(OrderDirection orderDirection)
         {
-            return GetOrdered(DbContext.RealEstates, re => re.Price, orderDirection);
+            return GetOrderedAsync(DbContext.RealEstates, re => re.Price, orderDirection);
         }
 
-        public IEnumerable<RealEstate> GetRealEstatesOrderByPricePage(int pageNumber, int pageSize,
+        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPricePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            return GetOrderedPage(DbContext.RealEstates, re => re.Price, pageNumber, pageSize, orderDirection);
+            return GetOrderedPageAsync(DbContext.RealEstates, re => re.Price, pageNumber, pageSize, orderDirection);
         }
 
-        public IEnumerable<RealEstate> SearchRealEstates(string keyWord)
+        public async Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord)
         {
             return mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                DbContext.RealEstates
+                await DbContext.RealEstates
                     .Where(re => re.Name.Contains(keyWord)
                                  || keyWord.Contains(re.Name)
                                  || re.City.Name.Contains(keyWord)
@@ -79,7 +89,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                                  || re.District.Name.Contains(keyWord)
                                  || keyWord.Contains(re.District.Name)
                                  || re.Street.Contains(keyWord)
-                                 || keyWord.Contains(re.Street)));
+                                 || keyWord.Contains(re.Street))
+                    .ToListAsync());
         }
     }
 }

@@ -25,26 +25,28 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             DbContext = dbContext;
         }
 
-        protected IEnumerable<T> GetOrdered<TKey>(DbSet<TEntity> dbSet, Expression<Func<TEntity, TKey>> keySelector,
+        protected virtual async Task<IEnumerable<T>> GetOrderedAsync<TKey>(DbSet<TEntity> dbSet,
+            Expression<Func<TEntity, TKey>> keySelector,
             OrderDirection orderDirection)
         {
-            return mapper.Map<IQueryable<TEntity>, IEnumerable<T>>(
+            return mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(
                 orderDirection == OrderDirection.Asc
-                    ? dbSet.OrderBy(keySelector)
-                    : dbSet.OrderByDescending(keySelector));
+                    ? await dbSet.OrderBy(keySelector).ToListAsync()
+                    : await dbSet.OrderByDescending(keySelector).ToListAsync());
         }
 
-        protected IEnumerable<T> GetOrderedPage<TKey>(DbSet<TEntity> dbSet, Expression<Func<TEntity, TKey>> keySelector,
+        protected virtual async Task<IEnumerable<T>> GetOrderedPageAsync<TKey>(DbSet<TEntity> dbSet,
+            Expression<Func<TEntity, TKey>> keySelector,
             int pageNumber, int pageSize, OrderDirection orderDirection)
         {
             var pagableResult = dbSet
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize);
 
-            return mapper.Map<IQueryable<TEntity>, IEnumerable<T>>(
+            return mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(
                 orderDirection == OrderDirection.Asc
-                    ? pagableResult.OrderBy(keySelector)
-                    : pagableResult.OrderByDescending(keySelector));
+                    ? await pagableResult.OrderBy(keySelector).ToListAsync()
+                    : await pagableResult.OrderByDescending(keySelector).ToListAsync());
         }
 
         public void Save()
@@ -57,13 +59,13 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             await DbContext.SaveChangesAsync();
         }
 
-        public abstract IEnumerable<T> GetEntities();
+        public abstract Task<IEnumerable<T>> GetEntitiesAsync();
 
-        public abstract IEnumerable<T> GetPage(int pageNumber, int pageSize);
+        public abstract Task<IEnumerable<T>> GetPageAsync(int pageNumber, int pageSize);
 
-        public virtual T FindById(int id)
+        public virtual async Task<T> FindByIdAsync(int id)
         {
-            return mapper.Map<TEntity, T>(DbContext.Find<TEntity>(id));
+            return mapper.Map<TEntity, T>(await DbContext.FindAsync<TEntity>(id));
         }
 
         public virtual void Add(T entity)

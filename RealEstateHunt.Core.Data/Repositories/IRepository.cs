@@ -5,9 +5,9 @@ namespace RealEstateHunt.Core.Data.Repositories
 {
     public interface IRepository<T>
     {
-        IEnumerable<T> GetEntities();
-        IEnumerable<T> GetPage(int pageNumber, int pageSize);
-        T FindById(int id);
+        Task<IEnumerable<T>> GetEntitiesAsync();
+        Task<IEnumerable<T>> GetPageAsync(int pageNumber, int pageSize);
+        Task<T> FindByIdAsync(int id);
         void Add(T entity);
         void Update(T entity);
         void Remove(int id);
