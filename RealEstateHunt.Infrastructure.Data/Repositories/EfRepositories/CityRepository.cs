@@ -1,4 +1,4 @@
-﻿using RealEstateHunt.Core.Data;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +23,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<City>> GetPageAsync(int pageNumber, int pageSize)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+            
             return Mapper.Map<IEnumerable<CityEntity>, IEnumerable<City>>(
                 await DbContext.Cities
                 .Skip(pageNumber * pageSize)

@@ -1,4 +1,5 @@
-﻿using RealEstateHunt.Core.Data;
+﻿using System;
+using RealEstateHunt.Core.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<RealEstate>> GetPageAsync(int pageNumber, int pageSize)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Skip(pageNumber * pageSize)
@@ -32,6 +36,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<RealEstate>> FindByCityNameAsync(string cityName)
         {
+            if (string.IsNullOrWhiteSpace(cityName)) throw new ArgumentNullException(nameof(cityName));
+
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.City.Name == cityName)
@@ -40,6 +46,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<RealEstate>> FindByCityAndDistrictNameAsync(string cityName, string districtName)
         {
+            if (string.IsNullOrWhiteSpace(cityName)) throw new ArgumentNullException(nameof(cityName));
+            if (string.IsNullOrWhiteSpace(districtName)) throw new ArgumentNullException(nameof(districtName));
+
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.City.Name == cityName &&
@@ -49,6 +58,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType)
         {
+            if (realEstateType == null) throw new ArgumentNullException(nameof(realEstateType));
+
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.TypeId == realEstateType.Id)
@@ -59,6 +70,10 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             int pageNumber,
             int pageSize)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+            if (realEstateType == null) throw new ArgumentNullException(nameof(realEstateType));
+
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.TypeId == realEstateType.Id)
@@ -75,11 +90,16 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPricePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
             return GetOrderedPageAsync(DbContext.RealEstates, re => re.Price, pageNumber, pageSize, orderDirection);
         }
 
         public async Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord)
         {
+            if (string.IsNullOrWhiteSpace(keyWord)) throw new ArgumentNullException(nameof(keyWord));
+
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await DbContext.RealEstates
                     .Where(re => re.Name.Contains(keyWord)

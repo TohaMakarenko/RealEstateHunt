@@ -1,4 +1,5 @@
-﻿using RealEstateHunt.Core.Data;
+﻿using System;
+using RealEstateHunt.Core.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -24,6 +25,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<Contact>> GetPageAsync(int pageNumber, int pageSize)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Skip(pageNumber * pageSize)
@@ -39,6 +43,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<Contact>> GetClientsOrderByFirstNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
             return GetOrderedPageAsync(DbContext.Contacts, c => c.FirstName, pageNumber, pageSize, orderDirection);
         }
 
@@ -50,6 +57,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<Contact>> GetClientsOrderByLastNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
             return GetOrderedPageAsync(DbContext.Contacts, c => c.LastName, pageNumber, pageSize, orderDirection);
         }
 
@@ -61,12 +71,18 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberPageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
             return GetOrderedPageAsync(DbContext.Contacts, c => c.BankAccountNumber, pageNumber, pageSize,
                 orderDirection);
         }
 
         public async Task<IEnumerable<Contact>> FindByFullNameAsync(string firstName, string lastName)
         {
+            if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentNullException(nameof(firstName));
+            if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentNullException(nameof(lastName));
+
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c =>
@@ -77,6 +93,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> FindByFullNameAsync(string fullName)
         {
+            if (string.IsNullOrWhiteSpace(fullName)) throw new ArgumentNullException(nameof(fullName));
+
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c =>
@@ -86,6 +104,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> FindByFullNameLikeAsync(string fullNameSubstring)
         {
+            if (string.IsNullOrWhiteSpace(fullNameSubstring))
+                throw new ArgumentNullException(nameof(fullNameSubstring));
+
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c =>
@@ -96,6 +117,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> SearchContactsAsync(string keyWord)
         {
+            if (string.IsNullOrWhiteSpace(keyWord))
+                throw new ArgumentNullException(nameof(keyWord));
+
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c => c.FirstName.Contains(keyWord)
@@ -113,6 +137,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact)
         {
+            if (contact == null) throw new ArgumentNullException(nameof(contact));
+            
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await DbContext.Contacts
                     .Where(c => contact.Id != 0 && c.Id == contact.Id

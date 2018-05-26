@@ -1,4 +1,5 @@
-﻿using RealEstateHunt.Core.Data;
+﻿using System;
+using RealEstateHunt.Core.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,9 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<User>> GetPageAsync(int pageNumber, int pageSize)
         {
+            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
             return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
                 await DbContext.Users
                     .Skip(pageNumber * pageSize)
@@ -32,6 +36,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<IEnumerable<User>> FindByNameAsync(string name)
         {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
+
             return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
                 await DbContext.Users
                     .Where(u => u.Name == name)
