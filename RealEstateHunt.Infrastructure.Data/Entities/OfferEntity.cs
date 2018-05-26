@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Infrastructure.Data.Entities
 {
+    [Table("Offer")]
     public class OfferEntity
     {
         public int Id { get; set; }

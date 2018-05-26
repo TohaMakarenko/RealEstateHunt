@@ -2,6 +2,7 @@
 
 namespace RealEstateHunt.Infrastructure.Data.Entities
 {
+    [Table("User")]
     public class UserEntity
     {
         public int Id { get; set; }

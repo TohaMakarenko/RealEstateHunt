@@ -2,6 +2,7 @@
 
 namespace RealEstateHunt.Infrastructure.Data.Entities
 {
+    [Table("Contract")]
     public class ContractEntity
     {
         public int Id { get; set; }
@@ -10,7 +11,7 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         public string Name { get; set; }
 
         [ForeignKey("Offer")]
-        public int OfferId { get; set; }
+        public int? OfferId { get; set; }
 
         public OfferEntity Offer { get; set; }
 

@@ -117,13 +117,13 @@ namespace RealEstateHunt.Infrastructure.Data
                 .HasOne(d => d.RealEstate)
                 .WithMany(c => c.Offers)
                 .HasForeignKey(c => c.RealEstateId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
             
             modelBuilder.Entity<OfferEntity>()
                 .HasOne(d => d.Contact)
                 .WithMany(c => c.Offers)
                 .HasForeignKey(c => c.ContactId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

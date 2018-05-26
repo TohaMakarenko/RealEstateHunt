@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Infrastructure.Data.Entities
 {
+    [Table("District")]
     public class DistrictEntity
     {
         public int Id { get; set; }
@@ -11,7 +12,7 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         public string Name { get; set; }
 
         [ForeignKey("City")]
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
 
         public CityEntity City { get; set; }
 

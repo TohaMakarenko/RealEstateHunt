@@ -2,6 +2,7 @@
 
 namespace RealEstateHunt.Infrastructure.Data.Entities
 {
+    [Table("ContactCommunication")]
     public class ContactCommunicationEntity
     {
         public int Id { get; set; }

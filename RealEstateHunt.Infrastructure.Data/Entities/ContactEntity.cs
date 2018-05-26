@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstateHunt.Infrastructure.Data.Entities
 {
+    [Table("Contact")]
     public class ContactEntity
     {
         public int Id { get; set; }
