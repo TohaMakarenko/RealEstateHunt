@@ -1,0 +1,16 @@
+{
+  "name": "RealEstateHunt.WebApp",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
+    "install": "^0.11.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "npm": "^6.1.0",
+    "popper.js": "^1.14.3",
+    "requirejs": "^2.3.5",
+    "vue": "^2.5.16"
+  }
+}
