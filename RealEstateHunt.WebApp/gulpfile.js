@@ -13,6 +13,11 @@ gulp.task('copy-node_modules', function () {
         gulp.src('node_modules/vue/dist/**')
             .pipe(gulp.dest('wwwroot/lib/vue'));
 
+        gulp.src('node_modules/vue-router/dist/**')
+            .pipe(gulp.dest('wwwroot/lib/vue-router'));
+        
+        
+
         gulp.src('node_modules/lodash/lodash.js')
             .pipe(gulp.dest('wwwroot/lib/lodash/'));
 
