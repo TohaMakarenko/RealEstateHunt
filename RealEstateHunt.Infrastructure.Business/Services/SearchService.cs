@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using RealEstateHunt.Core.Business.Models;
 using RealEstateHunt.Core.Business.Services;
 using RealEstateHunt.Core.Data.Models;
 using RealEstateHunt.Core.Data.UnitOfWork;
@@ -25,13 +26,12 @@ namespace RealEstateHunt.Infrastructure.Business.Services
             return _unitOfWork.RealEstateRepository.SearchRealEstatesAsync(keyWord);
         }
 
-        public async Task<(IEnumerable<RealEstate> realEstates, IEnumerable<Contact> contacts)> SearchAllAsync(
-            string keyWord)
+        public async Task<SearchResult> SearchAllAsync(string keyWord)
         {
-            (IEnumerable<RealEstate> realEstates, IEnumerable<Contact> contacts) result;
-            result.realEstates = await SearchRealEstatesAsync(keyWord);
-            result.contacts = await SearchContactsAsync(keyWord);
-            return result;
+            return new SearchResult {
+                RealEstates = await SearchRealEstatesAsync(keyWord),
+                Contacts = await SearchContactsAsync(keyWord)
+            };
         }
 
         public Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact)
