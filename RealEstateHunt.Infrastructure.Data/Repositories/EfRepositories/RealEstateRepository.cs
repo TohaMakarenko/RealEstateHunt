@@ -24,6 +24,21 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                 .Include(e => e.Type);
         }
 
+        public override async Task<RealEstate> AddAsync(RealEstate entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            var e = Mapper.Map<RealEstate, RealEstateEntity>(entity);
+            e.City = DbContext.Cities.Attach(e.City).Entity;
+            e.District = DbContext.Districts.Attach(e.District).Entity;
+            e.Type = DbContext.RealEstateTypes.Attach(e.Type).Entity;
+            DbContext.Offers.AttachRange(e.Offers);
+            return Mapper.Map<RealEstateEntity, RealEstate>(
+                (await DbContext.RealEstates
+                    .AddAsync(e))
+                .Entity);
+        }
+
         protected override IQueryable<RealEstateEntity> IncludeCollections(IQueryable<RealEstateEntity> dbSet)
         {
             return dbSet.Include(e => e.Offers);

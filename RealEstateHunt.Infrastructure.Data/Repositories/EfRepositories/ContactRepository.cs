@@ -17,6 +17,24 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
     {
         public ContactRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
+        public override async Task<Contact> AddAsync(Contact entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            var e = Mapper.Map<Contact, ContactEntity>(entity);
+            e.City = DbContext.Cities.Attach(e.City).Entity;
+            e.District = DbContext.Districts.Attach(e.District).Entity;
+            e.PreferredType = DbContext.RealEstateTypes.Attach(e.PreferredType).Entity;
+            DbContext.ContactCommunications.AttachRange(e.ContactCommunications);
+            DbContext.Contracts.AttachRange(e.Contracts);
+            DbContext.Offers.AttachRange(e.Offers);
+
+            return Mapper.Map<ContactEntity, Contact>(
+                (await DbContext.Contacts
+                    .AddAsync(e))
+                .Entity);
+        }
+
         protected override IQueryable<ContactEntity> IncludeEntities(IQueryable<ContactEntity> dbSet)
         {
             return dbSet

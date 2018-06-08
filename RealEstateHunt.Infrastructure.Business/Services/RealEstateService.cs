@@ -51,6 +51,11 @@ namespace RealEstateHunt.Infrastructure.Business.Services
             return _unitOfWork.RealEstateRepository.GetEntitiesAsync();
         }
 
+        public Task<IEnumerable<RealEstateType>> GetRealEstateTypesAsync()
+        {
+            return _unitOfWork.RealEstateTypeRepository.GetEntitiesAsync();
+        }
+
         public Task<IEnumerable<RealEstate>> GetRealEstatesPageAsync(int pageNumber, int pageSize)
         {
             return _unitOfWork.RealEstateRepository.GetPageAsync(pageNumber, pageSize);

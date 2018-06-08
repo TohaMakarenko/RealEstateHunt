@@ -14,6 +14,19 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
     {
         public CityRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
+        public override async Task<City> AddAsync(City entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            var e = Mapper.Map<City, CityEntity>(entity);
+            DbContext.Districts.AttachRange(e.Districts);
+
+            return Mapper.Map<CityEntity, City>(
+                (await DbContext.Cities
+                    .AddAsync(e))
+                .Entity);
+        }
+
         protected override IQueryable<CityEntity> IncludeCollections(IQueryable<CityEntity> dbSet)
         {
             return dbSet

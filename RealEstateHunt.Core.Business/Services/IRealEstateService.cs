@@ -14,6 +14,7 @@ namespace RealEstateHunt.Core.Business.Services
         Task EditRealEstateAsync(RealEstate realEstate);
         Task<RealEstate> GetRealEstateAsync(int id);
         Task<IEnumerable<RealEstate>> GetRealEstatesAsync();
+        Task<IEnumerable<RealEstateType>> GetRealEstateTypesAsync();
         Task<IEnumerable<RealEstate>> GetRealEstatesPageAsync(int pageNumber, int pageSize);
         Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType);
         Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(int realEstateTypeId);

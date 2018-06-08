@@ -6,7 +6,7 @@ require.config({
         bootstrap: "lib/bootstrap/js/bootstrap.bundle.min",
         vue: "requirejs-vue",
         "vue-router": "lib/vue-router/vue-router",
-        axios: "lib/axios/axios.min.js"
+        axios: "lib/axios/axios.min"
     },
     config: {
         'vue': {
@@ -21,19 +21,24 @@ require.config({
     }
 });
 
-require(["Vue", "vue-router", "router", "bootstrap"], function (Vue, VueRouter, router) {
-    Vue.use(VueRouter);
-    return new Vue({
-        el: "#app",
-        router: router,
-        data: {
-            message: "asdad",
-            searchKey: "qqqq"
-        },
-        methods: {
-            search: function () {
-                console.log(this.searchKey);
+require(["Vue", "vue-router", "axios", "router","configuration", "bootstrap"],
+    function (Vue, VueRouter, axios, router, configuration) {
+        Vue.use(VueRouter);
+        Vue.prototype.$http = axios;
+        Vue.prototype.$config = configuration;
+        return new Vue({
+            el: "#app",
+            router: router,
+            data: {
+                searchKey: ""
+            },
+            methods: {
+                search: function () {
+                    this.$router.push({
+                        path: 'search',
+                        query: {searchKey: this.searchKey}
+                    })
+                }
             }
-        }
+        });
     });
-});
