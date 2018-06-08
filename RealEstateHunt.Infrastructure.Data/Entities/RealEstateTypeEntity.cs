@@ -8,6 +8,6 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         public int Id { get; set; }
 
         [Column(TypeName = "varchar(50)")]
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 }
