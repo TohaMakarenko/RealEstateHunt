@@ -38,7 +38,7 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         public string BankAccountNumber { get; set; }
         
         [ForeignKey("PreferredType")]
-        public int PreferredTypeId { get; set; }
+        public int? PreferredTypeId { get; set; }
         
         public RealEstateTypeEntity PreferredType { get; set; }
         
