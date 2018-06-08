@@ -15,10 +15,24 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
     {
         public UserRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
+        protected override IQueryable<UserEntity> IncludeEntities(IQueryable<UserEntity> dbSet)
+        {
+            return dbSet.Include(e => e.Contact);
+        }
+
+        public override async Task<User> FindByIdAsync(int id)
+        {
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+
+            return Mapper.Map<UserEntity, User>(
+                await IncludeCollections(IncludeEntities(DbContext.Users))
+                    .FirstOrDefaultAsync(e => e.Id == id));
+        }
+
         public override async Task<IEnumerable<User>> GetEntitiesAsync()
         {
             return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
-                await DbContext.Users
+                await IncludeEntities(DbContext.Users)
                     .ToListAsync());
         }
 
@@ -28,7 +42,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
-                await DbContext.Users
+                await IncludeEntities(DbContext.Users)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());
@@ -39,7 +53,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
 
             return Mapper.Map<IEnumerable<UserEntity>, IEnumerable<User>>(
-                await DbContext.Users
+                await IncludeEntities(DbContext.Users)
                     .Where(u => u.Name == name)
                     .ToListAsync());
         }

@@ -15,19 +15,36 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
     {
         public ContractRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
+        protected override IQueryable<ContractEntity> IncludeEntities(IQueryable<ContractEntity> dbSet)
+        {
+            return dbSet
+                .Include(c => c.Client)
+                .Include(c => c.Manager)
+                .Include(c => c.Offer);
+        }
+
+        public override async Task<Contract> FindByIdAsync(int id)
+        {
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+
+            return Mapper.Map<ContractEntity, Contract>(
+                await IncludeEntities(DbContext.Contracts)
+                    .FirstOrDefaultAsync(e => e.Id == id));
+        }
+
         public override async Task<IEnumerable<Contract>> GetEntitiesAsync()
         {
             return Mapper.Map<IEnumerable<ContractEntity>, IEnumerable<Contract>>(
-                await DbContext.Contracts.ToListAsync());
+                await IncludeEntities(DbContext.Contracts).ToListAsync());
         }
 
         public override async Task<IEnumerable<Contract>> GetPageAsync(int pageNumber, int pageSize)
         {
             if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
-            
+
             return Mapper.Map<IEnumerable<ContractEntity>, IEnumerable<Contract>>(
-                await DbContext.Contracts
+                await IncludeEntities(DbContext.Contracts)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToArrayAsync());

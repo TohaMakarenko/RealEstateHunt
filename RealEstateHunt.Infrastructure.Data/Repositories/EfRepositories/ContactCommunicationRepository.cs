@@ -16,6 +16,21 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
     {
         public ContactCommunicationRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
+        protected override IQueryable<ContactCommunicationEntity> IncludeEntities(
+            IQueryable<ContactCommunicationEntity> dbSet)
+        {
+            return dbSet
+                .Include(e => e.Contact);
+        }
+        
+        public override async Task<ContactCommunication> FindByIdAsync(int id)
+        {
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+
+            return Mapper.Map<ContactCommunicationEntity, ContactCommunication>(
+                await IncludeEntities(DbContext.ContactCommunications).FirstOrDefaultAsync(e => e.Id == id));
+        }
+        
         public override async Task<IEnumerable<ContactCommunication>> GetEntitiesAsync()
         {
             return Mapper.Map<IEnumerable<ContactCommunicationEntity>, IEnumerable<ContactCommunication>>(

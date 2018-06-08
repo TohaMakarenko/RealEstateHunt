@@ -16,10 +16,32 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
     {
         public RealEstateRepository(RehDbContext dbContext, IMapper mapper) : base(dbContext, mapper) { }
 
+        protected override IQueryable<RealEstateEntity> IncludeEntities(IQueryable<RealEstateEntity> dbSet)
+        {
+            return dbSet
+                .Include(e => e.City)
+                .Include(e => e.District)
+                .Include(e => e.Type);
+        }
+
+        protected override IQueryable<RealEstateEntity> IncludeCollections(IQueryable<RealEstateEntity> dbSet)
+        {
+            return dbSet.Include(e => e.Offers);
+        }
+
+        public override async Task<RealEstate> FindByIdAsync(int id)
+        {
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+
+            return Mapper.Map<RealEstateEntity, RealEstate>(
+                await IncludeCollections(IncludeEntities(DbContext.RealEstates))
+                    .FirstOrDefaultAsync(e => e.Id == id));
+        }
+
         public override async Task<IEnumerable<RealEstate>> GetEntitiesAsync()
         {
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                await DbContext.RealEstates.ToListAsync());
+                await IncludeEntities(DbContext.RealEstates).ToListAsync());
         }
 
         public override async Task<IEnumerable<RealEstate>> GetPageAsync(int pageNumber, int pageSize)
@@ -28,7 +50,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                await DbContext.RealEstates
+                await IncludeEntities(DbContext.RealEstates)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());
@@ -39,7 +61,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (string.IsNullOrWhiteSpace(cityName)) throw new ArgumentNullException(nameof(cityName));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                await DbContext.RealEstates
+                await IncludeEntities(DbContext.RealEstates)
                     .Where(re => re.City.Name == cityName)
                     .ToListAsync());
         }
@@ -50,7 +72,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (string.IsNullOrWhiteSpace(districtName)) throw new ArgumentNullException(nameof(districtName));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                await DbContext.RealEstates
+                await IncludeEntities(DbContext.RealEstates)
                     .Where(re => re.City.Name == cityName &&
                                  re.District.Name == districtName)
                     .ToListAsync());
@@ -66,7 +88,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (realEstateTypeId <= 0) throw new ArgumentOutOfRangeException(nameof(realEstateTypeId));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                await DbContext.RealEstates
+                await IncludeEntities(DbContext.RealEstates)
                     .Where(re => re.TypeId == realEstateTypeId)
                     .ToListAsync());
         }
@@ -86,7 +108,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                await DbContext.RealEstates
+                await IncludeEntities(DbContext.RealEstates)
                     .Where(re => re.TypeId == realEstateTypeId)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
@@ -95,7 +117,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPriceAsync(OrderDirection orderDirection)
         {
-            return GetOrderedAsync(DbContext.RealEstates, re => re.Price, orderDirection);
+            return GetOrderedAsync(IncludeEntities(DbContext.RealEstates), re => re.Price, orderDirection);
         }
 
         public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPricePageAsync(int pageNumber, int pageSize,
@@ -104,7 +126,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
-            return GetOrderedPageAsync(DbContext.RealEstates, re => re.Price, pageNumber, pageSize, orderDirection);
+            return GetOrderedPageAsync(IncludeEntities(DbContext.RealEstates), re => re.Price, pageNumber, pageSize,
+                orderDirection);
         }
 
         public async Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord)
@@ -112,7 +135,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (string.IsNullOrWhiteSpace(keyWord)) throw new ArgumentNullException(nameof(keyWord));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
-                await DbContext.RealEstates
+                await IncludeEntities(DbContext.RealEstates)
                     .Where(re => re.Name.Contains(keyWord)
                                  || keyWord.Contains(re.Name)
                                  || re.City.Name.Contains(keyWord)
