@@ -18,10 +18,11 @@ namespace RealEstateHunt.Infrastructure.Business.Services
         }
 
 
-        public Task AddClientAsync(Contact contact)
+        public async Task<Contact> AddClientAsync(Contact contact)
         {
-            _unitOfWork.ContactRepository.Add(contact);
-            return _unitOfWork.SaveAsync();
+            var entity = await _unitOfWork.ContactRepository.AddAsync(contact);
+            await _unitOfWork.SaveAsync();
+            return entity;
         }
 
         public Task RemoveClientAsync(int id)

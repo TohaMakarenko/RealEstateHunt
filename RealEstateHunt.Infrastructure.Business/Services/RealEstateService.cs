@@ -16,10 +16,11 @@ namespace RealEstateHunt.Infrastructure.Business.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task AddRealEstateAsync(RealEstate realEstate)
+        public async Task<RealEstate> AddRealEstateAsync(RealEstate realEstate)
         {
-            _unitOfWork.RealEstateRepository.Add(realEstate);
-            return _unitOfWork.SaveAsync();
+            var entitty = await _unitOfWork.RealEstateRepository.AddAsync(realEstate);
+            await _unitOfWork.SaveAsync();
+            return entitty;
         }
 
         public Task RemoveRealEstateAsync(int id)
@@ -40,7 +41,7 @@ namespace RealEstateHunt.Infrastructure.Business.Services
             return _unitOfWork.SaveAsync();
         }
 
-        public Task GetRealEstateAsync(int id)
+        public Task<RealEstate> GetRealEstateAsync(int id)
         {
             return _unitOfWork.RealEstateRepository.FindByIdAsync(id);
         }

@@ -42,7 +42,7 @@ namespace RealEstateHunt.Infrastructure.Business.Services
             offer.Contact = new Contact() {
                 Id = clientId
             };
-            _unitOfWork.OfferRepository.Add(offer);
+            await _unitOfWork.OfferRepository.AddAsync(offer);
             await _unitOfWork.SaveAsync();
             return true;
         }

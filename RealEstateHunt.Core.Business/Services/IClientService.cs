@@ -8,7 +8,7 @@ namespace RealEstateHunt.Core.Business.Services
 {
     public interface IClientService
     {
-        Task AddClientAsync(Contact contact);
+        Task<Contact> AddClientAsync(Contact contact);
         Task RemoveClientAsync(int id);
         Task RemoveClientAsync(Contact client);
         Task EditClient(Contact client);

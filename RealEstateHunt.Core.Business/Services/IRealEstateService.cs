@@ -8,11 +8,11 @@ namespace RealEstateHunt.Core.Business.Services
 {
     public interface IRealEstateService
     {
-        Task AddRealEstateAsync(RealEstate realEstate);
+        Task<RealEstate> AddRealEstateAsync(RealEstate realEstate);
         Task RemoveRealEstateAsync(int id);
         Task RemoveRealEstateAsync(RealEstate realEstate);
         Task EditRealEstateAsync(RealEstate realEstate);
-        Task GetRealEstateAsync(int id);
+        Task<RealEstate> GetRealEstateAsync(int id);
         Task<IEnumerable<RealEstate>> GetRealEstatesAsync();
         Task<IEnumerable<RealEstate>> GetRealEstatesPageAsync(int pageNumber, int pageSize);
         Task<IEnumerable<RealEstate>> GetRealEstatesByTypeAsync(RealEstateType realEstateType);

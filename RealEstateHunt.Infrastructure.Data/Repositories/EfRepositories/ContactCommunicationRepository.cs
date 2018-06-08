@@ -40,7 +40,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<ContactCommunication>> GetPageAsync(int pageNumber, int pageSize)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<ContactCommunicationEntity>, IEnumerable<ContactCommunication>>(

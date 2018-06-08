@@ -45,7 +45,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<District>> GetPageAsync(int pageNumber, int pageSize)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(

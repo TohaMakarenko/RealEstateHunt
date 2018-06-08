@@ -46,7 +46,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<RealEstate>> GetPageAsync(int pageNumber, int pageSize)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
@@ -104,7 +104,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public async Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(int realEstateTypeId, int pageNumber,
             int pageSize)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
@@ -123,7 +123,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPricePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return GetOrderedPageAsync(IncludeEntities(DbContext.RealEstates), re => re.Price, pageNumber, pageSize,

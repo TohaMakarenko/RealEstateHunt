@@ -29,7 +29,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         {
             return dbSet;
         }
-        
+
         protected virtual IQueryable<TEntity> IncludeCollections(IQueryable<TEntity> dbSet)
         {
             return dbSet;
@@ -52,7 +52,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             int pageNumber, int pageSize, OrderDirection orderDirection)
         {
             if (keySelector == null) throw new ArgumentNullException(nameof(keySelector));
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
             var includeEntities = IncludeEntities(dbSet);
             var pagableResult = includeEntities
@@ -86,11 +86,14 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             return Mapper.Map<TEntity, T>(await DbContext.FindAsync<TEntity>(id));
         }
 
-        public virtual void Add(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            DbContext.Add<TEntity>(Mapper.Map<T, TEntity>(entity));
+            return Mapper.Map<TEntity, T>(
+                (await DbContext
+                    .AddAsync<TEntity>(Mapper.Map<T, TEntity>(entity)))
+                .Entity);
         }
 
         public virtual void Update(T entity)

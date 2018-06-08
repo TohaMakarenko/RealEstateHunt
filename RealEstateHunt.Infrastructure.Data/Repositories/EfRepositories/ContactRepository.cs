@@ -50,7 +50,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public override async Task<IEnumerable<Contact>> GetPageAsync(int pageNumber, int pageSize)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
@@ -68,7 +68,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<Contact>> GetClientsOrderByFirstNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return GetOrderedPageAsync(IncludeEntities(DbContext.Contacts), c => c.FirstName, pageNumber, pageSize,
@@ -83,7 +83,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<Contact>> GetClientsOrderByLastNamePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return GetOrderedPageAsync(IncludeEntities(DbContext.Contacts), c => c.LastName, pageNumber, pageSize,
@@ -98,7 +98,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberPageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
-            if (pageNumber <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
 
             return GetOrderedPageAsync(IncludeEntities(DbContext.Contacts), c => c.BankAccountNumber, pageNumber,
