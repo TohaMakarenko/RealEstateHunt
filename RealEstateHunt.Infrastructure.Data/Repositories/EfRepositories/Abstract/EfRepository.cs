@@ -54,15 +54,13 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (keySelector == null) throw new ArgumentNullException(nameof(keySelector));
             if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
             if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
-            var includeEntities = IncludeEntities(dbSet);
-            var pagableResult = includeEntities
-                .Skip(pageNumber * pageSize)
-                .Take(pageSize);
+            var sortedResult = orderDirection == OrderDirection.Asc
+                ? await dbSet.OrderBy(keySelector).ToListAsync()
+                : await dbSet.OrderByDescending(keySelector).ToListAsync();
 
-            return Mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(
-                orderDirection == OrderDirection.Asc
-                    ? await pagableResult.OrderBy(keySelector).ToListAsync()
-                    : await pagableResult.OrderByDescending(keySelector).ToListAsync());
+            return Mapper.Map<IEnumerable<TEntity>, IEnumerable<T>>(sortedResult
+                .Skip(pageNumber * pageSize)
+                .Take(pageSize));
         }
 
         public void Save()
