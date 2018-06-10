@@ -4,12 +4,12 @@ require.config({
         Vue: "lib/vue/vue",
         lodash: "lib/lodash/lodash.min",
         bootstrap: "lib/bootstrap/js/bootstrap.bundle.min",
-        vue: "requirejs-vue",
+        rvue: "requirejs-vue",
         "vue-router": "lib/vue-router/vue-router",
         axios: "lib/axios/axios.min"
     },
     config: {
-        'vue': {
+        'rvue': {
             'css': 'inject',
             'templateVar': 'template'
         }

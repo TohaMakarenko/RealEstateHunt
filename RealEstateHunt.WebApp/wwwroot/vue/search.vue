@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    define(["js/search"], function (search) {
+    define(["vue/search.js"], function (search) {
         return search(template);
     })
 </script>

@@ -82,7 +82,7 @@
 </template>
 
 <script>
-    define(["js/realEstatePage"], function (search) {
+    define(["vue/realEstatePage.js"], function (search) {
         return search(template);
     })
 </script>

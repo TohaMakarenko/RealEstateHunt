@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    define(["js/contactPage"], function (search) {
+    define(["vue/contactPage.js"], function (search) {
         return search(template);
     })
 </script>

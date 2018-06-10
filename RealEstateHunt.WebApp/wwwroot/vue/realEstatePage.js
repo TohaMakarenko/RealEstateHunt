@@ -73,7 +73,7 @@ define([], function () {
                 onSave: function () {
                     var validationResult = this.validate();
                     if (validationResult) {
-                        alert("Р—Р°РїРѕРІРЅС–С‚СЊ РїРѕР»Рµ " + validationResult);
+                        alert("Заповніть поле " + validationResult);
                         return;
                     }
                     this.save();
@@ -87,23 +87,23 @@ define([], function () {
                 },
                 validate: function () {
                     if (!this.record.name)
-                        return "РќР°Р·РІР°";
+                        return "Назва";
                     if (!this.record.type || this.record.type.id <= 0)
-                        return "РўРёРї";
+                        return "Тип";
                     if (!this.record.city || this.record.city.id <= 0)
-                        return "РњС–СЃС‚Рѕ";
+                        return "Місто";
                     if (!this.record.district || this.record.district.id <= 0)
-                        return "Р Р°Р№РѕРЅ";
+                        return "Район";
                     if (!this.record.number)
-                        return "РќРѕРјРµСЂ";
+                        return "Номер";
                     if (!this.record.street)
-                        return "Р’СѓР»РёС†СЏ";
+                        return "Вулиця";
                     if (this.record.floor <= 0)
-                        return "РџРѕРІРµСЂС…";
+                        return "Поверх";
                     if (!(this.record.square + 0) || (this.record.square + 0) <= 0)
-                        return "РџР»РѕС‰Р°";
+                        return "Площа";
                     if (!(this.record.price + 0) || (this.record.price + 0) <= 0)
-                        return "Р¦С–РЅР°";
+                        return "Ціна";
                     return false;
                 },
                 save: function () {

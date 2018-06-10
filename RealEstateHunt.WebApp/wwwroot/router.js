@@ -1,7 +1,7 @@
 define("router", ["vue-router"], function (VueRouter) {
     function view(name) {
         return function (resolve) {
-            require(['vue!/vue/' + name], resolve)
+            require(['rvue!/vue/' + name], resolve)
         }
     }
     
