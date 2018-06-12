@@ -23,6 +23,11 @@ namespace RealEstateHunt.Core.Business.Services
             int pageSize);
 
         Task<IEnumerable<RealEstate>> GetRealEstatesByTypePageAsync(int realEstateTypeId, int pageNumber, int pageSize);
+        
+        Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypeAsync(OrderDirection orderDirection);
+
+        Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypePageAsync(int pageNumber, int pageSize,
+            OrderDirection orderDirection);
 
         Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPriceAsync(OrderDirection orderDirection);
 

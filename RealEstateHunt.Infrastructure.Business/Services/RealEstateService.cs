@@ -84,6 +84,18 @@ namespace RealEstateHunt.Infrastructure.Business.Services
                 pageSize);
         }
 
+        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypeAsync(OrderDirection orderDirection)
+        {
+            return _unitOfWork.RealEstateRepository.GetRealEstatesOrderByTypeAsync(orderDirection);
+        }
+
+        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypePageAsync(int pageNumber, int pageSize,
+            OrderDirection orderDirection)
+        {
+            return _unitOfWork.RealEstateRepository.GetRealEstatesOrderByTypePageAsync(pageNumber, pageSize,
+                orderDirection);
+        }
+        
         public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPriceAsync(OrderDirection orderDirection)
         {
             return _unitOfWork.RealEstateRepository.GetRealEstatesOrderByPriceAsync(orderDirection);

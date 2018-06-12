@@ -26,6 +26,7 @@ define([], function () {
                             {
                                 name: "typeName",
                                 caption: "Тип",
+                                orderMethod: "GetRealEstatesOrderByTypePage",
                                 filter: {
                                     controller: "RealEstate",
                                     method: "GetRealEstatesByTypePage",
@@ -42,6 +43,14 @@ define([], function () {
                             }
                         ]
                     }
+                }
+            },
+            methods: {
+                addNewRealEstate: function () {
+                    this.$router.push({
+                        path: '/realEstate/new',
+                        params: {id: "new"}
+                    })
                 }
             }
         };

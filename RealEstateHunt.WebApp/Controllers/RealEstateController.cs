@@ -57,37 +57,36 @@ namespace RealEstateHunt.WebApp.Controllers
                 await _realEstateService.GetRealEstatesPageAsync(pageNumber, ViewConstants.DefaultPageSize));
         }
 
-        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesByType(int realEstateTypeId)
-        {
-            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
-                await _realEstateService.GetRealEstatesByTypeAsync(realEstateTypeId));
-        }
-
-        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesByTypePage(int realEstateTypeId, int pageNumber)
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesByTypePage(int realEstateTypeId,
+            int pageNumber)
         {
             return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
                 await _realEstateService.GetRealEstatesByTypePageAsync(realEstateTypeId, pageNumber,
                     ViewConstants.DefaultPageSize));
         }
 
-        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesOrderByPrice(int orderDirection)
-        {
-            if (orderDirection != 0 && orderDirection != 1)
-                throw new ArgumentException("order direction must be 0 or 1", nameof(orderDirection));
-
-            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
-                await _realEstateService.GetRealEstatesOrderByPriceAsync((OrderDirection) orderDirection));
-        }
-
-        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesOrderByPricePage(int pageNumber, int orderDirection)
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesOrderByPricePage(int pageNumber,
+            int orderDirection)
         {
             if (orderDirection != 0 && orderDirection != 1)
                 throw new ArgumentException("order direction must be 0 or 1", nameof(orderDirection));
 
             return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
                 await _realEstateService.GetRealEstatesOrderByPricePageAsync(pageNumber, ViewConstants.DefaultPageSize,
-                (OrderDirection) orderDirection));
+                    (OrderDirection) orderDirection));
         }
+
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesOrderByTypePage(int pageNumber,
+            int orderDirection)
+        {
+            if (orderDirection != 0 && orderDirection != 1)
+                throw new ArgumentException("order direction must be 0 or 1", nameof(orderDirection));
+
+            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
+                await _realEstateService.GetRealEstatesOrderByTypePageAsync(pageNumber, ViewConstants.DefaultPageSize,
+                    (OrderDirection) orderDirection));
+        }
+
 
         public Task<IEnumerable<RealEstateType>> GetRealEstateTypes()
         {

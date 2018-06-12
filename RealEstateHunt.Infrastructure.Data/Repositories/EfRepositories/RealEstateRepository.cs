@@ -144,6 +144,21 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             return GetOrderedPageAsync(IncludeEntities(DbContext.RealEstates), re => re.Price, pageNumber, pageSize,
                 orderDirection);
         }
+        
+        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypeAsync(OrderDirection orderDirection)
+        {
+            return GetOrderedAsync(IncludeEntities(DbContext.RealEstates), re => re.Type.Name, orderDirection);
+        }
+        
+        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypePageAsync(int pageNumber, int pageSize,
+            OrderDirection orderDirection)
+        {
+            if (pageNumber < 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+            if (pageSize <= 1) throw new ArgumentOutOfRangeException(nameof(pageSize));
+
+            return GetOrderedPageAsync(IncludeEntities(DbContext.RealEstates), re => re.Type.Name, pageNumber, pageSize,
+                orderDirection);
+        }
 
         public async Task<IEnumerable<RealEstate>> SearchRealEstatesAsync(string keyWord)
         {
