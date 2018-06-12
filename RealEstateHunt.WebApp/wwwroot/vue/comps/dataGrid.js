@@ -46,8 +46,8 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
                         if (!params.pageNumber) {
                             params.pageNumber = this.page
                         }
-                        if (_.isNumber(params.orderDirection) && !_.isNaN(params.orderDirection)) {
-                            params.orderDirection = orderDirection;
+                        if (!_.isNumber(params.orderDirection) && _.isNaN(params.orderDirection)) {
+                            params.orderDirection = this.orderDirection;
                         }
                     }
                     this.$http.get(this.config.controller + "/" +
@@ -81,8 +81,12 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
                     if (!cfg.orderMethod)
                         return;
 
+                    this.orderDirection = !this.orderDirection + 0;
+                    
                     if (cfg.orderMethod) {
-                        this.reloadData(cfg.orderMethod, !this.orderDirection + 0);
+                        this.reloadData(cfg.orderMethod, {
+                            orderDirection: this.orderDirection
+                        });
                     }
                 },
                 loadMore: function () {
