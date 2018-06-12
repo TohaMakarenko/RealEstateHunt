@@ -173,8 +173,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                     .Where(c => contact.Id != 0 && c.Id == contact.Id
                                 || !string.IsNullOrEmpty(contact.FirstName) && c.FirstName.Contains(contact.FirstName)
                                 || !string.IsNullOrEmpty(contact.LastName) && c.LastName.Contains(contact.LastName)
-                                || contact.City != null && contact.City.Id < c.CityId
-                                || contact.District != null && contact.District.Id < c.DistrictId
+                                || contact.City != null && contact.City.Id == c.CityId
+                                || contact.District != null && contact.District.Id == c.DistrictId
                                 || !string.IsNullOrEmpty(contact.Street) && c.Street.Contains(contact.Street)
                                 || contact.PreferredPrice != 0 && contact.PreferredPrice < c.PreferredPrice
                                 || contact.PreferredType != null && contact.PreferredType.Id == c.PreferredTypeId)
