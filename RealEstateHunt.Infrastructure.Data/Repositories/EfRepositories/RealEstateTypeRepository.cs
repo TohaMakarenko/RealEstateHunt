@@ -30,6 +30,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             
             return Mapper.Map<IEnumerable<RealEstateTypeEntity>, IEnumerable<RealEstateType>>(
                 await DbContext.RealEstateTypes
+                    .OrderByDescending(e=>e.Id)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());

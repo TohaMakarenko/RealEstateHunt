@@ -20,11 +20,11 @@ namespace RealEstateHunt.WebApp.Controllers
             return _cityService.GetCitiesAsync();
         }
 
-        public async Task<IEnumerable<District>> GetDistricts(int? cityId)
+        public Task<IEnumerable<District>> GetDistricts(int? cityId)
         {
             return cityId == null
-                ? await _cityService.GetDistrictsAsync()
-                : await _cityService.GetDistrictsByCityAsync(cityId.Value);
+                ? _cityService.GetDistrictsAsync()
+                : _cityService.GetDistrictsByCityAsync(cityId.Value);
         }
     }
 }

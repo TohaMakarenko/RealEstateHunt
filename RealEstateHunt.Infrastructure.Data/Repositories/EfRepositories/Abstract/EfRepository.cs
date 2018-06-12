@@ -88,10 +88,10 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            return Mapper.Map<TEntity, T>(
-                (await DbContext
-                    .AddAsync<TEntity>(Mapper.Map<T, TEntity>(entity)))
-                .Entity);
+            var entry = DbContext.Entry(Mapper.Map<T, TEntity>(entity));
+            entry.State = EntityState.Added;
+            await DbContext.SaveChangesAsync();
+            return Mapper.Map<TEntity, T>(entry.Entity);
         }
 
         public virtual void Update(T entity)

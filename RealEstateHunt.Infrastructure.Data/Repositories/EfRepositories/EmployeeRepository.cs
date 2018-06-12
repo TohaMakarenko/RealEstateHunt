@@ -49,6 +49,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
             return Mapper.Map<IEnumerable<EmployeeEntity>, IEnumerable<Employee>>(
                 await IncludeEntities(DbContext.Employees)
+                    .OrderByDescending(e=>e.Id)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());

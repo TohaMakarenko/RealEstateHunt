@@ -46,6 +46,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             return Mapper.Map<IEnumerable<ContactCommunicationEntity>, IEnumerable<ContactCommunication>>(
                 await DbContext
                     .ContactCommunications
+                    .OrderByDescending(e=>e.Id)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());
