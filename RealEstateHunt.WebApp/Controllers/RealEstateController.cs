@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateHunt.Core.Business.Services;
 using RealEstateHunt.Core.Data.Enums;
 using RealEstateHunt.Core.Data.Models;
 using RealEstateHunt.WebApp.Constants;
+using RealEstateHunt.WebApp.Models;
 using Contact = Microsoft.Azure.KeyVault.Models.Contact;
 
 namespace RealEstateHunt.WebApp.Controllers
@@ -13,10 +15,12 @@ namespace RealEstateHunt.WebApp.Controllers
     public class RealEstateController : Controller
     {
         private readonly IRealEstateService _realEstateService;
+        private readonly IMapper _mapper;
 
-        public RealEstateController(IRealEstateService realEstateService)
+        public RealEstateController(IRealEstateService realEstateService, IMapper mapper)
         {
             _realEstateService = realEstateService;
+            _mapper = mapper;
         }
 
         public Task<RealEstate> Record(int id)
@@ -25,9 +29,9 @@ namespace RealEstateHunt.WebApp.Controllers
         }
 
         [HttpDelete]
-        public async void DeleteRecord(int id)
+        public Task DeleteRecord(int id)
         {
-            await _realEstateService.RemoveRealEstateAsync(id);
+            return _realEstateService.RemoveRealEstateAsync(id);
         }
 
         [HttpPost]
@@ -47,37 +51,42 @@ namespace RealEstateHunt.WebApp.Controllers
             return _realEstateService.GetRealEstatesAsync();
         }
 
-        public Task<IEnumerable<RealEstate>> GetRealEstatesPage(int pageNumber)
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesPage(int pageNumber)
         {
-            return _realEstateService.GetRealEstatesPageAsync(pageNumber, ViewConstants.DefaultPageSize);
+            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
+                await _realEstateService.GetRealEstatesPageAsync(pageNumber, ViewConstants.DefaultPageSize));
         }
 
-        public Task<IEnumerable<RealEstate>> GetRealEstatesByType(int realEstateTypeId)
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesByType(int realEstateTypeId)
         {
-            return _realEstateService.GetRealEstatesByTypeAsync(realEstateTypeId);
+            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
+                await _realEstateService.GetRealEstatesByTypeAsync(realEstateTypeId));
         }
 
-        public Task<IEnumerable<RealEstate>> GetRealEstatesByTypePage(int realEstateTypeId, int pageNumber)
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesByTypePage(int realEstateTypeId, int pageNumber)
         {
-            return _realEstateService.GetRealEstatesByTypePageAsync(realEstateTypeId, pageNumber,
-                ViewConstants.DefaultPageSize);
+            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
+                await _realEstateService.GetRealEstatesByTypePageAsync(realEstateTypeId, pageNumber,
+                    ViewConstants.DefaultPageSize));
         }
 
-        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPrice(int orderDirection)
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesOrderByPrice(int orderDirection)
         {
             if (orderDirection != 0 && orderDirection != 1)
                 throw new ArgumentException("order direction must be 0 or 1", nameof(orderDirection));
 
-            return _realEstateService.GetRealEstatesOrderByPriceAsync((OrderDirection) orderDirection);
+            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
+                await _realEstateService.GetRealEstatesOrderByPriceAsync((OrderDirection) orderDirection));
         }
 
-        public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByPricePage(int pageNumber, int orderDirection)
+        public async Task<IEnumerable<RealEstateGridModel>> GetRealEstatesOrderByPricePage(int pageNumber, int orderDirection)
         {
             if (orderDirection != 0 && orderDirection != 1)
                 throw new ArgumentException("order direction must be 0 or 1", nameof(orderDirection));
 
-            return _realEstateService.GetRealEstatesOrderByPricePageAsync(pageNumber, ViewConstants.DefaultPageSize,
-                (OrderDirection) orderDirection);
+            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
+                await _realEstateService.GetRealEstatesOrderByPricePageAsync(pageNumber, ViewConstants.DefaultPageSize,
+                (OrderDirection) orderDirection));
         }
 
         public Task<IEnumerable<RealEstateType>> GetRealEstateTypes()

@@ -8,5 +8,6 @@ namespace RealEstateHunt.Core.Business.Services
     {
         Task<IEnumerable<City>> GetCitiesAsync();
         Task<IEnumerable<District>> GetDistrictsAsync();
+        Task<IEnumerable<District>> GetDistrictsByCityAsync(int cityId);
     }
 }

@@ -64,5 +64,15 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                     .Where(d => d.Name == name)
                     .ToArrayAsync());
         }
+
+        public async Task<IEnumerable<District>> GetByCityAsync(int cityId)
+        {
+            if (cityId <= 0) throw new ArgumentOutOfRangeException(nameof(cityId));
+            
+            return Mapper.Map<IEnumerable<DistrictEntity>, IEnumerable<District>>(
+                await DbContext.Districts
+                    .Where(d => d.CityId == cityId)
+                    .ToArrayAsync());
+        }
     }
 }

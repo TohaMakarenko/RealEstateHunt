@@ -24,5 +24,10 @@ namespace RealEstateHunt.Infrastructure.Business.Services
         {
             return _unitOfWork.DistrictRepository.GetEntitiesAsync();
         }
+
+        public Task<IEnumerable<District>> GetDistrictsByCityAsync(int cityId)
+        {
+            return _unitOfWork.DistrictRepository.GetByCityAsync(cityId);
+        }
     }
 }
