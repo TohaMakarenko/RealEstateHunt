@@ -2,8 +2,9 @@
     <div class="row content">
         <div class="col-md-5">
             <div class="form-group">
-                <button class="button" v-on:click="onSave">Зберегти</button>
-                <button class="button" v-show="canDelete" v-on:click="onDelete">Видалити</button>
+                <button class="btn" v-on:click="onClose">Закрити</button>
+                <button class="btn" v-on:click="onSave">Зберегти</button>
+                <button class="btn" v-show="canDelete" v-on:click="onDelete">Видалити</button>
             </div>
             <div class="form-group">
                 <label for="Name">
@@ -12,34 +13,17 @@
                 </label>
             </div>
             <div class="form-group">
-                <label>
-                    Тип
-                    <select v-model="record.type.id">
-                        <option v-for="i in reTypes" v-bind:value="i.id">
-                            {{ i.name }}
-                        </option>
-                    </select>
-                </label>
+                <lookup label="Тип" controller="RealEstate" method="GetRealEstateTypes" display="name" id="id"
+                        v-model="type"></lookup>
             </div>
             <div class="form-group">
-                <label>
-                    Місто
-                    <select v-model="record.city.id">
-                        <option v-for="i in cities" v-bind:value="i.id">
-                            {{ i.name }}
-                        </option>
-                    </select>
-                </label>
+                <lookup label="Місто" controller="City" method="GetCities" display="name" id="id"
+                        v-model="city"></lookup>
             </div>
             <div class="form-group">
-                <label>
-                    Район
-                    <select v-model="record.district.id">
-                        <option v-for="i in districts" v-bind:value="i.id">
-                            {{ i.name }}
-                        </option>
-                    </select>
-                </label>
+                <lookup label="Район" controller="City" method="GetDistricts" display="name" id="id"
+                        v-model="district"
+                        v-bind:filter-value="city" filter-param-name="cityId"></lookup>
             </div>
             <div class="form-group">
                 <label>
@@ -82,7 +66,7 @@
 </template>
 
 <script>
-    define(["vue/realEstatePage.js"], function (search) {
+    define(["vue/realEstatePage.js", "rvue!vue/comps/lookup"], function (search) {
         return search(template);
     })
 </script>

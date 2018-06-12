@@ -11,6 +11,9 @@ define([], function () {
                     reTypes: [],
                     cities: [],
                     districts: [],
+                    type: {},
+                    city: {},
+                    district: {}
                 }
             },
             watch: {
@@ -25,9 +28,6 @@ define([], function () {
                     this.record.city = {id: -1};
                     this.record.district = {id: -1};
                 }
-                this.loadRETypes();
-                this.loadCities();
-                this.loadDistricts();
             },
             computed: {
                 canDelete: function () {
@@ -46,37 +46,16 @@ define([], function () {
                         }
                     }.bind(this));
                 },
-                loadRETypes: function () {
-                    this.$http.get(controllerAddress + "/" + 'GetRealEstateTypes')
-                        .then(function (response) {
-                            if (response.data && response.data.length) {
-                                this.reTypes = response.data;
-                            }
-                        }.bind(this));
-                },
-                loadCities: function () {
-                    this.$http.get('/City/GetCities')
-                        .then(function (response) {
-                            if (response.data && response.data.length) {
-                                this.cities = response.data;
-                            }
-                        }.bind(this));
-                },
-                loadDistricts: function () {
-                    this.$http.get('/City/GetDistricts')
-                        .then(function (response) {
-                            if (response.data && response.data.length) {
-                                this.districts = response.data;
-                            }
-                        }.bind(this));
-                },
                 onSave: function () {
                     var validationResult = this.validate();
                     if (validationResult) {
-                        alert("«‡ÔÓ‚Ì≥Ú¸ ÔÓÎÂ " + validationResult);
+                        alert("–ó–∞–ø–æ–≤–Ω—ñ—Ç—å –ø–æ–ª–µ " + validationResult);
                         return;
                     }
                     this.save();
+                },
+                onClose: function(){
+                    this.$router.back();
                 },
                 onDelete: function () {
                     this.$http.delete(controllerAddress + '/DeleteRecord', {
@@ -87,23 +66,23 @@ define([], function () {
                 },
                 validate: function () {
                     if (!this.record.name)
-                        return "Õ‡Á‚‡";
+                        return "–ù–∞–∑–≤–∞";
                     if (!this.record.type || this.record.type.id <= 0)
-                        return "“ËÔ";
+                        return "–¢–∏–ø";
                     if (!this.record.city || this.record.city.id <= 0)
-                        return "Ã≥ÒÚÓ";
+                        return "–ú—ñ—Å—Ç–æ";
                     if (!this.record.district || this.record.district.id <= 0)
-                        return "–‡ÈÓÌ";
+                        return "–†–∞–π–æ–Ω";
                     if (!this.record.number)
-                        return "ÕÓÏÂ";
+                        return "–ù–æ–º–µ—Ä";
                     if (!this.record.street)
-                        return "¬ÛÎËˆˇ";
+                        return "–í—É–ª–∏—Ü—è";
                     if (this.record.floor <= 0)
-                        return "œÓ‚Âı";
+                        return "–ü–æ–≤–µ—Ä—Ö";
                     if (!(this.record.square + 0) || (this.record.square + 0) <= 0)
-                        return "œÎÓ˘‡";
+                        return "–ü–ª–æ—â–∞";
                     if (!(this.record.price + 0) || (this.record.price + 0) <= 0)
-                        return "÷≥Ì‡";
+                        return "–¶—ñ–Ω–∞";
                     return false;
                 },
                 save: function () {

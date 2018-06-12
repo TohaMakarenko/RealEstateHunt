@@ -1,7 +1,4 @@
 define([], function () {
-    var controllerAddress = '/RealEstate';
-    var getPageMethod = 'GetRealEstatesPage';
-    var getSortByPricePageMethod = 'GetRealEstatesOrderByPricePage';
     return function (template) {
         return {
             template: template,
@@ -13,19 +10,30 @@ define([], function () {
                         columns: [
                             {
                                 name: "name",
-                                caption: "Назва"
+                                caption: "Назва",
+                                getLink: function (item) {
+                                    return 'RealEstate/' + item.id
+                                }
                             },
                             {
-                                name: "city.name",
+                                name: "cityName",
                                 caption: "Місто"
                             },
                             {
-                                name: "district.name",
+                                name: "districtName",
                                 caption: "Район"
                             },
                             {
-                                name: "type.name",
-                                caption: "Тип"
+                                name: "typeName",
+                                caption: "Тип",
+                                filter: {
+                                    controller: "RealEstate",
+                                    method: "GetRealEstatesByTypePage",
+                                    lookupConfig: {
+                                        controller: "RealEstate",
+                                        method: "GetRealEstateTypes"
+                                    }
+                                }
                             },
                             {
                                 name: "price",

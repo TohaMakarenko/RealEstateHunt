@@ -1,12 +1,12 @@
-define(["Vue", "lodash"], function (Vue, _) {
+define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
     return function (template) {
         return Vue.component('data-grid', {
-            props: ['config'],
+            props: ['config', 'filterMethod', 'filterValue'],
             template: template,
             data: function () {
                 return {
                     collection: [],
-                    loadPageMethod:"",
+                    loadPageMethod: "",
                     page: 0,
                     orderDirection: 0,
                     isEnd: false
@@ -14,16 +14,47 @@ define(["Vue", "lodash"], function (Vue, _) {
             },
             created: function () {
                 this.loadPageMethod = this.config.pageMethod;
-                this.loadPage(0, this.loadPageMethod, 0);
+                this.loadPage();
+            },
+            watch: {
+                filterMethod: function () {
+                    this.loadPageMethod = this.filterMethod;
+                    this.reloadData(this.filterValue, this.filterMethod)
+                },
+                filterValue: function () {
+                    this.loadPageMethod = this.filterMethod;
+                    this.reloadData(this.filterValue, this.filterMethod)
+                }
             },
             methods: {
-                loadPage: function (page, method, orderDirection) {
-                    this.$http.get(this.config.controller + "/" + method, {
-                        params: {
-                            pageNumber: page,
-                            orderDirection: orderDirection
+                reloadData: function (method, params) {
+                    this.page = 0;
+                    this.loadPageMethod = method;
+                    this.orderDirection = params.orderDirection;
+                    this.collection = [];
+                    this.isEnd = false;
+                    this.loadPage(method, params);
+                },
+                loadPage: function (method, params) {
+                    if (!params) {
+                        params = {
+                            pageNumber: this.page,
+                            orderDirection: this.orderDirection
+                        };
+                    }
+                    else {
+                        if (!params.pageNumber) {
+                            params.pageNumber = this.page
                         }
-                    }).then(function (response) {
+                        if (_.isNumber(params.orderDirection) && !_.isNaN(params.orderDirection)) {
+                            params.orderDirection = orderDirection;
+                        }
+                    }
+                    this.$http.get(this.config.controller + "/" +
+                        (method ? method : this.loadPageMethod),
+                        {
+                            params: params
+                        }).then(function (response) {
                         if (response.data && response.data.length) {
                             this.collection = this.collection.concat(response.data);
                             this.isEnd = response.data.length < this.$config.constants.defaultPageSize;
@@ -33,10 +64,10 @@ define(["Vue", "lodash"], function (Vue, _) {
                         }
                     }.bind(this));
                 },
-                getColumnValue: function(item, column){
+                getColumnValue: function (item, column) {
                     var path = column.split('.');
-                    var result = item   ;
-                    path.forEach(function (value) { 
+                    var result = item;
+                    path.forEach(function (value) {
                         result = result[value];
                     });
                     return result;
@@ -47,18 +78,21 @@ define(["Vue", "lodash"], function (Vue, _) {
                         return i.name === el;
                     });
                     cfg = this.config.columns[cfg];
-                    this.page = 0;
-                    this.orderDirection = !this.orderDirection + 0;
-                    this.collection = [];
-                    this.loadPageMethod = cfg.orderMethod;
-                    this.isEnd = false;
-                    if(cfg.orderMethod){
-                        this.loadPage(0, this.loadPageMethod, this.orderDirection);   
+                    if (!cfg.orderMethod)
+                        return;
+
+                    if (cfg.orderMethod) {
+                        this.reloadData(cfg.orderMethod, !this.orderDirection + 0);
                     }
                 },
                 loadMore: function () {
                     this.page++;
-                    this.loadPage(this.page, this.loadPageMethod, this.orderDirection);
+                    this.loadPage();
+                },
+                getLink: function (item, config) {
+                    if (_.isFunction(config.getLink)) {
+                        return config.getLink(item);
+                    }
                 }
             }
         })

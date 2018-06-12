@@ -8,11 +8,14 @@
             </tr>
             <tr v-for="i in collection">
                 <td v-for="c in config.columns">
-                    {{getColumnValue(i, c.name)}}
+                    <router-link v-if="c.getLink" v-bind:to="getLink(i, c)">
+                        {{getColumnValue(i, c.name)}}
+                    </router-link>
+                    <span v-else>{{getColumnValue(i, c.name)}}</span>
                 </td>
             </tr>
         </table>
-        <button class="button" v-show="!isEnd" v-on:click="loadMore">Завантажити більше</button>
+        <button class="btn" v-show="!isEnd" v-on:click="loadMore">Завантажити більше</button>
     </div>
 </template>
 

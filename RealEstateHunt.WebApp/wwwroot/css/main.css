@@ -1,3 +1,6 @@
 body{
     background: #0b2e13;
 }
+input[type^="button"]{
+    min-width: 200px;
+}
