@@ -1,7 +1,7 @@
 <template>
     <label>
-        {{label}}<br>
-        <select v-model="selected">
+        {{label}}
+        <select class="form-control" v-model="selected">
             <option v-for="i in collection" v-bind:value="i[id]">
                 {{ i[display] }}
             </option>

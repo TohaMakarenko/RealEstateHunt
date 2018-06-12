@@ -7,7 +7,11 @@ define([], function () {
             template: template,
             data: function () {
                 return {
-                    record: {},
+                    record: {
+                        type: {id: -1},
+                        city: {id: -1},
+                        district: {id: -1}
+                    },
                     reTypes: [],
                     cities: [],
                     districts: [],
@@ -22,11 +26,6 @@ define([], function () {
             created: function () {
                 if (this.$route.params.id !== 'new') {
                     this.loadEntity(this.$route.params.id)
-                }
-                else {
-                    this.record.type = {id: -1};
-                    this.record.city = {id: -1};
-                    this.record.district = {id: -1};
                 }
             },
             computed: {
@@ -54,7 +53,7 @@ define([], function () {
                     }
                     this.save();
                 },
-                onClose: function(){
+                onClose: function () {
                     this.$router.back();
                 },
                 onDelete: function () {

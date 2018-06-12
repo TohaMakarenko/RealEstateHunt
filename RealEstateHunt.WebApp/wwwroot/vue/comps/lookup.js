@@ -42,6 +42,9 @@ define(["Vue", "lodash"], function (Vue, _) {
                 filterValue: function () {
                     this.loadLookup();
                 },
+                value: function(val){
+                    this.selected = val;
+                },
                 selected: function () {
                     this.$emit("change", this.selected);
                 }
@@ -49,7 +52,7 @@ define(["Vue", "lodash"], function (Vue, _) {
             methods: {
                 loadLookup: function () {
                     var params = {};
-                    if (this.filterValue) {
+                    if (this.filterValue !== undefined  && this.filterValue >= 0) {
                         params[this.filterParamName] = this.filterValue;
                     }
                     this.$http.get(this.controller + '/' + this.method, {
