@@ -11,17 +11,11 @@ define([], function () {
                         type: {id: -1},
                         city: {id: -1},
                         district: {id: -1}
-                    },
-                    reTypes: [],
-                    cities: [],
-                    districts: [],
-                    type: {},
-                    city: {},
-                    district: {}
+                    }
                 }
             },
             watch: {
-                '$route': 'fetchData'
+                '$route.params.id': 'loadEntity'
             },
             created: function () {
                 if (this.$route.params.id !== 'new') {
@@ -48,19 +42,19 @@ define([], function () {
                 onSave: function () {
                     var validationResult = this.validate();
                     if (validationResult) {
-                        alert("Заповніть поле " + validationResult);
+                        alert("Заповніть коректно поле " + validationResult);
                         return;
                     }
                     this.save();
                 },
                 onClose: function () {
-                    this.$router.back();
+                    this.$router.push('/realEstate');
                 },
                 onDelete: function () {
                     this.$http.delete(controllerAddress + '/DeleteRecord', {
                         params: {id: this.record.id}
                     }).then(function (data) {
-                        this.$router.back()
+                        this.$router.push('/realEstate');
                     }.bind(this));
                 },
                 validate: function () {
@@ -92,7 +86,9 @@ define([], function () {
                                     'Content-Type': 'application/json'
                                 }
                             }).then(function (data) {
-                            this.$router.back()
+                            if (data.data.id) {
+                                this.$router.push('/realEstate/' + data.data.id)
+                            }
                         }.bind(this));
                     }
                     else {
@@ -101,9 +97,7 @@ define([], function () {
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
-                            }).then(function (data) {
-                            this.$router.back();
-                        }.bind(this));
+                            })
                     }
                 }
             }
