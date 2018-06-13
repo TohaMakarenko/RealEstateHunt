@@ -7,5 +7,6 @@
         public string ContactName { get; set; }
         public int RealEstateId { get; set; }
         public string RealEstateName { get; set; }
+        public string Status { get; set; }
     }
 }

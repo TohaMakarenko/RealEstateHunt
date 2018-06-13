@@ -184,7 +184,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         public async Task<IEnumerable<Contact>> GetAvailableForOfferClients(int maxOffers)
         {
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
-                await DbContext.Contacts.Where(c => c.Offers.Count < maxOffers).ToListAsync());
+                await DbContext.Contacts.Where(c => c.Offers.Count(o => !o.IsDeclined) < maxOffers)
+                    .ToListAsync());
         }
 
         public async Task<IEnumerable<Contact>> GetContactsWhichDesireRealEstateAsync(int realEstateid, int maxOffers)
@@ -198,7 +199,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                 await DbContext.Contacts
                     .Where(c => c.PreferredTypeId == realEstate.TypeId
                                 && c.PreferredPrice > realEstate.Price
-                                && c.Offers.Count < maxOffers)
+                                && c.Offers.Count(o => !o.IsDeclined) < maxOffers)
                     .ToListAsync());
         }
     }

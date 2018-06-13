@@ -6,7 +6,7 @@
             <span v-show="!canDecline && (record.isDeclined===true)">Відхилена</span>
             <button class="btn" v-show="canSave" v-on:click="onSave">Зберегти</button>
         </div>
-        <div class="row">
+        <div class="row" v-if="isNew">
             <div class="col-md-5">
                 <div class="form-group">
                     <lookup label="Клієнт" controller="Offer" method="GetContactsWhichDesireRealEstateAsync"
@@ -21,7 +21,20 @@
                             v-bind:filter-value="record.contact.id" filter-param-name="contactId"></lookup>
                 </div>
             </div>
-            
+        </div>
+        <div class="row" v-else>
+            <div class="col-md-5">
+                Клієнт: 
+                <router-link v-bind:to="'/contact/' + record.contact.id">
+                    {{record.contact.firstName + record.contact.lastName}}
+                </router-link>
+            </div>
+            <div class="col-md-5">
+                Нерухомість: 
+                <router-link v-bind:to="'/realEstate/' + record.realEstate.id">
+                    {{record.realEstate.name}}
+                </router-link>
+            </div>
         </div>
     </div>
 </template>

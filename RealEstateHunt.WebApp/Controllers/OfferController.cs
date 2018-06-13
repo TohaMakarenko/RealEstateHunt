@@ -51,7 +51,7 @@ namespace RealEstateHunt.WebApp.Controllers
                     ContactName = i.Contact.FirstName + " " + i.Contact.LastName,
                     RealEstateId = i.RealEstate.Id,
                     RealEstateName = i.RealEstate.Name,
-                    
+                    Status = i.IsDeclined ? "Відхилена" : "Активна"
                 });
         }
 

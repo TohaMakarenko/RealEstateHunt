@@ -26,6 +26,9 @@ define([], function () {
                 canDecline: function () {
                     return this.$route.params.id !== 'new' &&
                         !this.record.isDeclined;
+                },
+                isNew: function () {
+                    return this.$route.params.id === 'new'
                 }
             },
             methods: {

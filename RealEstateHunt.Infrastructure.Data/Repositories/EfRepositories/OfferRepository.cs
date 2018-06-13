@@ -40,7 +40,8 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
         public async Task<bool> GetCanAddOfferToClientAsync(int clientId, int maxOffers)
         {
-            return await DbContext.Offers.Where(o => o.ContactId == clientId).CountAsync() < maxOffers;
+            return await DbContext.Offers.Where(o => o.ContactId == clientId).Where(o => !o.IsDeclined)
+                       .CountAsync() < maxOffers;
         }
 
         public override async Task<IEnumerable<Offer>> GetEntitiesAsync()

@@ -28,6 +28,10 @@ define([], function () {
                                 getLink: function (item) {
                                     return 'realEstate/' + item.realEstateId
                                 }
+                            },
+                            {
+                                name: "status",
+                                caption: "Стан"
                             }
                         ]
                     }

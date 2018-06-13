@@ -14,11 +14,13 @@ namespace RealEstateHunt.WebApp.Controllers
     public class ContactController : Controller
     {
         private readonly IClientService _clientService;
+        private readonly ISearchService _searchService;
         private readonly IMapper _mapper;
 
-        public ContactController(IClientService clientService, IMapper mapper)
+        public ContactController(IClientService clientService, ISearchService searchService, IMapper mapper)
         {
             _clientService = clientService;
+            _searchService = searchService;
             _mapper = mapper;
         }
 
@@ -76,6 +78,12 @@ namespace RealEstateHunt.WebApp.Controllers
             return _mapper.Map<IEnumerable<Contact>, IEnumerable<ContactGridModel>>(
                 await _clientService.GetClientsOrderByBankAccountNumberPageAsync(page, ViewConstants.DefaultPageSize,
                     (OrderDirection) orderDirection));
+        }
+
+        public async Task<IEnumerable<ContactGridModel>> Search(string keyWord)
+        {
+            return _mapper.Map<IEnumerable<Contact>, IEnumerable<ContactGridModel>>(
+                await _searchService.SearchContactsAsync(keyWord));
         }
     }
 }

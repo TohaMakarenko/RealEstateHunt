@@ -4,6 +4,7 @@ define([], function () {
             template: template,
             data: function () {
                 return {
+                    searchValue: "",
                     gridDataConfig: {
                         controller: "Contact",
                         pageMethod: "GetPage",
@@ -34,6 +35,16 @@ define([], function () {
                                 orderMethod: "GetOrderByBankAccountNumberPage"
                             }
                         ]
+                    }
+                }
+            },
+            computed: {
+                searchMethod: function () {
+                    return this.searchValue ? "Search" : "GetPage"
+                },
+                searchValueObject: function () {
+                    return {
+                        keyWord: this.searchValue
                     }
                 }
             },

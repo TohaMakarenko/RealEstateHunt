@@ -14,7 +14,7 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
             },
             created: function () {
                 this.loadPageMethod = this.config.pageMethod;
-                this.loadPageDebounced =  _.debounce(this.loadPage, 100);
+                this.loadPageDebounced = _.debounce(this.loadPage, 500);
                 this.loadPageDebounced();
             },
             watch: {
@@ -30,7 +30,6 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
                     this.loadPageMethod = method;
                     this.orderDirection = params.orderDirection;
                     this.collection = [];
-                    this.isEnd = false;
                     this.loadPageDebounced(method, params);
                 },
                 loadPage: function (method, params) {
@@ -40,22 +39,24 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
                             orderDirection: this.orderDirection
                         };
                     }
-                    else {
-                        if (!params.pageNumber) {
-                            params.pageNumber = this.page
-                        }
-                        if (!_.isNumber(params.orderDirection) && _.isNaN(params.orderDirection)) {
-                            params.orderDirection = this.orderDirection;
-                        }
+                    else if (!_.isNumber(params.orderDirection) && _.isNaN(params.orderDirection)) {
+                        params.orderDirection = this.orderDirection;
                     }
+                    
                     this.$http.get(this.config.controller + "/" +
                         (method ? method : this.loadPageMethod),
                         {
                             params: params
                         }).then(function (response) {
                         if (response.data && response.data.length) {
-                            this.collection = this.collection.concat(response.data);
-                            this.isEnd = response.data.length < this.$config.constants.defaultPageSize;
+                            if (!_.isNumber(params.pageNumber)) {
+                                this.collection = response.data;
+                                this.isEnd = true;
+                            }
+                            else {
+                                this.collection = this.collection.concat(response.data);
+                                this.isEnd = response.data.length < this.$config.constants.defaultPageSize;
+                            }
                         }
                         else {
                             this.isEnd = true;
@@ -80,7 +81,7 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
                         return;
 
                     this.orderDirection = !this.orderDirection + 0;
-                    
+
                     if (cfg.orderMethod) {
                         this.reloadData(cfg.orderMethod, {
                             orderDirection: this.orderDirection
