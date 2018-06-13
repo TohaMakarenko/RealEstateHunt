@@ -14,26 +14,24 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
             },
             created: function () {
                 this.loadPageMethod = this.config.pageMethod;
-                this.loadPage();
+                this.loadPageDebounced =  _.debounce(this.loadPage, 100);
+                this.loadPageDebounced();
             },
             watch: {
-                filterMethod: function (val) {
-                    this.loadPageMethod = val;
-                    this.reloadData(this.filterValue, this.filterMethod)
-                },
-                filterValue: function (val) {
-                    this.loadPageMethod = val;
-                    this.reloadData(this.filterValue, this.filterMethod)
-                }
+                'filterMethod': 'filterChanged',
+                'filterValue': 'filterChanged'
             },
             methods: {
+                filterChanged: function () {
+                    this.reloadData(this.filterMethod, this.filterValue)
+                },
                 reloadData: function (method, params) {
                     this.page = 0;
                     this.loadPageMethod = method;
                     this.orderDirection = params.orderDirection;
                     this.collection = [];
                     this.isEnd = false;
-                    this.loadPage(method, params);
+                    this.loadPageDebounced(method, params);
                 },
                 loadPage: function (method, params) {
                     if (!params) {

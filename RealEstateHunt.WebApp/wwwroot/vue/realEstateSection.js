@@ -4,6 +4,7 @@ define([], function () {
             template: template,
             data: function () {
                 return {
+                    searchValue: "",
                     gridDataConfig: {
                         controller: "RealEstate",
                         pageMethod: "GetRealEstatesPage",
@@ -42,6 +43,16 @@ define([], function () {
                                 orderMethod: "GetRealEstatesOrderByPricePage"
                             }
                         ]
+                    }
+                }
+            },
+            computed: {
+                searchMethod: function () {
+                    return this.searchValue ? "Search" : "GetRealEstatesPage"
+                },
+                searchValueObject: function () {
+                    return {
+                        keyWord: this.searchValue
                     }
                 }
             },

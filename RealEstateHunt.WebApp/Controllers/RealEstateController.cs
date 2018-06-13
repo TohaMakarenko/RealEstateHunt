@@ -15,11 +15,13 @@ namespace RealEstateHunt.WebApp.Controllers
     public class RealEstateController : Controller
     {
         private readonly IRealEstateService _realEstateService;
+        private readonly ISearchService _searchService;
         private readonly IMapper _mapper;
 
-        public RealEstateController(IRealEstateService realEstateService, IMapper mapper)
+        public RealEstateController(IRealEstateService realEstateService, ISearchService searchService, IMapper mapper)
         {
             _realEstateService = realEstateService;
+            _searchService = searchService;
             _mapper = mapper;
         }
 
@@ -87,10 +89,15 @@ namespace RealEstateHunt.WebApp.Controllers
                     (OrderDirection) orderDirection));
         }
 
-
         public Task<IEnumerable<RealEstateType>> GetRealEstateTypes()
         {
             return _realEstateService.GetRealEstateTypesAsync();
+        }
+        
+        public async Task<IEnumerable<RealEstateGridModel>> Search(string keyWord)
+        {
+            return _mapper.Map<IEnumerable<RealEstate>, IEnumerable<RealEstateGridModel>>(
+                await _searchService.SearchRealEstatesAsync(keyWord));
         }
     }
 }
