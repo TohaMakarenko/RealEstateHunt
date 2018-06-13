@@ -13,7 +13,10 @@ namespace RealEstateHunt.Core.Data.Repositories
             GetClientsOrderByFirstNamePageAsync(int pageNumber, int pageSize, OrderDirection orderDirection);
 
         Task<IEnumerable<Contact>> GetClientsOrderByLastNameAsync(OrderDirection orderDirection);
-        Task<IEnumerable<Contact>> GetClientsOrderByLastNamePageAsync(int pageNumber, int pageSize, OrderDirection orderDirection);
+
+        Task<IEnumerable<Contact>> GetClientsOrderByLastNamePageAsync(int pageNumber, int pageSize,
+            OrderDirection orderDirection);
+
         Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberAsync(OrderDirection orderDirection);
 
         Task<IEnumerable<Contact>> GetClientsOrderByBankAccountNumberPageAsync(int pageNumber, int pageSize,
@@ -25,5 +28,7 @@ namespace RealEstateHunt.Core.Data.Repositories
 
         Task<IEnumerable<Contact>> SearchContactsAsync(string keyWord);
         Task<IEnumerable<Contact>> ExtendedSearchContactsAsync(Contact contact);
+        Task<IEnumerable<Contact>> GetAvailableForOfferClients(int maxOffers);
+        Task<IEnumerable<Contact>> GetContactsWhichDesireRealEstateAsync(int realEstateid, int maxOffers);
     }
 }

@@ -34,8 +34,13 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
 
             return Mapper.Map<OfferEntity, Offer>(
-                await IncludeCollections(IncludeEntities(DbContext.Offers))
+                await IncludeCollections(IncludeEntities(DbContext.Offers.AsNoTracking()))
                     .FirstOrDefaultAsync(e => e.Id == id));
+        }
+
+        public async Task<bool> GetCanAddOfferToClientAsync(int clientId, int maxOffers)
+        {
+            return await DbContext.Offers.Where(o => o.ContactId == clientId).CountAsync() < maxOffers;
         }
 
         public override async Task<IEnumerable<Offer>> GetEntitiesAsync()
@@ -51,7 +56,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
             return Mapper.Map<IEnumerable<OfferEntity>, IEnumerable<Offer>>(
                 await IncludeEntities(DbContext.Offers)
-                    .OrderByDescending(e=>e.Id)
+                    .OrderByDescending(e => e.Id)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());

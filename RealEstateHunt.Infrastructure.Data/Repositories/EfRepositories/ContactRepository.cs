@@ -55,7 +55,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
             return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
                 await IncludeEntities(DbContext.Contacts)
-                    .OrderByDescending(e=>e.Id)
+                    .OrderByDescending(e => e.Id)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());
@@ -178,6 +178,27 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                                 || !string.IsNullOrEmpty(contact.Street) && c.Street.Contains(contact.Street)
                                 || contact.PreferredPrice != 0 && contact.PreferredPrice < c.PreferredPrice
                                 || contact.PreferredType != null && contact.PreferredType.Id == c.PreferredTypeId)
+                    .ToListAsync());
+        }
+
+        public async Task<IEnumerable<Contact>> GetAvailableForOfferClients(int maxOffers)
+        {
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+                await DbContext.Contacts.Where(c => c.Offers.Count < maxOffers).ToListAsync());
+        }
+
+        public async Task<IEnumerable<Contact>> GetContactsWhichDesireRealEstateAsync(int realEstateid, int maxOffers)
+        {
+            var realEstate = await DbContext.RealEstates.FindAsync(realEstateid);
+            if (realEstate == null) {
+                return null;
+            }
+
+            return Mapper.Map<IEnumerable<ContactEntity>, IEnumerable<Contact>>(
+                await DbContext.Contacts
+                    .Where(c => c.PreferredTypeId == realEstate.TypeId
+                                && c.PreferredPrice > realEstate.Price
+                                && c.Offers.Count < maxOffers)
                     .ToListAsync());
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using RealEstateHunt.Core.Data;
 using RealEstateHunt.Core.Data.Models;
 
@@ -6,10 +7,13 @@ namespace RealEstateHunt.Core.Business.Services
 {
     public interface IOfferService
     {
-        Task<bool> AddOfferToClientAsync(Contact client, Offer offer);
-        Task<bool> AddOfferToClientAsync(int clientId, Offer offer);
-        Task<bool> IsDesiredAsync(Contact client, RealEstate realEstate);
-        Task<bool> IsDesiredAsync(int clientId, RealEstate realEstate);
-        Task DeclineOfferAsync(Offer offer);
+        Task<Offer> AddOfferAsync(Offer offer);
+        Task<Offer> GetOfferAsync(int id);
+        Task<IEnumerable<Offer>> GetOffersAsync();
+        Task<IEnumerable<Offer>> GetOffersPageAsync(int pageNumber, int pageSize);
+        Task<IEnumerable<Contact>> GetAvailableClientsAsync();
+        Task<IEnumerable<RealEstate>> GetDesiredRealEstatesForClientAsync(int contactId);
+        Task<IEnumerable<Contact>> GetContactsWhichDesireRealEstateAsync(int realEstateid);
+        Task DeclineOfferAsync(int offerId);
     }
 }

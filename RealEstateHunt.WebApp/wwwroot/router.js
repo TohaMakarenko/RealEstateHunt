@@ -30,6 +30,14 @@ define("router", ["vue-router"], function (VueRouter) {
             {
                 path: '/realEstate/:id',
                 component: view('realEstatePage')
+            },
+            {
+                path: '/offer',
+                component: view('offerSection')
+            },
+            {
+                path: '/offer/:id',
+                component: view('offerPage')
             }
         ]
     });

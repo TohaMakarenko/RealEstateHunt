@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RealEstateHunt.Core.Business.Services;
@@ -12,7 +13,6 @@ namespace RealEstateHunt.Infrastructure.Business.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        //TODO: make it as db constant
         private const int MaxOffersPerUser = 5;
 
         public OfferService(IUnitOfWork unitOfWork)
@@ -20,60 +20,54 @@ namespace RealEstateHunt.Infrastructure.Business.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task<bool> AddOfferToClientAsync(Contact client, Offer offer)
+
+        public async Task<Offer> AddOfferAsync(Offer offer)
         {
-            if (client == null)
-                throw new ArgumentNullException(nameof(client));
-            if (offer == null)
-                throw new ArgumentNullException(nameof(offer));
-
-            return AddOfferToClientAsync(client.Id, offer);
-        }
-
-        public async Task<bool> AddOfferToClientAsync(int clientId, Offer offer)
-        {
-            if (offer == null)
-                throw new ArgumentNullException(nameof(offer));
-
-            if ((await _unitOfWork.ContactRepository.FindByIdAsync(clientId)).Offers.Count() > MaxOffersPerUser) {
-                return false;
+            if (await _unitOfWork.OfferRepository.GetCanAddOfferToClientAsync(offer.Contact.Id, MaxOffersPerUser)) {
+                return await _unitOfWork.OfferRepository.AddAsync(offer);
             }
 
-            offer.Contact = new Contact() {
-                Id = clientId
-            };
-            await _unitOfWork.OfferRepository.AddAsync(offer);
-            await _unitOfWork.SaveAsync();
-            return true;
+            return null;
         }
 
-        public Task<bool> IsDesiredAsync(Contact client, RealEstate realEstate)
+        public Task<Offer> GetOfferAsync(int id)
         {
-            if (client == null)
-                throw new ArgumentNullException(nameof(client));
-            if (realEstate == null)
-                throw new ArgumentNullException(nameof(realEstate));
-
-            return IsDesiredAsync(client.Id, realEstate);
+            return _unitOfWork.OfferRepository.FindByIdAsync(id);
         }
 
-        public async Task<bool> IsDesiredAsync(int clientId, RealEstate realEstate)
+        public Task<IEnumerable<Offer>> GetOffersAsync()
         {
-            if (realEstate == null)
-                throw new ArgumentNullException(nameof(realEstate));
-
-            var client = await _unitOfWork.ContactRepository.FindByIdAsync(clientId);
-            return client.PreferredPrice > realEstate.Price
-                   && client.PreferredType.Id == realEstate.Type.Id;
+            return _unitOfWork.OfferRepository.GetEntitiesAsync();
         }
 
-        public Task DeclineOfferAsync(Offer offer)
+        public Task<IEnumerable<Offer>> GetOffersPageAsync(int pageNumber, int pageSize)
         {
+            return _unitOfWork.OfferRepository.GetPageAsync(pageNumber, pageSize);
+        }
+
+        public Task<IEnumerable<Contact>> GetAvailableClientsAsync()
+        {
+            return _unitOfWork.ContactRepository.GetAvailableForOfferClients(MaxOffersPerUser);
+        }
+
+        public Task<IEnumerable<RealEstate>> GetDesiredRealEstatesForClientAsync(int contactId)
+        {
+            return _unitOfWork.RealEstateRepository.GetDesiredRealEstatesForClientAsync(contactId);
+        }
+
+        public Task<IEnumerable<Contact>> GetContactsWhichDesireRealEstateAsync(int realEstateid)
+        {
+            return _unitOfWork.ContactRepository.GetContactsWhichDesireRealEstateAsync(realEstateid, MaxOffersPerUser);
+        }
+
+        public async Task DeclineOfferAsync(int offerId)
+        {
+            var offer = await _unitOfWork.OfferRepository.FindByIdAsync(offerId);
             if (offer == null) throw new ArgumentNullException(nameof(offer));
 
             offer.IsDeclined = true;
             _unitOfWork.OfferRepository.Update(offer);
-            return _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync();
         }
     }
 }

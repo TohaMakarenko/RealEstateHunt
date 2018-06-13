@@ -17,12 +17,12 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
                 this.loadPage();
             },
             watch: {
-                filterMethod: function () {
-                    this.loadPageMethod = this.filterMethod;
+                filterMethod: function (val) {
+                    this.loadPageMethod = val;
                     this.reloadData(this.filterValue, this.filterMethod)
                 },
-                filterValue: function () {
-                    this.loadPageMethod = this.filterMethod;
+                filterValue: function (val) {
+                    this.loadPageMethod = val;
                     this.reloadData(this.filterValue, this.filterMethod)
                 }
             },

@@ -17,7 +17,7 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         public RealEstateEntity RealEstate { get; set; }
 
         [ForeignKey("Manager")]
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
 
         public EmployeeEntity Manager { get; set; }
 

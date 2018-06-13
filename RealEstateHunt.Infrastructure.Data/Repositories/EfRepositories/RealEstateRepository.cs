@@ -51,7 +51,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
 
             return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
                 await IncludeEntities(DbContext.RealEstates)
-                    .OrderByDescending(e=>e.Id)
+                    .OrderByDescending(e => e.Id)
                     .Skip(pageNumber * pageSize)
                     .Take(pageSize)
                     .ToListAsync());
@@ -130,12 +130,12 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
             return GetOrderedPageAsync(IncludeEntities(DbContext.RealEstates), re => re.Price, pageNumber, pageSize,
                 orderDirection);
         }
-        
+
         public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypeAsync(OrderDirection orderDirection)
         {
             return GetOrderedAsync(IncludeEntities(DbContext.RealEstates), re => re.Type.Name, orderDirection);
         }
-        
+
         public Task<IEnumerable<RealEstate>> GetRealEstatesOrderByTypePageAsync(int pageNumber, int pageSize,
             OrderDirection orderDirection)
         {
@@ -160,6 +160,20 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                                  || keyWord.Contains(re.District.Name)
                                  || re.Street.Contains(keyWord)
                                  || keyWord.Contains(re.Street))
+                    .ToListAsync());
+        }
+
+        public async Task<IEnumerable<RealEstate>> GetDesiredRealEstatesForClientAsync(int clientId)
+        {
+            var client = await DbContext.Contacts.FindAsync(clientId);
+            if (client == null) {
+                return null;
+            }
+
+            return Mapper.Map<IEnumerable<RealEstateEntity>, IEnumerable<RealEstate>>(
+                await DbContext.RealEstates
+                    .Where(re => re.TypeId == client.PreferredTypeId
+                                 && re.Price < client.PreferredPrice)
                     .ToListAsync());
         }
     }
