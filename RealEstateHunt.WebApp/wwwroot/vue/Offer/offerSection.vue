@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    define(["vue/offerSection.js", "rvue!vue/comps/dataGrid"], function (search) {
+    define(["vue/Offer/offerSection.js", "rvue!vue/comps/dataGrid"], function (search) {
         return search(template);
     })
 </script>

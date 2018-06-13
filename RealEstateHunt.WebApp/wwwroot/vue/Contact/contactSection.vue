@@ -8,7 +8,7 @@
                 </label>
             </div>
             <div class=" col-md-5 float-right">
-                <button class="btn float-right" v-on:click="addNewRealEstate">Додати</button>
+                <button class="btn float-right" v-on:click="addNewContact">Додати</button>
             </div>
         </div>
         <div class="row">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    define(["vue/realEstateSection.js", "rvue!vue/comps/dataGrid"], function (search) {
+    define(["vue/Contact/contactSection.js", "rvue!vue/comps/dataGrid"], function (search) {
         return search(template);
     })
 </script>

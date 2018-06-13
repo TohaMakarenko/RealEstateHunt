@@ -8,36 +8,32 @@ define("router", ["vue-router"], function (VueRouter) {
     return new VueRouter({
         routes: [
             {
-                path: '/test',
-                component: view('test')
-            },
-            {
                 path: '/search',
-                component: view('search')
+                component: view('Search/search')
             },
             {
                 path: '/contact',
-                component: view('contactSection')
-            },
-            {
-                path: '/realEstate',
-                component: view('realEstateSection')
+                component: view('Contact/contactSection')
             },
             {
                 path: '/contact/:id',
-                component: view('contactPage')
+                component: view('Contact/contactPage')
+            },
+            {
+                path: '/realEstate',
+                component: view('RealEstate/realEstateSection')
             },
             {
                 path: '/realEstate/:id',
-                component: view('realEstatePage')
+                component: view('RealEstate/realEstatePage')
             },
             {
                 path: '/offer',
-                component: view('offerSection')
+                component: view('Offer/offerSection')
             },
             {
                 path: '/offer/:id',
-                component: view('offerPage')
+                component: view('Offer/offerPage')
             }
         ]
     });

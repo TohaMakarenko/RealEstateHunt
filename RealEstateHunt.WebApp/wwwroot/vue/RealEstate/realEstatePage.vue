@@ -70,7 +70,7 @@
 </template>
 
 <script>
-    define(["vue/realEstatePage.js", "rvue!vue/comps/lookup"], function (search) {
+    define(["vue/RealEstate/realEstatePage.js", "rvue!vue/comps/lookup"], function (search) {
         return search(template);
     })
 </script>

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    define(["vue/offerPage.js", "rvue!vue/comps/lookup"], function (search) {
+    define(["vue/Offer/offerPage.js", "rvue!vue/comps/lookup"], function (search) {
         return search(template);
     })
 </script>

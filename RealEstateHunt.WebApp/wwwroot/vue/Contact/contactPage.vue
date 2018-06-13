@@ -64,7 +64,7 @@
 </template>
 
 <script>
-    define(["vue/contactPage.js", "rvue!vue/comps/lookup"], function (search) {
+    define(["vue/Contact/contactPage.js", "rvue!vue/comps/lookup"], function (search) {
         return search(template);
     })
 </script>
