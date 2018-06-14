@@ -58,7 +58,7 @@ define([], function () {
                     }.bind(this));
                 },
                 validate: function () {
-                    if (!this.record.name)
+                    if (!this.validateName(this.record.name))
                         return "Назва";
                     if (!this.record.type || this.record.type.id <= 0)
                         return "Тип";
@@ -66,17 +66,29 @@ define([], function () {
                         return "Місто";
                     if (!this.record.district || this.record.district.id <= 0)
                         return "Район";
-                    if (!this.record.number)
+                    if (!this.validateNumber(this.record.number))
                         return "Номер";
-                    if (!this.record.street)
+                    if (!this.validateStreet(this.record.street))
                         return "Вулиця";
-                    if (this.record.floor <= 0)
+                    if (!(this.record.floor + 0) || (this.record.floor + 0) <= 0)
                         return "Поверх";
                     if (!(this.record.square + 0) || (this.record.square + 0) <= 0)
                         return "Площа";
                     if (!(this.record.price + 0) || (this.record.price + 0) <= 0)
                         return "Ціна";
                     return false;
+                },
+                validateName: function (value) {
+                    return /^([а-яёі']*\s?)*$/iu.test(value);
+                },
+                validateBankAccount: function (value) {
+                    return /^\d{5,20}$/.test(value);
+                },
+                validateStreet: function (value) {
+                    return /^([А-ЯЁІ'][а-яёі']*\s?)*$/iu.test(value);
+                },
+                validateNumber: function (value) {
+                    return /^\d{1,4}[а-яёі']*$/.test(value);
                 },
                 save: function () {
                     if (this.$route.params.id === 'new') {

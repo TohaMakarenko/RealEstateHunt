@@ -329,3 +329,5 @@ ASALocalRun/
 .mfractor/
 
 Export/
+db/
+*.cd

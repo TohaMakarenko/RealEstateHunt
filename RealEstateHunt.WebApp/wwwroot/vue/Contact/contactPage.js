@@ -56,9 +56,9 @@ define([], function () {
                     }.bind(this));
                 },
                 validate: function () {
-                    if (!this.record.firstName)
+                    if (!this.validateName(this.record.firstName))
                         return "Ім'я";
-                    if (!this.record.lastName)
+                    if (!this.validateName(this.record.lastName))
                         return "Прізвище";
                     if (_.isEmpty(this.record.city) ||
                         this.record.city.id <= 0)
@@ -66,11 +66,11 @@ define([], function () {
                     if (_.isEmpty(this.record.district) ||
                         this.record.district.id <= 0)
                         return "Район";
-                    if (!this.record.number)
+                    if (!this.validateNumber(this.record.number))
                         return "Номер";
-                    if (!this.record.street)
+                    if (!this.validateStreet(this.record.street))
                         return "Вулиця";
-                    if (!this.record.bankAccountNumber)
+                    if (!this.validateBankAccount(this.record.bankAccountNumber))
                         return "Номер банкцівського рахунку";
                     if (!(this.record.preferredPrice + 0) || (this.record.preferredPrice + 0) <= 0)
                         return "Бажана ціна";
@@ -78,6 +78,18 @@ define([], function () {
                         this.record.preferredType.id <= 0)
                         return "Бажаний тип";
                     return false;
+                },
+                validateName: function (value) {
+                    return /^[А-ЯЁІ'][а-яёі']*$/iu.test(value);
+                },
+                validateBankAccount: function (value) {
+                    return /^\d{5,20}$/.test(value);
+                },
+                validateStreet: function (value) {
+                    return /^([А-ЯЁІ'][а-яёі']*\s?)*$/iu.test(value);
+                },
+                validateNumber: function (value) {
+                    return /^\d{1,4}[а-яёі']*$/.test(value);
                 },
                 save: function () {
                     if (this.$route.params.id === 'new') {
