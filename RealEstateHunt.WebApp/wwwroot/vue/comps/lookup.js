@@ -11,7 +11,7 @@ define(["Vue", "lodash"], function (Vue, _) {
             data: function () {
                 return {
                     collection: [],
-                    selected: 0
+                    selected: -1
                 }
             },
             created: function () {
@@ -40,7 +40,6 @@ define(["Vue", "lodash"], function (Vue, _) {
             },
             watch: {
                 filterValue: function () {
-                    this.selected = -1;
                     this.loadLookup();
                 },
                 value: function (val) {
@@ -61,6 +60,11 @@ define(["Vue", "lodash"], function (Vue, _) {
                     }).then(function (response) {
                         if (response.data) {
                             this.collection = response.data;
+                            if (_.findIndex(this.collection, function (i) {
+                                return i[this.id] === this.selected;
+                            }.bind(this)) < 0) {
+                                this.selected = -1;
+                            }
                         }
                     }.bind(this));
                 },

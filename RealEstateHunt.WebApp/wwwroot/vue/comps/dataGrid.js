@@ -14,7 +14,7 @@ define(["Vue", "lodash", "rvue!vue/comps/lookup"], function (Vue, _) {
             },
             created: function () {
                 this.loadPageMethod = this.config.pageMethod;
-                this.loadPageDebounced = _.debounce(this.loadPage, 500);
+                this.loadPageDebounced = _.debounce(this.loadPage, 200);
                 this.loadPageDebounced();
             },
             watch: {

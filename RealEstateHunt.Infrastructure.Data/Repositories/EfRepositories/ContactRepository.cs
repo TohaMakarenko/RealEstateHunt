@@ -158,9 +158,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
                                 || c.City.Name.Contains(keyWord)
                                 || keyWord.Contains(c.City.Name)
                                 || c.District.Name.Contains(keyWord)
-                                || keyWord.Contains(c.District.Name)
-                                || c.Street.Contains(keyWord)
-                                || keyWord.Contains(c.Street))
+                                || keyWord.Contains(c.District.Name))
                     .ToListAsync());
         }
 

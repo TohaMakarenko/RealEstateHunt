@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label>
-                        Номер банкцівського рахунку
+                        Номер банківського рахунку
                         <input class="form-control" type="text" v-model="record.bankAccountNumber"/>
                     </label>
                 </div>
