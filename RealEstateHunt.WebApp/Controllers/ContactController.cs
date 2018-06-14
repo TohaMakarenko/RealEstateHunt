@@ -85,5 +85,27 @@ namespace RealEstateHunt.WebApp.Controllers
             return _mapper.Map<IEnumerable<Contact>, IEnumerable<ContactGridModel>>(
                 await _searchService.SearchContactsAsync(keyWord));
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<ContactGridModel>> ExtendedSearch(string firstName, string lastName, int cityId,
+            int districtId, int preferedTypeId)
+        {
+            var searchEntity = new Contact();
+            if (cityId > 0) {
+                searchEntity.City = new City() {Id = cityId};
+            }
+            if (districtId > 0) {
+                searchEntity.District = new District() {Id = districtId};
+            }
+            if (preferedTypeId > 0) {
+                searchEntity.PreferredType = new RealEstateType() {Id = preferedTypeId};
+            }
+
+            searchEntity.FirstName = firstName;
+            searchEntity.LastName = lastName;
+            
+            return _mapper.Map<IEnumerable<Contact>, IEnumerable<ContactGridModel>>(
+                await _searchService.ExtendedSearchContactsAsync(searchEntity));
+        }
     }
 }

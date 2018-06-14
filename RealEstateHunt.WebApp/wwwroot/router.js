@@ -34,6 +34,10 @@ define("router", ["vue-router"], function (VueRouter) {
             {
                 path: '/offer/:id',
                 component: view('Offer/offerPage')
+            },
+            {
+                path: '/contactSearch',
+                component: view('ContactSearch/contactSearch')
             }
         ]
     });
