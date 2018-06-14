@@ -14,15 +14,11 @@ namespace RealEstateHunt.Infrastructure.Data.UnitOfWork.EfUnitOfWork
         private readonly IMapper _mapper;
 
         private ICityRepository _cityRepository;
-        private IContactCommunicationRepository _contactCommunicationRepository;
         private IContactRepository _contactRepository;
-        private IContractRepository _contractRepository;
         private IDistrictRepository _districtRepository;
-        private IEmployeeRepository _employeeRepository;
         private IOfferRepository _offerRepository;
         private IRealEstateRepository _realEstateRepository;
         private IRealEstateTypeRepository _realEstateTypeRepository;
-        private IUserRepository _userRepository;
 
         public UnitOfWork(RehDbContext dbContext, IMapper mapper)
         {
@@ -33,25 +29,13 @@ namespace RealEstateHunt.Infrastructure.Data.UnitOfWork.EfUnitOfWork
         public ICityRepository CityRepository =>
             _cityRepository ?? (_cityRepository = new CityRepository(_dbContext, _mapper));
 
-        public IContactCommunicationRepository ContactCommunicationRepository =>
-            _contactCommunicationRepository ?? (_contactCommunicationRepository
-            = new ContactCommunicationRepository(_dbContext, _mapper));
-
         public IContactRepository ContactRepository =>
             _contactRepository ?? (_contactRepository
             = new ContactRepository(_dbContext, _mapper));
 
-        public IContractRepository ContractRepository =>
-            _contractRepository ?? (_contractRepository
-            = new ContractRepository(_dbContext, _mapper));
-
         public IDistrictRepository DistrictRepository =>
             _districtRepository ?? (_districtRepository
             = new DistrictRepository(_dbContext, _mapper));
-
-        public IEmployeeRepository EmployeeRepository =>
-            _employeeRepository ?? (_employeeRepository
-            = new EmployeeRepository(_dbContext, _mapper));
 
         public IOfferRepository OfferRepository =>
             _offerRepository ?? (_offerRepository
@@ -64,10 +48,6 @@ namespace RealEstateHunt.Infrastructure.Data.UnitOfWork.EfUnitOfWork
         public IRealEstateTypeRepository RealEstateTypeRepository =>
             _realEstateTypeRepository ?? (_realEstateTypeRepository
             = new RealEstateTypeRepository(_dbContext, _mapper));
-
-        public IUserRepository UserRepository =>
-            _userRepository ?? (_userRepository
-            = new UserRepository(_dbContext, _mapper));
 
         public void Save()
         {

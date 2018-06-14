@@ -7,12 +7,9 @@ namespace RealEstateHunt.Core.Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public RealEstate RealEstate { get; set; }
-        public Employee Manager { get; set; }
         public Contact Contact { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
         public bool IsDeclined { get; set; }
-
-        public IEnumerable<Contract> Contracts { get; set; }
     }
 }

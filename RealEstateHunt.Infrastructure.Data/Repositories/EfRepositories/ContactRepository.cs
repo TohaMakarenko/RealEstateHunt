@@ -28,8 +28,6 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         protected override IQueryable<ContactEntity> IncludeCollections(IQueryable<ContactEntity> dbSet)
         {
             return dbSet
-                .Include(c => c.ContactCommunications)
-                .Include(c => c.Contracts)
                 .Include(c => c.Offers);
         }
 

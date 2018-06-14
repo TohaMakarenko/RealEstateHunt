@@ -8,14 +8,10 @@ namespace RealEstateHunt.Infrastructure.Data
     {
         public DbSet<CityEntity> Cities { get; set; }
         public DbSet<ContactEntity> Contacts { get; set; }
-        public DbSet<ContactCommunicationEntity> ContactCommunications { get; set; }
-        public DbSet<ContractEntity> Contracts { get; set; }
         public DbSet<DistrictEntity> Districts { get; set; }
-        public DbSet<EmployeeEntity> Employees { get; set; }
         public DbSet<OfferEntity> Offers { get; set; }
         public DbSet<RealEstateEntity> RealEstates { get; set; }
         public DbSet<RealEstateTypeEntity> RealEstateTypes { get; set; }
-        public DbSet<UserEntity> Users { get; set; }
 
         public RehDbContext(DbContextOptions options) : base(options)
         {
@@ -31,28 +27,9 @@ namespace RealEstateHunt.Infrastructure.Data
 
         protected virtual void CreateIndexes(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserEntity>()
-               .HasIndex(u => u.Name)
-               .IsUnique();
-
-            modelBuilder.Entity<UserEntity>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
-
-            modelBuilder.Entity<UserEntity>()
-                .HasIndex(u => u.Phone)
-                .IsUnique();
-
             modelBuilder.Entity<ContactEntity>()
                 .HasIndex(c => c.BankAccountNumber)
                 .IsUnique();
-
-            modelBuilder.Entity<EmployeeEntity>()
-                .HasIndex(e => e.ContactId)
-                .IsUnique();
-
-            modelBuilder.Entity<ContactCommunicationEntity>()
-                .HasIndex(cc => cc.Value);
         }
 
         protected virtual void CreateForeignKeys(ModelBuilder modelBuilder)
@@ -71,28 +48,6 @@ namespace RealEstateHunt.Infrastructure.Data
                 .HasOne(c => c.District)
                 .WithMany(c => c.Contacts)
                 .HasForeignKey(c => c.DistrictId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<ContactCommunicationEntity>()
-                .HasOne(cc => cc.Contact)
-                .WithMany(c => c.ContactCommunications)
-                .HasForeignKey(cc => cc.ContactId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<ContractEntity>()
-                .HasOne(c => c.Client)
-                .WithMany(c => c.Contracts)
-                .HasForeignKey(c => c.ClientId);
-
-            modelBuilder.Entity<ContractEntity>()
-                .HasOne(c => c.Manager)
-                .WithMany(m => m.Contracts)
-                .HasForeignKey(c => c.ManagerId);
-
-            modelBuilder.Entity<ContractEntity>()
-                .HasOne(d => d.Offer)
-                .WithMany(c => c.Contracts)
-                .HasForeignKey(c => c.OfferId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<RealEstateEntity>()

@@ -19,14 +19,7 @@ namespace RealEstateHunt.Infrastructure.Data.Repositories.EfRepositories
         {
             return dbSet
                 .Include(e => e.Contact)
-                .Include(e => e.RealEstate)
-                .Include(e => e.Manager);
-        }
-
-        protected override IQueryable<OfferEntity> IncludeCollections(IQueryable<OfferEntity> dbSet)
-        {
-            return dbSet
-                .Include(e => e.Contracts);
+                .Include(e => e.RealEstate);
         }
 
         public override async Task<Offer> FindByIdAsync(int id)

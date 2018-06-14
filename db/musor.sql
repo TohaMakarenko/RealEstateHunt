@@ -21,7 +21,7 @@ select * from RealEstate re
   
 
 insert into Contact (BankAccountNumber, BirthDate, CityId, DistrictId, FirstName, LastName, Number, PreferredPrice, PreferredTypeId, Street)
-values ('1337', GETDATE(), 1, 1, 'FirstName', 'LastName', '223', 14, 1, 'Stree');
+values ('4414', GETDATE(), 1, 1, 'FirstName1', 'LastName1', '441', 14, 1, 'Stree');
 
 select * from Contact c
 
@@ -51,3 +51,27 @@ FROM [City] AS [c]
 
 
 select * from RealEstate re
+
+    select * from City
+
+select * from District d
+
+    delete from Offer
+
+        select * from Offer
+
+           
+
+            select * from Offer
+
+                INSERT dbo.District(Id, Name, CityId) VALUES (1, N'Солом''янський', 1)
+INSERT dbo.District(Id, Name, CityId) VALUES (2, N'Святошинський', 1)
+INSERT dbo.District(Id, Name, CityId) VALUES (3, N'Жовтневий', 2)
+INSERT dbo.District(Id, Name, CityId) VALUES (4, N'Кіровський', 2)
+INSERT dbo.District(Id, Name, CityId) VALUES (5, N'Галицький', 3)
+INSERT dbo.District(Id, Name, CityId) VALUES (6, N'Личаківський', 3)
+
+    INSERT dbo.RealEstateType(Id, Name) VALUES (1, N'1-кімнатна Квартира')
+INSERT dbo.RealEstateType(Id, Name) VALUES (2, N'2-кімнатна Квартира')
+INSERT dbo.RealEstateType(Id, Name) VALUES (3, N'3-кімнатна Квартира')
+INSERT dbo.RealEstateType(Id, Name) VALUES (4, N'Приватна ділянка')

@@ -19,8 +19,6 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         [ForeignKey("Manager")]
         public int? ManagerId { get; set; }
 
-        public EmployeeEntity Manager { get; set; }
-
         [ForeignKey("Contact")]
         public int ContactId { get; set; }
         
@@ -32,7 +30,5 @@ namespace RealEstateHunt.Infrastructure.Data.Entities
         public int Price { get; set; }
         
         public bool IsDeclined { get; set; }
-
-        public ICollection<ContractEntity> Contracts { get; set; }
     }
 }

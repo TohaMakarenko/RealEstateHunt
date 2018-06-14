@@ -16,9 +16,7 @@ namespace RealEstateHunt.Core.Data.Models
         public string BankAccountNumber { get; set; }
         public RealEstateType PreferredType { get; set; }
         public int PreferredPrice { get; set; }
-
-        public IEnumerable<ContactCommunication> ContactCommunications { get; set; }
-        public IEnumerable<Contract> Contracts { get; set; }
+        
         public IEnumerable<Offer> Offers { get; set; }
     }
 }
