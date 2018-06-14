@@ -1,7 +1,7 @@
 define(["Vue", "lodash"], function (Vue, _) {
     return function (template) {
         return Vue.component('lookup', {
-            model:{
+            model: {
                 prop: "value",
                 event: "change"
             },
@@ -40,9 +40,10 @@ define(["Vue", "lodash"], function (Vue, _) {
             },
             watch: {
                 filterValue: function () {
+                    this.selected = -1;
                     this.loadLookup();
                 },
-                value: function(val){
+                value: function (val) {
                     this.selected = val;
                 },
                 selected: function () {
@@ -52,7 +53,7 @@ define(["Vue", "lodash"], function (Vue, _) {
             methods: {
                 loadLookup: function () {
                     var params = {};
-                    if (this.filterValue !== undefined  && this.filterValue >= 0) {
+                    if (this.filterValue !== undefined && this.filterValue >= 0) {
                         params[this.filterParamName] = this.filterValue;
                     }
                     this.$http.get(this.controller + '/' + this.method, {
@@ -62,6 +63,9 @@ define(["Vue", "lodash"], function (Vue, _) {
                             this.collection = response.data;
                         }
                     }.bind(this));
+                },
+                resetSelected: function () {
+                    this.selected = -1;
                 }
             }
         })
