@@ -8,7 +8,7 @@
     "gulp-cached": "^1.1.1",
     "install": "^0.11.0",
     "jquery": "^3.3.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "npm": "^6.1.0",
     "popper.js": "^1.14.3",
     "requirejs": "^2.3.5",
